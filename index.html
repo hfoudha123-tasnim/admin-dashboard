@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr" dir="ltr">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de Bord Administrateur - Plateforme Éducative</title>
+    <title>لوحة التحكم الإدارية - المنصة التعليمية</title>
     <style>
         * {
             margin: 0;
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif;
             background: #f5f7fa;
             color: #333;
         }
@@ -20,14 +20,14 @@
         /* Sidebar */
         .sidebar {
             position: fixed;
-            left: 0;
+            right: 0;
             top: 0;
             height: 100%;
-            width: 260px;
-            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            width: 280px;
+            background: linear-gradient(180deg, #1e3a5f 0%, #2c5282 100%);
             padding: 20px 0;
             z-index: 1000;
-            transition: all 0.3s ease;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
         }
 
         .sidebar-header {
@@ -37,12 +37,13 @@
 
         .sidebar-header h2 {
             color: white;
-            font-size: 22px;
+            font-size: 24px;
+            font-weight: 700;
         }
 
         .sidebar-header p {
             color: #bdc3c7;
-            font-size: 13px;
+            font-size: 14px;
             margin-top: 5px;
         }
 
@@ -58,22 +59,22 @@
             gap: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
-            border-left: 3px solid transparent;
+            border-right: 3px solid transparent;
         }
 
         .menu-item:hover, .menu-item.active {
             background: rgba(255,255,255,0.1);
-            border-left-color: #3498db;
+            border-right-color: #3498db;
         }
 
         .menu-item i {
-            font-size: 20px;
-            width: 25px;
+            font-size: 22px;
+            width: 30px;
         }
 
         /* Main Content */
         .main-content {
-            margin-left: 260px;
+            margin-right: 280px;
             padding: 20px;
             min-height: 100vh;
         }
@@ -81,9 +82,9 @@
         /* Header */
         .header {
             background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 25px 35px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -92,20 +93,23 @@
 
         .header h1 {
             color: #2c3e50;
-            font-size: 28px;
+            font-size: 30px;
+            font-weight: 700;
         }
 
         .header-actions {
             display: flex;
             gap: 15px;
+            align-items: center;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
+            font-weight: 600;
             transition: all 0.3s ease;
         }
 
@@ -116,7 +120,7 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+            box-shadow: 0 5px 20px rgba(52,152,219,0.4);
         }
 
         .btn-success {
@@ -124,10 +128,15 @@
             color: white;
         }
 
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+        }
+
         /* Stats Cards */
         .stats-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
@@ -135,8 +144,8 @@
         .stat-card {
             background: white;
             padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             display: flex;
             align-items: center;
             gap: 20px;
@@ -145,17 +154,17 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
         }
 
         .stat-icon {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+            width: 65px;
+            height: 65px;
+            border-radius: 14px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 30px;
         }
 
         .stat-icon.blue { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
@@ -164,22 +173,23 @@
         .stat-icon.orange { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); }
 
         .stat-info h3 {
-            font-size: 32px;
+            font-size: 34px;
             color: #2c3e50;
             margin-bottom: 5px;
+            font-weight: 700;
         }
 
         .stat-info p {
             color: #7f8c8d;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         /* Content Section */
         .content-section {
             background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             margin-bottom: 30px;
             display: none;
         }
@@ -199,7 +209,29 @@
 
         .section-header h2 {
             color: #2c3e50;
-            font-size: 22px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        /* Login Section */
+        .login-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 30px rgba(0,0,0,0.1);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h2 {
+            color: #2c3e50;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
 
         /* Table */
@@ -215,16 +247,17 @@
 
         .data-table th {
             padding: 15px;
-            text-align: left;
+            text-align: right;
             color: #2c3e50;
-            font-weight: 600;
-            font-size: 14px;
+            font-weight: 700;
+            font-size: 15px;
         }
 
         .data-table td {
             padding: 15px;
             border-bottom: 1px solid #ecf0f1;
             color: #555;
+            text-align: right;
         }
 
         .data-table tbody tr:hover {
@@ -232,9 +265,9 @@
         }
 
         .badge {
-            padding: 5px 12px;
+            padding: 6px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
         }
 
@@ -256,6 +289,7 @@
         .action-buttons {
             display: flex;
             gap: 8px;
+            justify-content: flex-start;
         }
 
         .btn-icon {
@@ -264,6 +298,7 @@
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 16px;
         }
 
         .btn-edit {
@@ -297,17 +332,18 @@
         .form-group label {
             color: #2c3e50;
             font-weight: 600;
-            font-size: 14px;
+            font-size: 15px;
         }
 
         .form-group input,
         .form-group select,
         .form-group textarea {
             padding: 12px;
-            border: 1px solid #ddd;
+            border: 2px solid #ddd;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 15px;
             transition: all 0.3s ease;
+            font-family: inherit;
         }
 
         .form-group input:focus,
@@ -323,10 +359,10 @@
             display: none;
             position: fixed;
             top: 0;
-            left: 0;
+            right: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             z-index: 2000;
             align-items: center;
             justify-content: center;
@@ -338,10 +374,10 @@
 
         .modal-content {
             background: white;
-            padding: 30px;
+            padding: 35px;
             border-radius: 15px;
             width: 90%;
-            max-width: 600px;
+            max-width: 700px;
             max-height: 90vh;
             overflow-y: auto;
         }
@@ -355,60 +391,150 @@
 
         .modal-header h3 {
             color: #2c3e50;
-            font-size: 22px;
+            font-size: 24px;
+            font-weight: 700;
         }
 
         .close-modal {
             cursor: pointer;
-            font-size: 28px;
+            font-size: 32px;
             color: #7f8c8d;
+            transition: color 0.3s;
         }
 
-        /* Color Picker Section */
-        .color-picker-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
+        .close-modal:hover {
+            color: #e74c3c;
         }
 
-        .color-picker-item {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .color-preview {
-            width: 100%;
-            height: 60px;
-            border-radius: 8px;
-            border: 2px solid #ddd;
-        }
-
-        /* Charts Container */
-        .charts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .chart-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .chart-placeholder {
-            width: 100%;
-            height: 300px;
-            background: #ecf0f1;
-            border-radius: 8px;
+        /* Tutor Avatar */
+        .tutor-avatar {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #7f8c8d;
+            font-size: 40px;
+            cursor: pointer;
+            box-shadow: 0 5px 25px rgba(102,126,234,0.4);
+            transition: all 0.3s ease;
+            z-index: 1500;
+        }
+
+        .tutor-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 35px rgba(102,126,234,0.6);
+        }
+
+        .tutor-chat {
+            position: fixed;
+            bottom: 130px;
+            left: 30px;
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            display: none;
+            flex-direction: column;
+            z-index: 1500;
+        }
+
+        .tutor-chat.active {
+            display: flex;
+        }
+
+        .tutor-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .tutor-messages {
+            padding: 20px;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .tutor-message {
+            background: #f0f0f0;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .tutor-input {
+            padding: 15px;
+            border-top: 2px solid #ecf0f1;
+        }
+
+        .tutor-input input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+        }
+
+        /* Referral Section */
+        .referral-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+
+        .referral-code {
+            background: rgba(255,255,255,0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .referral-code h2 {
+            font-size: 36px;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        /* Video Player */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.12);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            background: #ecf0f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+        }
+
+        .video-info {
+            padding: 15px;
         }
 
         /* Responsive */
@@ -424,11 +550,18 @@
             }
 
             .main-content {
-                margin-left: 70px;
+                margin-right: 70px;
             }
 
-            .form-grid {
-                grid-template-columns: 1fr;
+            .tutor-avatar {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+
+            .tutor-chat {
+                width: 90%;
+                left: 5%;
             }
         }
     </style>
@@ -437,41 +570,53 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-header">
-            <h2>Admin Panel</h2>
-            <p>Plateforme Éducative</p>
+            <h2>لوحة التحكم</h2>
+            <p>المنصة التعليمية التونسية</p>
         </div>
         <div class="sidebar-menu">
             <div class="menu-item active" onclick="showSection('dashboard')">
                 <i>📊</i>
-                <span>Tableau de Bord</span>
+                <span>لوحة المعلومات</span>
+            </div>
+            <div class="menu-item" onclick="showSection('login')">
+                <i>🔐</i>
+                <span>تسجيل الدخول</span>
             </div>
             <div class="menu-item" onclick="showSection('classes')">
                 <i>🎓</i>
-                <span>Classes</span>
+                <span>الصفوف الدراسية</span>
             </div>
             <div class="menu-item" onclick="showSection('subjects')">
                 <i>📚</i>
-                <span>Matières</span>
+                <span>المواد الدراسية</span>
+            </div>
+            <div class="menu-item" onclick="showSection('lessons')">
+                <i>📖</i>
+                <span>الدروس</span>
+            </div>
+            <div class="menu-item" onclick="showSection('exercises')">
+                <i>✏️</i>
+                <span>التمارين</span>
+            </div>
+            <div class="menu-item" onclick="showSection('videos')">
+                <i>🎥</i>
+                <span>الفيديوهات</span>
             </div>
             <div class="menu-item" onclick="showSection('users')">
                 <i>👥</i>
-                <span>Utilisateurs</span>
-            </div>
-            <div class="menu-item" onclick="showSection('appearance')">
-                <i>🎨</i>
-                <span>Apparence</span>
+                <span>المستخدمون</span>
             </div>
             <div class="menu-item" onclick="showSection('subscriptions')">
                 <i>💳</i>
-                <span>Abonnements</span>
+                <span>الاشتراكات</span>
             </div>
-            <div class="menu-item" onclick="showSection('statistics')">
-                <i>📈</i>
-                <span>Statistiques</span>
+            <div class="menu-item" onclick="showSection('referral')">
+                <i>🎁</i>
+                <span>برنامج الإحالة</span>
             </div>
             <div class="menu-item" onclick="showSection('settings')">
                 <i>⚙️</i>
-                <span>Paramètres</span>
+                <span>الإعدادات</span>
             </div>
         </div>
     </div>
@@ -481,11 +626,11 @@
         <!-- Header -->
         <div class="header">
             <div>
-                <h1>Panneau d'Administration</h1>
+                <h1>مرحباً في لوحة التحكم</h1>
             </div>
             <div class="header-actions">
-                <button class="btn btn-primary">Notifications (5)</button>
-                <button class="btn btn-success">Mon Profil</button>
+                <button class="btn btn-primary">الإشعارات (5)</button>
+                <button class="btn btn-success">الملف الشخصي</button>
             </div>
         </div>
 
@@ -496,89 +641,124 @@
                     <div class="stat-icon blue">👥</div>
                     <div class="stat-info">
                         <h3>1,547</h3>
-                        <p>Utilisateurs Actifs</p>
+                        <p>المستخدمون النشطون</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon green">📚</div>
                     <div class="stat-info">
-                        <h3>48</h3>
-                        <p>Matières</p>
+                        <h3>36</h3>
+                        <p>المواد الدراسية</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon purple">🎓</div>
                     <div class="stat-info">
-                        <h3>12</h3>
-                        <p>Classes</p>
+                        <h3>4</h3>
+                        <p>الصفوف الدراسية</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon orange">💰</div>
                     <div class="stat-info">
-                        <h3>8,452€</h3>
-                        <p>Revenus Mensuels</p>
+                        <h3>8,452 د.ت</h3>
+                        <p>الإيرادات الشهرية</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Login Section -->
+        <div class="content-section" id="login">
+            <div class="login-container">
+                <div class="login-header">
+                    <h2>تسجيل الدخول</h2>
+                    <p>أدخل بيانات الدخول الخاصة بك</p>
+                </div>
+                <div class="form-group">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" placeholder="example@email.com">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" placeholder="••••••••">
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">تسجيل الدخول</button>
+                <p style="text-align: center; margin-top: 15px; color: #7f8c8d;">
+                    ليس لديك حساب؟ <a href="#" style="color: #3498db;">سجل الآن</a>
+                </p>
             </div>
         </div>
 
         <!-- Classes Section -->
         <div class="content-section" id="classes">
             <div class="section-header">
-                <h2>Gestion des Classes</h2>
-                <button class="btn btn-primary" onclick="openModal('addClassModal')">+ Ajouter une Classe</button>
+                <h2>إدارة الصفوف الدراسية</h2>
+                <button class="btn btn-primary" onclick="openModal('addClassModal')">+ إضافة صف</button>
             </div>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nom de la Classe</th>
-                        <th>Niveau</th>
-                        <th>Nombre d'Élèves</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
+                        <th>الإجراءات</th>
+                        <th>الحالة</th>
+                        <th>عدد الطلاب</th>
+                        <th>المستوى</th>
+                        <th>اسم الصف</th>
+                        <th>#</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>#001</td>
-                        <td>6ème Année Primaire</td>
-                        <td>Primaire</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-active">نشط</span></td>
                         <td>45</td>
-                        <td><span class="badge badge-active">Active</span></td>
+                        <td>ابتدائي</td>
+                        <td>السنة السادسة ابتدائي</td>
+                        <td>001#</td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon btn-edit">✏️</button>
                                 <button class="btn-icon btn-delete">🗑️</button>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>#002</td>
-                        <td>5ème Année Primaire</td>
-                        <td>Primaire</td>
+                        <td><span class="badge badge-active">نشط</span></td>
                         <td>38</td>
-                        <td><span class="badge badge-active">Active</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn-icon btn-edit">✏️</button>
-                                <button class="btn-icon btn-delete">🗑️</button>
-                            </div>
-                        </td>
+                        <td>ابتدائي</td>
+                        <td>السنة الخامسة ابتدائي</td>
+                        <td>002#</td>
                     </tr>
                     <tr>
-                        <td>#003</td>
-                        <td>1ère Année Collège</td>
-                        <td>Collège</td>
-                        <td>52</td>
-                        <td><span class="badge badge-active">Active</span></td>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon btn-edit">✏️</button>
                                 <button class="btn-icon btn-delete">🗑️</button>
                             </div>
                         </td>
+                        <td><span class="badge badge-active">نشط</span></td>
+                        <td>42</td>
+                        <td>ابتدائي</td>
+                        <td>السنة الرابعة ابتدائي</td>
+                        <td>003#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-active">نشط</span></td>
+                        <td>40</td>
+                        <td>ابتدائي</td>
+                        <td>السنة الثالثة ابتدائي</td>
+                        <td>004#</td>
                     </tr>
                 </tbody>
             </table>
@@ -587,397 +767,632 @@
         <!-- Subjects Section -->
         <div class="content-section" id="subjects">
             <div class="section-header">
-                <h2>Gestion des Matières</h2>
-                <button class="btn btn-primary" onclick="openModal('addSubjectModal')">+ Ajouter une Matière</button>
+                <h2>إدارة المواد الدراسية</h2>
+                <button class="btn btn-primary" onclick="openModal('addSubjectModal')">+ إضافة مادة</button>
             </div>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Matière</th>
-                        <th>Classe</th>
-                        <th>Enseignant</th>
-                        <th>Leçons</th>
-                        <th>Actions</th>
+                        <th>الإجراءات</th>
+                        <th>عدد الدروس</th>
+                        <th>المعلم</th>
+                        <th>الصف</th>
+                        <th>المادة</th>
+                        <th>#</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>#M01</td>
-                        <td>Mathématiques</td>
-                        <td>6ème Primaire</td>
-                        <td>Prof. Ahmed</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
                         <td>15</td>
+                        <td>أ. أحمد بن علي</td>
+                        <td>السنة السادسة</td>
+                        <td>الرياضيات</td>
+                        <td>M01#</td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon btn-edit">✏️</button>
                                 <button class="btn-icon btn-delete">🗑️</button>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>#M02</td>
-                        <td>Arabe</td>
-                        <td>6ème Primaire</td>
-                        <td>Prof. Fatima</td>
                         <td>12</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn-icon btn-edit">✏️</button>
-                                <button class="btn-icon btn-delete">🗑️</button>
-                            </div>
-                        </td>
+                        <td>أ. فاطمة الزهراء</td>
+                        <td>السنة السادسة</td>
+                        <td>اللغة العربية</td>
+                        <td>M02#</td>
                     </tr>
                     <tr>
-                        <td>#M03</td>
-                        <td>Sciences</td>
-                        <td>6ème Primaire</td>
-                        <td>Prof. Mohamed</td>
-                        <td>14</td>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon btn-edit">✏️</button>
                                 <button class="btn-icon btn-delete">🗑️</button>
                             </div>
                         </td>
+                        <td>10</td>
+                        <td>أ. سارة المنصوري</td>
+                        <td>السنة السادسة</td>
+                        <td>اللغة الفرنسية</td>
+                        <td>M03#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>14</td>
+                        <td>أ. محمد الطرابلسي</td>
+                        <td>السنة السادسة</td>
+                        <td>علوم الحياة والأرض</td>
+                        <td>M04#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>11</td>
+                        <td>أ. ليلى بن عمر</td>
+                        <td>السنة السادسة</td>
+                        <td>التاريخ والجغرافيا</td>
+                        <td>M05#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>8</td>
+                        <td>أ. خالد السعيدي</td>
+                        <td>السنة السادسة</td>
+                        <td>التربية الإسلامية</td>
+                        <td>M06#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>6</td>
+                        <td>أ. نادية الحمروني</td>
+                        <td>السنة السادسة</td>
+                        <td>التربية المدنية</td>
+                        <td>M07#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>5</td>
+                        <td>أ. منال القروي</td>
+                        <td>السنة السادسة</td>
+                        <td>الإعلامية</td>
+                        <td>M08#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>7</td>
+                        <td>أ. ياسمين التونسي</td>
+                        <td>السنة السادسة</td>
+                        <td>اللغة الإنجليزية</td>
+                        <td>M09#</td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+
+        <!-- Lessons Section -->
+        <div class="content-section" id="lessons">
+            <div class="section-header">
+                <h2>إدارة الدروس</h2>
+                <button class="btn btn-primary" onclick="openModal('addLessonModal')">+ إضافة درس</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>الإجراءات</th>
+                        <th>الحالة</th>
+                        <th>المدة</th>
+                        <th>المادة</th>
+                        <th>عنوان الدرس</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-active">منشور</span></td>
+                        <td>45 دقيقة</td>
+                        <td>الرياضيات</td>
+                        <td>الهندسة الفضائية</td>
+                        <td>L001#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-active">منشور</span></td>
+                        <td>40 دقيقة</td>
+                        <td>اللغة العربية</td>
+                        <td>الإعراب والبناء</td>
+                        <td>L002#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-pending">مسودة</span></td>
+                        <td>50 دقيقة</td>
+                        <td>علوم الحياة</td>
+                        <td>التوالد عند الإنسان</td>
+                        <td>L003#</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Exercises Section -->
+        <div class="content-section" id="exercises">
+            <div class="section-header">
+                <h2>إدارة التمارين التفاعلية</h2>
+                <button class="btn btn-primary" onclick="openModal('addExerciseModal')">+ إضافة تمرين</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>الإجراءات</th>
+                        <th>النوع</th>
+                        <th>عدد الأسئلة</th>
+                        <th>المادة</th>
+                        <th>عنوان التمرين</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>اختيار متعدد</td>
+                        <td>20</td>
+                        <td>الرياضيات</td>
+                        <td>تمارين الهندسة</td>
+                        <td>E001#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>ملء الفراغات</td>
+                        <td>15</td>
+                        <td>اللغة العربية</td>
+                        <td>تطبيقات النحو</td>
+                        <td>E002#</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td>صح أو خطأ</td>
+                        <td>25</td>
+                        <td>العلوم</td>
+                        <td>اختبار الجهاز الهضمي</td>
+                        <td>E003#</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Videos Section -->
+        <div class="content-section" id="videos">
+            <div class="section-header">
+                <h2>إدارة الفيديوهات التعليمية</h2>
+                <button class="btn btn-primary" onclick="openModal('addVideoModal')">+ إضافة فيديو</button>
+            </div>
+            <div class="video-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">▶️</div>
+                    <div class="video-info">
+                        <h3 style="color: #2c3e50; margin-bottom: 10px;">الكسور العشرية</h3>
+                        <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 8px;">الرياضيات - السنة السادسة</p>
+                        <p style="color: #3498db; font-weight: 600;">المدة: 15:30</p>
+                        <div class="action-buttons" style="margin-top: 10px;">
+                            <button class="btn-icon btn-edit">✏️</button>
+                            <button class="btn-icon btn-delete">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">▶️</div>
+                    <div class="video-info">
+                        <h3 style="color: #2c3e50; margin-bottom: 10px;">قواعد الإملاء</h3>
+                        <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 8px;">اللغة العربية - السنة السادسة</p>
+                        <p style="color: #3498db; font-weight: 600;">المدة: 12:45</p>
+                        <div class="action-buttons" style="margin-top: 10px;">
+                            <button class="btn-icon btn-edit">✏️</button>
+                            <button class="btn-icon btn-delete">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-card">
+                    <div class="video-thumbnail">▶️</div>
+                    <div class="video-info">
+                        <h3 style="color: #2c3e50; margin-bottom: 10px;">الدورة الدموية</h3>
+                        <p style="color: #7f8c8d; font-size: 14px; margin-bottom: 8px;">علوم الحياة - السنة السادسة</p>
+                        <p style="color: #3498db; font-weight: 600;">المدة: 18:20</p>
+                        <div class="action-buttons" style="margin-top: 10px;">
+                            <button class="btn-icon btn-edit">✏️</button>
+                            <button class="btn-icon btn-delete">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Users Section -->
         <div class="content-section" id="users">
             <div class="section-header">
-                <h2>Gestion des Utilisateurs</h2>
-                <button class="btn btn-primary" onclick="openModal('addUserModal')">+ Ajouter un Utilisateur</button>
+                <h2>إدارة المستخدمين</h2>
+                <button class="btn btn-primary" onclick="openModal('addUserModal')">+ إضافة مستخدم</button>
             </div>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nom Complet</th>
-                        <th>Email</th>
-                        <th>Rôle</th>
-                        <th>Date d'Inscription</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
+                        <th>الإجراءات</th>
+                        <th>الحالة</th>
+                        <th>تاريخ التسجيل</th>
+                        <th>الدور</th>
+                        <th>البريد الإلكتروني</th>
+                        <th>الاسم الكامل</th>
+                        <th>#</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>#U001</td>
-                        <td>Ahmed Ben Ali</td>
-                        <td>ahmed@email.com</td>
-                        <td>Élève</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-active">نشط</span></td>
                         <td>15/09/2025</td>
-                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>طالب</td>
+                        <td>ahmed@email.com</td>
+                        <td>أحمد بن علي</td>
+                        <td>U001#</td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon btn-edit">✏️</button>
                                 <button class="btn-icon btn-delete">🗑️</button>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>#U002</td>
-                        <td>Fatima Zahra</td>
-                        <td>fatima@email.com</td>
-                        <td>Enseignant</td>
+                        <td><span class="badge badge-active">نشط</span></td>
                         <td>01/09/2025</td>
-                        <td><span class="badge badge-active">Actif</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn-icon btn-edit">✏️</button>
-                                <button class="btn-icon btn-delete">🗑️</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>#U003</td>
-                        <td>Mohamed Salah</td>
-                        <td>mohamed@email.com</td>
-                        <td>Élève</td>
-                        <td>20/09/2025</td>
-                        <td><span class="badge badge-pending">En attente</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn-icon btn-edit">✏️</button>
-                                <button class="btn-icon btn-delete">🗑️</button>
-                            </div>
-                        </td>
+                        <td>معلم</td>
+                        <td>fatima@email.com</td>
+                        <td>فاطمة الزهراء</td>
+                        <td>U002#</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Appearance Section -->
-        <div class="content-section" id="appearance">
-            <div class="section-header">
-                <h2>Personnalisation de l'Interface</h2>
-                <button class="btn btn-success">Sauvegarder les Modifications</button>
-            </div>
-            <div class="color-picker-grid">
-                <div class="color-picker-item">
-                    <label>Couleur Principale</label>
-                    <input type="color" value="#3498db" class="color-preview">
-                </div>
-                <div class="color-picker-item">
-                    <label>Couleur Secondaire</label>
-                    <input type="color" value="#2ecc71" class="color-preview">
-                </div>
-                <div class="color-picker-item">
-                    <label>Couleur d'Arrière-plan</label>
-                    <input type="color" value="#ecf0f1" class="color-preview">
-                </div>
-                <div class="color-picker-item">
-                    <label>Couleur du Texte</label>
-                    <input type="color" value="#2c3e50" class="color-preview">
-                </div>
-            </div>
-            <div class="form-grid" style="margin-top: 30px;">
-                <div class="form-group">
-                    <label>Logo de la Plateforme</label>
-                    <input type="file" accept="image/*">
-                </div>
-                <div class="form-group">
-                    <label>Nom de la Plateforme</label>
-                    <input type="text" value="Plateforme Éducative Tunisienne">
-                </div>
-                <div class="form-group">
-                    <label>Police de Caractères</label>
-                    <select>
-                        <option>Segoe UI</option>
-                        <option>Arial</option>
-                        <option>Helvetica</option>
-                        <option>Roboto</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Taille de Police</label>
-                    <select>
-                        <option>Petite</option>
-                        <option selected>Moyenne</option>
-                        <option>Grande</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
         <!-- Subscriptions Section -->
         <div class="content-section" id="subscriptions">
             <div class="section-header">
-                <h2>Gestion des Abonnements</h2>
-                <button class="btn btn-primary" onclick="openModal('addSubscriptionModal')">+ Créer un Plan</button>
+                <h2>إدارة الاشتراكات</h2>
+                <button class="btn btn-primary" onclick="openModal('addSubscriptionModal')">+ إنشاء خطة</button>
             </div>
             <div class="stats-grid">
                 <div class="stat-card">
                     <div class="stat-icon green">💎</div>
                     <div class="stat-info">
                         <h3>847</h3>
-                        <p>Abonnés Premium</p>
+                        <p>المشتركون المميزون</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon blue">🆓</div>
                     <div class="stat-info">
                         <h3>700</h3>
-                        <p>Utilisateurs Gratuits</p>
+                        <p>المستخدمون المجانيون</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon purple">📊</div>
                     <div class="stat-info">
                         <h3>54.8%</h3>
-                        <p>Taux de Conversion</p>
+                        <p>معدل التحويل</p>
                     </div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-icon orange">💰</div>
                     <div class="stat-info">
-                        <h3>10,164€</h3>
-                        <p>Revenus Mensuels</p>
+                        <h3>10,164 د.ت</h3>
+                        <p>الإيرادات الشهرية</p>
                     </div>
                 </div>
             </div>
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>Plan</th>
-                        <th>Prix Mensuel</th>
-                        <th>Abonnés</th>
-                        <th>Revenus</th>
-                        <th>Statut</th>
-                        <th>Actions</th>
+                        <th>الإجراءات</th>
+                        <th>الحالة</th>
+                        <th>الإيرادات</th>
+                        <th>المشتركون</th>
+                        <th>السعر الشهري</th>
+                        <th>الخطة</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Plan Gratuit</td>
-                        <td>0€</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                            </div>
+                        </td>
+                        <td><span class="badge badge-active">نشط</span></td>
+                        <td>0 د.ت</td>
                         <td>700</td>
-                        <td>0€</td>
-                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>0 د.ت</td>
+                        <td>الخطة المجانية</td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Plan Standard</td>
-                        <td>9€</td>
+                        <td><span class="badge badge-active">نشط</span></td>
+                        <td>4,680 د.ت</td>
                         <td>520</td>
-                        <td>4,680€</td>
-                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>27 د.ت</td>
+                        <td>الخطة القياسية</td>
+                    </tr>
+                    <tr>
                         <td>
                             <div class="action-buttons">
                                 <button class="btn-icon btn-edit">✏️</button>
                                 <button class="btn-icon btn-delete">🗑️</button>
                             </div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td>Plan Premium</td>
-                        <td>12€</td>
+                        <td><span class="badge badge-active">نشط</span></td>
+                        <td>3,924 د.ت</td>
                         <td>327</td>
-                        <td>3,924€</td>
-                        <td><span class="badge badge-active">Actif</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn-icon btn-edit">✏️</button>
-                                <button class="btn-icon btn-delete">🗑️</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Plan Famille</td>
-                        <td>18€</td>
-                        <td>0</td>
-                        <td>0€</td>
-                        <td><span class="badge badge-pending">Brouillon</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="btn-icon btn-edit">✏️</button>
-                                <button class="btn-icon btn-delete">🗑️</button>
-                            </div>
-                        </td>
+                        <td>36 د.ت</td>
+                        <td>الخطة المميزة</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <!-- Statistics Section -->
-        <div class="content-section" id="statistics">
+        <!-- Referral Section -->
+        <div class="content-section" id="referral">
             <div class="section-header">
-                <h2>Statistiques Détaillées</h2>
-                <button class="btn btn-primary">Exporter les Données</button>
+                <h2>برنامج الإحالة والتسويق بالعمولة</h2>
             </div>
-            <div class="charts-grid">
-                <div class="chart-card">
-                    <h3>Inscriptions Mensuelles</h3>
-                    <div class="chart-placeholder">
-                        📈 Graphique d'inscriptions
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <h3>Revenus par Mois</h3>
-                    <div class="chart-placeholder">
-                        💰 Graphique des revenus
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <h3>Matières Populaires</h3>
-                    <div class="chart-placeholder">
-                        📊 Graphique en barres
-                    </div>
-                </div>
-                <div class="chart-card">
-                    <h3>Taux d'Engagement</h3>
-                    <div class="chart-placeholder">
-                        🎯 Graphique circulaire
-                    </div>
+            <div class="referral-card">
+                <h2 style="margin-bottom: 15px;">شارك واربح!</h2>
+                <p style="font-size: 16px; margin-bottom: 20px;">احصل على 20% من قيمة كل اشتراك جديد عبر رابط الإحالة الخاص بك</p>
+                <div class="referral-code">
+                    <p style="font-size: 14px; margin-bottom: 10px;">رمز الإحالة الخاص بك</p>
+                    <h2>REFER2025</h2>
+                    <button class="btn btn-success" style="margin-top: 15px;">نسخ الرابط</button>
                 </div>
             </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">👥</div>
+                    <div class="stat-info">
+                        <h3>127</h3>
+                        <p>إجمالي الإحالات</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">✅</div>
+                    <div class="stat-info">
+                        <h3>89</h3>
+                        <p>الاشتراكات الناجحة</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">💰</div>
+                    <div class="stat-info">
+                        <h3>1,847 د.ت</h3>
+                        <p>إجمالي العمولات</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">📊</div>
+                    <div class="stat-info">
+                        <h3>70%</h3>
+                        <p>معدل التحويل</p>
+                    </div>
+                </div>
+            </div>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>العمولة</th>
+                        <th>الحالة</th>
+                        <th>التاريخ</th>
+                        <th>الخطة</th>
+                        <th>اسم المستخدم الجديد</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>5.4 د.ت</td>
+                        <td><span class="badge badge-active">مدفوع</span></td>
+                        <td>28/10/2025</td>
+                        <td>الخطة القياسية</td>
+                        <td>محمد الصالحي</td>
+                    </tr>
+                    <tr>
+                        <td>7.2 د.ت</td>
+                        <td><span class="badge badge-pending">قيد المعالجة</span></td>
+                        <td>30/10/2025</td>
+                        <td>الخطة المميزة</td>
+                        <td>سارة التونسي</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <!-- Settings Section -->
         <div class="content-section" id="settings">
             <div class="section-header">
-                <h2>Paramètres Généraux</h2>
-                <button class="btn btn-success">Enregistrer</button>
+                <h2>الإعدادات العامة</h2>
+                <button class="btn btn-success">حفظ التغييرات</button>
             </div>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Email de Contact</label>
+                    <label>البريد الإلكتروني للتواصل</label>
                     <input type="email" value="contact@plateforme.tn">
                 </div>
                 <div class="form-group">
-                    <label>Téléphone</label>
+                    <label>رقم الهاتف</label>
                     <input type="tel" value="+216 XX XXX XXX">
                 </div>
                 <div class="form-group">
-                    <label>Langue par Défaut</label>
+                    <label>اللغة الافتراضية</label>
                     <select>
-                        <option selected>Français</option>
-                        <option>Arabe</option>
-                        <option>Anglais</option>
+                        <option selected>العربية</option>
+                        <option>الفرنسية</option>
+                        <option>الإنجليزية</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Fuseau Horaire</label>
+                    <label>المنطقة الزمنية</label>
                     <select>
-                        <option selected>Africa/Tunis (UTC+1)</option>
-                        <option>Europe/Paris (UTC+1)</option>
+                        <option selected>تونس (UTC+1)</option>
+                        <option>باريس (UTC+1)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Notifications Email</label>
+                    <label>إشعارات البريد الإلكتروني</label>
                     <select>
-                        <option selected>Activées</option>
-                        <option>Désactivées</option>
+                        <option selected>مفعلة</option>
+                        <option>معطلة</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Maintenance Mode</label>
+                    <label>وضع الصيانة</label>
                     <select>
-                        <option selected>Désactivé</option>
-                        <option>Activé</option>
+                        <option selected>معطل</option>
+                        <option>مفعل</option>
                     </select>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Tutor Avatar -->
+    <div class="tutor-avatar" onclick="toggleTutorChat()">
+        👨‍🏫
+    </div>
+
+    <!-- Tutor Chat -->
+    <div class="tutor-chat" id="tutorChat">
+        <div class="tutor-header">
+            <h3>المساعد الذكي</h3>
+            <p>أنا هنا لمساعدتك!</p>
+        </div>
+        <div class="tutor-messages">
+            <div class="tutor-message">
+                <p><strong>المساعد:</strong> مرحباً! كيف يمكنني مساعدتك اليوم؟</p>
+            </div>
+            <div class="tutor-message">
+                <p><strong>أنت:</strong> أريد المساعدة في حل التمارين</p>
+            </div>
+            <div class="tutor-message">
+                <p><strong>المساعد:</strong> بالطبع! اختر المادة التي تريد المساعدة فيها وسأقدم لك شرحاً تفصيلياً.</p>
+            </div>
+        </div>
+        <div class="tutor-input">
+            <input type="text" placeholder="اكتب رسالتك هنا...">
+        </div>
+    </div>
+
+    <!-- Modals -->
     <!-- Add Class Modal -->
     <div class="modal" id="addClassModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Ajouter une Nouvelle Classe</h3>
+                <h3>إضافة صف دراسي جديد</h3>
                 <span class="close-modal" onclick="closeModal('addClassModal')">×</span>
             </div>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Nom de la Classe</label>
-                    <input type="text" placeholder="Ex: 6ème Année Primaire">
+                    <label>اسم الصف</label>
+                    <input type="text" placeholder="مثال: السنة السادسة ابتدائي">
                 </div>
                 <div class="form-group">
-                    <label>Niveau</label>
+                    <label>المستوى</label>
                     <select>
-                        <option>Primaire</option>
-                        <option>Collège</option>
-                        <option>Lycée</option>
+                        <option>ابتدائي</option>
+                        <option>إعدادي</option>
+                        <option>ثانوي</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Capacité Maximale</label>
-                    <input type="number" placeholder="Ex: 50">
+                    <label>السعة القصوى</label>
+                    <input type="number" placeholder="مثال: 50">
                 </div>
                 <div class="form-group">
-                    <label>Année Scolaire</label>
+                    <label>السنة الدراسية</label>
                     <input type="text" value="2025-2026">
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer la Classe</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">إنشاء الصف</button>
         </div>
     </div>
 
@@ -985,40 +1400,157 @@
     <div class="modal" id="addSubjectModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Ajouter une Nouvelle Matière</h3>
+                <h3>إضافة مادة دراسية جديدة</h3>
                 <span class="close-modal" onclick="closeModal('addSubjectModal')">×</span>
             </div>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Nom de la Matière</label>
-                    <input type="text" placeholder="Ex: Mathématiques">
+                    <label>اسم المادة</label>
+                    <input type="text" placeholder="مثال: الرياضيات">
                 </div>
                 <div class="form-group">
-                    <label>Classe Associée</label>
+                    <label>الصف المرتبط</label>
                     <select>
-                        <option>6ème Année Primaire</option>
-                        <option>5ème Année Primaire</option>
-                        <option>1ère Année Collège</option>
+                        <option>السنة السادسة ابتدائي</option>
+                        <option>السنة الخامسة ابتدائي</option>
+                        <option>السنة الرابعة ابتدائي</option>
+                        <option>السنة الثالثة ابتدائي</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Enseignant</label>
+                    <label>المعلم</label>
                     <select>
-                        <option>Prof. Ahmed</option>
-                        <option>Prof. Fatima</option>
-                        <option>Prof. Mohamed</option>
+                        <option>أ. أحمد بن علي</option>
+                        <option>أ. فاطمة الزهراء</option>
+                        <option>أ. محمد الطرابلسي</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Nombre d'Heures/Semaine</label>
-                    <input type="number" placeholder="Ex: 5">
+                    <label>عدد الساعات أسبوعياً</label>
+                    <input type="number" placeholder="مثال: 5">
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>Description</label>
-                    <textarea rows="4" placeholder="Description de la matière..."></textarea>
+                    <label>وصف المادة</label>
+                    <textarea rows="4" placeholder="وصف تفصيلي للمادة..."></textarea>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer la Matière</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">إنشاء المادة</button>
+        </div>
+    </div>
+
+    <!-- Add Lesson Modal -->
+    <div class="modal" id="addLessonModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة درس جديد</h3>
+                <span class="close-modal" onclick="closeModal('addLessonModal')">×</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>عنوان الدرس</label>
+                    <input type="text" placeholder="مثال: الهندسة الفضائية">
+                </div>
+                <div class="form-group">
+                    <label>المادة</label>
+                    <select>
+                        <option>الرياضيات</option>
+                        <option>اللغة العربية</option>
+                        <option>علوم الحياة والأرض</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>المدة (بالدقائق)</label>
+                    <input type="number" placeholder="مثال: 45">
+                </div>
+                <div class="form-group">
+                    <label>الحالة</label>
+                    <select>
+                        <option>مسودة</option>
+                        <option>منشور</option>
+                    </select>
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>محتوى الدرس</label>
+                    <textarea rows="6" placeholder="اكتب محتوى الدرس هنا..."></textarea>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">إنشاء الدرس</button>
+        </div>
+    </div>
+
+    <!-- Add Exercise Modal -->
+    <div class="modal" id="addExerciseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة تمرين تفاعلي جديد</h3>
+                <span class="close-modal" onclick="closeModal('addExerciseModal')">×</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>عنوان التمرين</label>
+                    <input type="text" placeholder="مثال: تمارين الهندسة">
+                </div>
+                <div class="form-group">
+                    <label>المادة</label>
+                    <select>
+                        <option>الرياضيات</option>
+                        <option>اللغة العربية</option>
+                        <option>علوم الحياة والأرض</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>نوع التمرين</label>
+                    <select>
+                        <option>اختيار متعدد</option>
+                        <option>ملء الفراغات</option>
+                        <option>صح أو خطأ</option>
+                        <option>ترتيب</option>
+                        <option>مطابقة</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>عدد الأسئلة</label>
+                    <input type="number" placeholder="مثال: 20">
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">إنشاء التمرين</button>
+        </div>
+    </div>
+
+    <!-- Add Video Modal -->
+    <div class="modal" id="addVideoModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>إضافة فيديو تعليمي جديد</h3>
+                <span class="close-modal" onclick="closeModal('addVideoModal')">×</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>عنوان الفيديو</label>
+                    <input type="text" placeholder="مثال: الكسور العشرية">
+                </div>
+                <div class="form-group">
+                    <label>المادة</label>
+                    <select>
+                        <option>الرياضيات</option>
+                        <option>اللغة العربية</option>
+                        <option>علوم الحياة والأرض</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>رابط الفيديو (YouTube)</label>
+                    <input type="url" placeholder="https://youtube.com/...">
+                </div>
+                <div class="form-group">
+                    <label>المدة</label>
+                    <input type="text" placeholder="مثال: 15:30">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>وصف الفيديو</label>
+                    <textarea rows="4" placeholder="وصف تفصيلي للفيديو..."></textarea>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">إضافة الفيديو</button>
         </div>
     </div>
 
@@ -1026,46 +1558,47 @@
     <div class="modal" id="addUserModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Ajouter un Nouvel Utilisateur</h3>
+                <h3>إضافة مستخدم جديد</h3>
                 <span class="close-modal" onclick="closeModal('addUserModal')">×</span>
             </div>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Prénom</label>
-                    <input type="text" placeholder="Prénom">
+                    <label>الاسم الأول</label>
+                    <input type="text" placeholder="الاسم الأول">
                 </div>
                 <div class="form-group">
-                    <label>Nom</label>
-                    <input type="text" placeholder="Nom">
+                    <label>اسم العائلة</label>
+                    <input type="text" placeholder="اسم العائلة">
                 </div>
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" placeholder="email@exemple.com">
+                    <label>البريد الإلكتروني</label>
+                    <input type="email" placeholder="example@email.com">
                 </div>
                 <div class="form-group">
-                    <label>Mot de Passe</label>
+                    <label>كلمة المرور</label>
                     <input type="password" placeholder="••••••••">
                 </div>
                 <div class="form-group">
-                    <label>Rôle</label>
+                    <label>الدور</label>
                     <select>
-                        <option>Élève</option>
-                        <option>Enseignant</option>
-                        <option>Administrateur</option>
-                        <option>Parent</option>
+                        <option>طالب</option>
+                        <option>معلم</option>
+                        <option>مدير</option>
+                        <option>ولي أمر</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Classe (si élève)</label>
+                    <label>الصف (للطلاب)</label>
                     <select>
-                        <option value="">Non applicable</option>
-                        <option>6ème Année Primaire</option>
-                        <option>5ème Année Primaire</option>
-                        <option>1ère Année Collège</option>
+                        <option value="">غير مطبق</option>
+                        <option>السنة السادسة ابتدائي</option>
+                        <option>السنة الخامسة ابتدائي</option>
+                        <option>السنة الرابعة ابتدائي</option>
+                        <option>السنة الثالثة ابتدائي</option>
                     </select>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer l'Utilisateur</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">إنشاء المستخدم</button>
         </div>
     </div>
 
@@ -1073,51 +1606,48 @@
     <div class="modal" id="addSubscriptionModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>Créer un Nouveau Plan d'Abonnement</h3>
+                <h3>إنشاء خطة اشتراك جديدة</h3>
                 <span class="close-modal" onclick="closeModal('addSubscriptionModal')">×</span>
             </div>
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Nom du Plan</label>
-                    <input type="text" placeholder="Ex: Plan Premium">
+                    <label>اسم الخطة</label>
+                    <input type="text" placeholder="مثال: الخطة المميزة">
                 </div>
                 <div class="form-group">
-                    <label>Prix Mensuel (€)</label>
-                    <input type="number" step="0.01" placeholder="12.00">
+                    <label>السعر الشهري (د.ت)</label>
+                    <input type="number" step="0.01" placeholder="36.00">
                 </div>
                 <div class="form-group" style="grid-column: 1 / -1;">
-                    <label>Description</label>
-                    <textarea rows="3" placeholder="Décrivez les avantages de ce plan..."></textarea>
+                    <label>الوصف</label>
+                    <textarea rows="3" placeholder="صف مزايا هذه الخطة..."></textarea>
                 </div>
                 <div class="form-group">
-                    <label>Durée (mois)</label>
+                    <label>المدة (بالأشهر)</label>
                     <input type="number" placeholder="1">
                 </div>
                 <div class="form-group">
-                    <label>Statut</label>
+                    <label>الحالة</label>
                     <select>
-                        <option>Brouillon</option>
-                        <option>Actif</option>
-                        <option>Inactif</option>
+                        <option>مسودة</option>
+                        <option>نشط</option>
+                        <option>غير نشط</option>
                     </select>
                 </div>
             </div>
-            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer le Plan</button>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">إنشاء الخطة</button>
         </div>
     </div>
 
     <script>
         // Show Section Function
         function showSection(sectionId) {
-            // Hide all sections
             document.querySelectorAll('.content-section').forEach(section => {
                 section.classList.remove('active');
             });
             
-            // Show selected section
             document.getElementById(sectionId).classList.add('active');
             
-            // Update active menu item
             document.querySelectorAll('.menu-item').forEach(item => {
                 item.classList.remove('active');
             });
@@ -1142,8 +1672,23 @@
             });
         });
 
-        // Sample notification
-        console.log('Tableau de bord administrateur chargé avec succès!');
+        // Tutor Chat Toggle
+        function toggleTutorChat() {
+            const tutorChat = document.getElementById('tutorChat');
+            tutorChat.classList.toggle('active');
+        }
+
+        // Sample notifications
+        console.log('لوحة التحكم الإدارية تم تحميلها بنجاح!');
+        
+        // Add delete confirmation
+        document.querySelectorAll('.btn-delete').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if(confirm('هل أنت متأكد من الحذف؟')) {
+                    alert('تم الحذف بنجاح!');
+                }
+            });
+        });
     </script>
 </body>
 </html>
