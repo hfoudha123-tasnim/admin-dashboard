@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord Administrateur - Plateforme Éducative</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 260px;
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar-header h2 {
+            color: white;
+            font-size: 22px;
+        }
+
+        .sidebar-header p {
+            color: #bdc3c7;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .sidebar-menu {
+            margin-top: 30px;
+        }
+
+        .menu-item {
+            padding: 15px 20px;
+            color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255,255,255,0.1);
+            border-left-color: #3498db;
+        }
+
+        .menu-item i {
+            font-size: 20px;
+            width: 25px;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 28px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            color: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .stat-icon.blue { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
+        .stat-icon.green { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); }
+        .stat-icon.purple { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); }
+        .stat-icon.orange { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); }
+
+        .stat-info h3 {
+            font-size: 32px;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+
+        /* Content Section */
+        .content-section {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .section-header h2 {
+            color: #2c3e50;
+            font-size: 22px;
+        }
+
+        /* Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .data-table thead {
+            background: #ecf0f1;
+        }
+
+        .data-table th {
+            padding: 15px;
+            text-align: left;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            color: #555;
+        }
+
+        .data-table tbody tr:hover {
+            background: #f8f9fa;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .badge-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-inactive {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-icon {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-icon:hover {
+            transform: scale(1.1);
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            color: #2c3e50;
+            font-size: 22px;
+        }
+
+        .close-modal {
+            cursor: pointer;
+            font-size: 28px;
+            color: #7f8c8d;
+        }
+
+        /* Color Picker Section */
+        .color-picker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .color-picker-item {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .color-preview {
+            width: 100%;
+            height: 60px;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+        }
+
+        /* Charts Container */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: #ecf0f1;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #7f8c8d;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .sidebar-header h2,
+            .sidebar-header p,
+            .menu-item span {
+                display: none;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Admin Panel</h2>
+            <p>Plateforme Éducative</p>
+        </div>
+        <div class="sidebar-menu">
+            <div class="menu-item active" onclick="showSection('dashboard')">
+                <i>📊</i>
+                <span>Tableau de Bord</span>
+            </div>
+            <div class="menu-item" onclick="showSection('classes')">
+                <i>🎓</i>
+                <span>Classes</span>
+            </div>
+            <div class="menu-item" onclick="showSection('subjects')">
+                <i>📚</i>
+                <span>Matières</span>
+            </div>
+            <div class="menu-item" onclick="showSection('users')">
+                <i>👥</i>
+                <span>Utilisateurs</span>
+            </div>
+            <div class="menu-item" onclick="showSection('appearance')">
+                <i>🎨</i>
+                <span>Apparence</span>
+            </div>
+            <div class="menu-item" onclick="showSection('subscriptions')">
+                <i>💳</i>
+                <span>Abonnements</span>
+            </div>
+            <div class="menu-item" onclick="showSection('statistics')">
+                <i>📈</i>
+                <span>Statistiques</span>
+            </div>
+            <div class="menu-item" onclick="showSection('settings')">
+                <i>⚙️</i>
+                <span>Paramètres</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header">
+            <div>
+                <h1>Panneau d'Administration</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-primary">Notifications (5)</button>
+                <button class="btn btn-success">Mon Profil</button>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <div class="content-section active" id="dashboard">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">👥</div>
+                    <div class="stat-info">
+                        <h3>1,547</h3>
+                        <p>Utilisateurs Actifs</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">📚</div>
+                    <div class="stat-info">
+                        <h3>48</h3>
+                        <p>Matières</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">🎓</div>
+                    <div class="stat-info">
+                        <h3>12</h3>
+                        <p>Classes</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">💰</div>
+                    <div class="stat-info">
+                        <h3>8,452€</h3>
+                        <p>Revenus Mensuels</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Classes Section -->
+        <div class="content-section" id="classes">
+            <div class="section-header">
+                <h2>Gestion des Classes</h2>
+                <button class="btn btn-primary" onclick="openModal('addClassModal')">+ Ajouter une Classe</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom de la Classe</th>
+                        <th>Niveau</th>
+                        <th>Nombre d'Élèves</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#001</td>
+                        <td>6ème Année Primaire</td>
+                        <td>Primaire</td>
+                        <td>45</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#002</td>
+                        <td>5ème Année Primaire</td>
+                        <td>Primaire</td>
+                        <td>38</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#003</td>
+                        <td>1ère Année Collège</td>
+                        <td>Collège</td>
+                        <td>52</td>
+                        <td><span class="badge badge-active">Active</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Subjects Section -->
+        <div class="content-section" id="subjects">
+            <div class="section-header">
+                <h2>Gestion des Matières</h2>
+                <button class="btn btn-primary" onclick="openModal('addSubjectModal')">+ Ajouter une Matière</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Matière</th>
+                        <th>Classe</th>
+                        <th>Enseignant</th>
+                        <th>Leçons</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#M01</td>
+                        <td>Mathématiques</td>
+                        <td>6ème Primaire</td>
+                        <td>Prof. Ahmed</td>
+                        <td>15</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#M02</td>
+                        <td>Arabe</td>
+                        <td>6ème Primaire</td>
+                        <td>Prof. Fatima</td>
+                        <td>12</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#M03</td>
+                        <td>Sciences</td>
+                        <td>6ème Primaire</td>
+                        <td>Prof. Mohamed</td>
+                        <td>14</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Users Section -->
+        <div class="content-section" id="users">
+            <div class="section-header">
+                <h2>Gestion des Utilisateurs</h2>
+                <button class="btn btn-primary" onclick="openModal('addUserModal')">+ Ajouter un Utilisateur</button>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom Complet</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Date d'Inscription</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#U001</td>
+                        <td>Ahmed Ben Ali</td>
+                        <td>ahmed@email.com</td>
+                        <td>Élève</td>
+                        <td>15/09/2025</td>
+                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#U002</td>
+                        <td>Fatima Zahra</td>
+                        <td>fatima@email.com</td>
+                        <td>Enseignant</td>
+                        <td>01/09/2025</td>
+                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>#U003</td>
+                        <td>Mohamed Salah</td>
+                        <td>mohamed@email.com</td>
+                        <td>Élève</td>
+                        <td>20/09/2025</td>
+                        <td><span class="badge badge-pending">En attente</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Appearance Section -->
+        <div class="content-section" id="appearance">
+            <div class="section-header">
+                <h2>Personnalisation de l'Interface</h2>
+                <button class="btn btn-success">Sauvegarder les Modifications</button>
+            </div>
+            <div class="color-picker-grid">
+                <div class="color-picker-item">
+                    <label>Couleur Principale</label>
+                    <input type="color" value="#3498db" class="color-preview">
+                </div>
+                <div class="color-picker-item">
+                    <label>Couleur Secondaire</label>
+                    <input type="color" value="#2ecc71" class="color-preview">
+                </div>
+                <div class="color-picker-item">
+                    <label>Couleur d'Arrière-plan</label>
+                    <input type="color" value="#ecf0f1" class="color-preview">
+                </div>
+                <div class="color-picker-item">
+                    <label>Couleur du Texte</label>
+                    <input type="color" value="#2c3e50" class="color-preview">
+                </div>
+            </div>
+            <div class="form-grid" style="margin-top: 30px;">
+                <div class="form-group">
+                    <label>Logo de la Plateforme</label>
+                    <input type="file" accept="image/*">
+                </div>
+                <div class="form-group">
+                    <label>Nom de la Plateforme</label>
+                    <input type="text" value="Plateforme Éducative Tunisienne">
+                </div>
+                <div class="form-group">
+                    <label>Police de Caractères</label>
+                    <select>
+                        <option>Segoe UI</option>
+                        <option>Arial</option>
+                        <option>Helvetica</option>
+                        <option>Roboto</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Taille de Police</label>
+                    <select>
+                        <option>Petite</option>
+                        <option selected>Moyenne</option>
+                        <option>Grande</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subscriptions Section -->
+        <div class="content-section" id="subscriptions">
+            <div class="section-header">
+                <h2>Gestion des Abonnements</h2>
+                <button class="btn btn-primary" onclick="openModal('addSubscriptionModal')">+ Créer un Plan</button>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon green">💎</div>
+                    <div class="stat-info">
+                        <h3>847</h3>
+                        <p>Abonnés Premium</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon blue">🆓</div>
+                    <div class="stat-info">
+                        <h3>700</h3>
+                        <p>Utilisateurs Gratuits</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon purple">📊</div>
+                    <div class="stat-info">
+                        <h3>54.8%</h3>
+                        <p>Taux de Conversion</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">💰</div>
+                    <div class="stat-info">
+                        <h3>10,164€</h3>
+                        <p>Revenus Mensuels</p>
+                    </div>
+                </div>
+            </div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Plan</th>
+                        <th>Prix Mensuel</th>
+                        <th>Abonnés</th>
+                        <th>Revenus</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Plan Gratuit</td>
+                        <td>0€</td>
+                        <td>700</td>
+                        <td>0€</td>
+                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Plan Standard</td>
+                        <td>9€</td>
+                        <td>520</td>
+                        <td>4,680€</td>
+                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Plan Premium</td>
+                        <td>12€</td>
+                        <td>327</td>
+                        <td>3,924€</td>
+                        <td><span class="badge badge-active">Actif</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Plan Famille</td>
+                        <td>18€</td>
+                        <td>0</td>
+                        <td>0€</td>
+                        <td><span class="badge badge-pending">Brouillon</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon btn-edit">✏️</button>
+                                <button class="btn-icon btn-delete">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Statistics Section -->
+        <div class="content-section" id="statistics">
+            <div class="section-header">
+                <h2>Statistiques Détaillées</h2>
+                <button class="btn btn-primary">Exporter les Données</button>
+            </div>
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>Inscriptions Mensuelles</h3>
+                    <div class="chart-placeholder">
+                        📈 Graphique d'inscriptions
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Revenus par Mois</h3>
+                    <div class="chart-placeholder">
+                        💰 Graphique des revenus
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Matières Populaires</h3>
+                    <div class="chart-placeholder">
+                        📊 Graphique en barres
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Taux d'Engagement</h3>
+                    <div class="chart-placeholder">
+                        🎯 Graphique circulaire
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="content-section" id="settings">
+            <div class="section-header">
+                <h2>Paramètres Généraux</h2>
+                <button class="btn btn-success">Enregistrer</button>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Email de Contact</label>
+                    <input type="email" value="contact@plateforme.tn">
+                </div>
+                <div class="form-group">
+                    <label>Téléphone</label>
+                    <input type="tel" value="+216 XX XXX XXX">
+                </div>
+                <div class="form-group">
+                    <label>Langue par Défaut</label>
+                    <select>
+                        <option selected>Français</option>
+                        <option>Arabe</option>
+                        <option>Anglais</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Fuseau Horaire</label>
+                    <select>
+                        <option selected>Africa/Tunis (UTC+1)</option>
+                        <option>Europe/Paris (UTC+1)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Notifications Email</label>
+                    <select>
+                        <option selected>Activées</option>
+                        <option>Désactivées</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Maintenance Mode</label>
+                    <select>
+                        <option selected>Désactivé</option>
+                        <option>Activé</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Class Modal -->
+    <div class="modal" id="addClassModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter une Nouvelle Classe</h3>
+                <span class="close-modal" onclick="closeModal('addClassModal')">×</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nom de la Classe</label>
+                    <input type="text" placeholder="Ex: 6ème Année Primaire">
+                </div>
+                <div class="form-group">
+                    <label>Niveau</label>
+                    <select>
+                        <option>Primaire</option>
+                        <option>Collège</option>
+                        <option>Lycée</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Capacité Maximale</label>
+                    <input type="number" placeholder="Ex: 50">
+                </div>
+                <div class="form-group">
+                    <label>Année Scolaire</label>
+                    <input type="text" value="2025-2026">
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer la Classe</button>
+        </div>
+    </div>
+
+    <!-- Add Subject Modal -->
+    <div class="modal" id="addSubjectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter une Nouvelle Matière</h3>
+                <span class="close-modal" onclick="closeModal('addSubjectModal')">×</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nom de la Matière</label>
+                    <input type="text" placeholder="Ex: Mathématiques">
+                </div>
+                <div class="form-group">
+                    <label>Classe Associée</label>
+                    <select>
+                        <option>6ème Année Primaire</option>
+                        <option>5ème Année Primaire</option>
+                        <option>1ère Année Collège</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Enseignant</label>
+                    <select>
+                        <option>Prof. Ahmed</option>
+                        <option>Prof. Fatima</option>
+                        <option>Prof. Mohamed</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Nombre d'Heures/Semaine</label>
+                    <input type="number" placeholder="Ex: 5">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>Description</label>
+                    <textarea rows="4" placeholder="Description de la matière..."></textarea>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer la Matière</button>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="modal" id="addUserModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Ajouter un Nouvel Utilisateur</h3>
+                <span class="close-modal" onclick="closeModal('addUserModal')">×</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input type="text" placeholder="Prénom">
+                </div>
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input type="text" placeholder="Nom">
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" placeholder="email@exemple.com">
+                </div>
+                <div class="form-group">
+                    <label>Mot de Passe</label>
+                    <input type="password" placeholder="••••••••">
+                </div>
+                <div class="form-group">
+                    <label>Rôle</label>
+                    <select>
+                        <option>Élève</option>
+                        <option>Enseignant</option>
+                        <option>Administrateur</option>
+                        <option>Parent</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Classe (si élève)</label>
+                    <select>
+                        <option value="">Non applicable</option>
+                        <option>6ème Année Primaire</option>
+                        <option>5ème Année Primaire</option>
+                        <option>1ère Année Collège</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer l'Utilisateur</button>
+        </div>
+    </div>
+
+    <!-- Add Subscription Modal -->
+    <div class="modal" id="addSubscriptionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Créer un Nouveau Plan d'Abonnement</h3>
+                <span class="close-modal" onclick="closeModal('addSubscriptionModal')">×</span>
+            </div>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Nom du Plan</label>
+                    <input type="text" placeholder="Ex: Plan Premium">
+                </div>
+                <div class="form-group">
+                    <label>Prix Mensuel (€)</label>
+                    <input type="number" step="0.01" placeholder="12.00">
+                </div>
+                <div class="form-group" style="grid-column: 1 / -1;">
+                    <label>Description</label>
+                    <textarea rows="3" placeholder="Décrivez les avantages de ce plan..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Durée (mois)</label>
+                    <input type="number" placeholder="1">
+                </div>
+                <div class="form-group">
+                    <label>Statut</label>
+                    <select>
+                        <option>Brouillon</option>
+                        <option>Actif</option>
+                        <option>Inactif</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">Créer le Plan</button>
+        </div>
+    </div>
+
+    <script>
+        // Show Section Function
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active menu item
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        // Sample notification
+        console.log('Tableau de bord administrateur chargé avec succès!');
+    </script>
+</body>
+</html>
