@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرياضيات - السنة السادسة ابتدائي</title>
+    <title>الرياضيات - السنة الخامسة والسادسة ابتدائي</title>
     <style>
         * {
             margin: 0;
@@ -23,10 +23,6 @@
             max-width: 1400px;
             margin: 0 auto;
         }
-
-        /* ====================================
-           قسم العرض (Student View)
-        ==================================== */
 
         .header {
             background: white;
@@ -91,15 +87,6 @@
             background: #d68910;
         }
 
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: #764ba2;
-        }
-
         .btn-success {
             background: #48bb78;
             color: white;
@@ -127,14 +114,12 @@
             background: #4a5568;
         }
 
-        /* Content Wrapper */
         .content-wrapper {
             display: grid;
             grid-template-columns: 1fr 350px;
             gap: 20px;
         }
 
-        /* Lessons Sidebar */
         .lessons-sidebar {
             background: white;
             border-radius: 15px;
@@ -148,9 +133,6 @@
         .lessons-sidebar h3 {
             margin-bottom: 15px;
             color: #2d3748;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
 
         .lesson-item {
@@ -184,7 +166,6 @@
             color: #718096;
         }
 
-        /* Main Content Area */
         .lesson-content {
             background: white;
             border-radius: 15px;
@@ -213,7 +194,6 @@
             flex-wrap: wrap;
         }
 
-        /* Video Section */
         .video-section {
             margin-bottom: 30px;
         }
@@ -256,7 +236,6 @@
             font-size: 3rem;
         }
 
-        /* Summary Section */
         .summary-section {
             background: #f7fafc;
             padding: 20px;
@@ -275,7 +254,6 @@
             color: #4a5568;
         }
 
-        /* Learning Objectives */
         .objectives-section {
             background: #f0fff4;
             padding: 20px;
@@ -308,7 +286,6 @@
             font-size: 1.2rem;
         }
 
-        /* Exercises Section */
         .exercises-section {
             margin-bottom: 30px;
         }
@@ -424,7 +401,6 @@
             color: #721c24;
         }
 
-        /* AI Assistant Widget */
         .ai-widget-toggle {
             position: fixed;
             bottom: 20px;
@@ -559,10 +535,6 @@
             justify-content: center;
             border-radius: 50%;
         }
-
-        /* ====================================
-           لوحة الإدارة (Admin Panel)
-        ==================================== */
 
         .admin-panel {
             display: none;
@@ -709,23 +681,6 @@
             margin-bottom: 20px;
         }
 
-        /* Progress Bar */
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #eee;
-            border-radius: 10px;
-            margin-top: 20px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            transition: width 0.3s;
-        }
-
-        /* Responsive */
         @media (max-width: 1024px) {
             .content-wrapper {
                 grid-template-columns: 1fr;
@@ -764,38 +719,29 @@
 </head>
 <body>
 
-    <!-- Header -->
-    <div class="header">
-        <div class="header-title">
-            <div class="header-icon">🔢</div>
-            <h1>الرياضيات - السنة السادسة</h1>
-        </div>
-        <div class="header-actions">
-            <button class="btn btn-back" onclick="goBack()">← العودة</button>
-            <button class="btn btn-admin" onclick="toggleAdminPanel()" id="admin-toggle">⚙️ الإدارة</button>
-        </div>
-    </div>
-
-    <!-- Content Wrapper -->
-    <div class="content-wrapper">
-        <!-- Main Lesson Content -->
-        <div class="lesson-content" id="lesson-content">
-            <div style="text-align: center; padding: 50px;">
-                ⏳ جاري تحميل الدرس...
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <div class="header-icon">🔢</div>
+                <h1>الرياضيات - السنة 5 و 6</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-back" onclick="goBack()">← العودة</button>
+                <button class="btn btn-admin" onclick="toggleAdminPanel()">⚙️ الإدارة</button>
             </div>
         </div>
 
-        <!-- Lessons Sidebar -->
-        <div class="lessons-sidebar" id="lessons-list">
-            <h3>
-                📚 الدروس
-                <span style="font-size: 0.9rem;" id="lessons-count">(0)</span>
-            </h3>
-            <!-- سيتم تحميل الدروس هنا -->
+        <div class="content-wrapper">
+            <div class="lesson-content" id="lesson-content">
+                <div style="text-align: center; padding: 50px;">⏳ جاري تحميل الدرس...</div>
+            </div>
+
+            <div class="lessons-sidebar" id="lessons-list">
+                <h3>📚 الدروس</h3>
+            </div>
         </div>
     </div>
 
-    <!-- AI Assistant Widget -->
     <div class="ai-widget-toggle" onclick="toggleAIChat()">🤖</div>
 
     <div id="ai-chat-widget">
@@ -810,30 +756,27 @@
         </div>
     </div>
 
-    <!-- Admin Panel -->
     <div class="admin-panel" id="admin-panel">
         <div class="admin-content">
             <div class="admin-header">
-                <h2>⚙️ لوحة الإدارة</h2>
+                <h2>⚙️ لوحة الإدارة - الرياضيات</h2>
                 <button class="btn btn-secondary" onclick="toggleAdminPanel()">✕ إغلاق</button>
             </div>
 
             <div id="admin-message"></div>
 
-            <!-- Admin Tabs -->
             <div class="admin-tabs">
                 <button class="admin-tab active" onclick="switchAdminTab('lessons')">📚 إدارة الدروس</button>
                 <button class="admin-tab" onclick="switchAdminTab('exercises')">✍️ إدارة التمارين</button>
                 <button class="admin-tab" onclick="switchAdminTab('videos')">🎬 إدارة الفيديوهات</button>
             </div>
 
-            <!-- Tab 1: Manage Lessons -->
             <div class="admin-tab-content active" id="tab-lessons">
                 <h3 style="margin-bottom: 20px;">إضافة درس جديد</h3>
                 <form onsubmit="addLesson(event)">
                     <div class="form-group">
                         <label>عنوان الدرس</label>
-                        <input type="text" id="lesson-title" required placeholder="مثال: الأعداد الصحيحة">
+                        <input type="text" id="lesson-title" required placeholder="مثال: الكسور العشرية">
                     </div>
                     <div class="form-group">
                         <label>رقم الفصل</label>
@@ -841,7 +784,7 @@
                     </div>
                     <div class="form-group">
                         <label>المدة الزمنية</label>
-                        <input type="text" id="lesson-duration" required placeholder="مثال: 45 دقيقة">
+                        <input type="text" id="lesson-duration" required placeholder="مثال: 50 دقيقة">
                     </div>
                     <div class="form-group">
                         <label>ملخص الدرس</label>
@@ -855,12 +798,9 @@
                 </form>
 
                 <h3 style="margin-top: 30px; margin-bottom: 20px;">الدروس الموجودة</h3>
-                <div class="admin-list" id="lessons-admin-list">
-                    <!-- سيتم عرض الدروس هنا -->
-                </div>
+                <div class="admin-list" id="lessons-admin-list"></div>
             </div>
 
-            <!-- Tab 2: Manage Exercises -->
             <div class="admin-tab-content" id="tab-exercises">
                 <h3 style="margin-bottom: 20px;">إضافة تمرين جديد</h3>
                 <form onsubmit="addExercise(event)">
@@ -907,12 +847,9 @@
                 </form>
 
                 <h3 style="margin-top: 30px; margin-bottom: 20px;">التمارين الموجودة</h3>
-                <div class="admin-list" id="exercises-admin-list">
-                    <!-- سيتم عرض التمارين هنا -->
-                </div>
+                <div class="admin-list" id="exercises-admin-list"></div>
             </div>
 
-            <!-- Tab 3: Manage Videos -->
             <div class="admin-tab-content" id="tab-videos">
                 <h3 style="margin-bottom: 20px;">إضافة فيديو للدرس</h3>
                 <form onsubmit="addVideo(event)">
@@ -930,134 +867,110 @@
                 </form>
 
                 <h3 style="margin-top: 30px; margin-bottom: 20px;">الفيديوهات الموجودة</h3>
-                <div class="admin-list" id="videos-admin-list">
-                    <!-- سيتم عرض الفيديوهات هنا -->
-                </div>
+                <div class="admin-list" id="videos-admin-list"></div>
             </div>
         </div>
     </div>
 
-    <!-- Scripts -->
     <script src="../assets/js/ai-assistant.js"></script>
     <script src="../assets/js/adaptive-learning.js"></script>
 
     <script>
-        // ====================================
-        // متغيرات عامة
-        // ====================================
         let lessonsData = null;
         let currentLesson = 0;
-        let currentSubjectId = 'math_6';
+        let currentSubjectId = 'math_5_6';
         const adaptive = new AdaptiveLearningSystem();
 
-        // ====================================
-        // تحميل بيانات الدروس
-        // ====================================
         async function loadLessonsData() {
             try {
                 const response = await fetch('../assets/data/lessons.json');
                 if (!response.ok) throw new Error('فشل التحميل');
                 const data = await response.json();
-                
-                // إذا لم يكن هناك بيانات محفوظة، استخدم البيانات من الملف
                 const saved = localStorage.getItem(`lessons_${currentSubjectId}`);
-                if (saved) {
-                    return JSON.parse(saved);
-                }
-                
-                return data.subjects.math_6;
+                if (saved) return JSON.parse(saved);
+                return data.subjects.math_5_6 || getDefaultLessons();
             } catch (error) {
                 console.error('خطأ:', error);
                 return getDefaultLessons();
             }
         }
 
-        // بيانات افتراضية
         function getDefaultLessons() {
             return {
-                name: "الرياضيات - السنة السادسة",
+                name: "الرياضيات - السنة 5 و 6",
                 icon: "🔢",
                 color: "#e53e3e",
                 lessons: [
                     {
-                        id: "math_6_lesson_1",
-                        title: "الأعداد الصحيحة",
+                        id: "math_5_6_lesson_1",
+                        title: "الكسور العشرية",
                         chapter: 1,
-                        duration: "45 دقيقة",
-                        summary: "تعريف الأعداد الصحيحة وخصائصها",
+                        duration: "50 دقيقة",
+                        summary: "تعلم الكسور العشرية: من الفهم إلى التطبيق. كيفية تحويل الكسور العادية إلى كسور عشرية وتطبيقاتها",
                         video_url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-                        learning_objectives: ["تحديد الأعداد الصحيحة", "مقارنة الأعداد"],
-                        exercises: []
+                        learning_objectives: ["فهم الكسور العشرية", "تحويل الكسور", "إجراء العمليات الحسابية"],
+                        exercises: [
+                            {
+                                id: "ex_1",
+                                type: "fill_blank",
+                                question: "الكسر 1/2 يساوي الكسر العشري ___",
+                                correct_answer: "0.5",
+                                acceptable_answers: ["0.5", ".5"],
+                                explanation: "1/2 = 0.5 (واحد من اثنين يساوي نصف)"
+                            },
+                            {
+                                id: "ex_2",
+                                type: "multiple_choice",
+                                question: "ما قيمة 0.25 + 0.75؟",
+                                options: ["0.50", "1.00", "1.50", "2.00"],
+                                correct_answer: 1,
+                                explanation: "0.25 + 0.75 = 1.00"
+                            },
+                            {
+                                id: "ex_3",
+                                type: "true_false",
+                                question: "0.3 أكبر من 0.30",
+                                correct_answer: false,
+                                explanation: "0.3 = 0.30 (هما متساويان)"
+                            }
+                        ]
                     }
                 ]
             };
         }
 
-        // ====================================
-        // عرض الدروس في القائمة الجانبية
-        // ====================================
         async function displayLessonsList() {
-            if (!lessonsData) {
-                lessonsData = await loadLessonsData();
-            }
-
+            if (!lessonsData) lessonsData = await loadLessonsData();
             const lessonsList = document.getElementById('lessons-list');
             if (!lessonsData || !lessonsData.lessons) return;
 
             const lessonsHTML = lessonsData.lessons.map((lesson, index) => `
                 <div class="lesson-item ${index === 0 ? 'active' : ''}" onclick="selectLesson(${index})">
                     <div class="lesson-item-title">الدرس ${lesson.chapter}: ${lesson.title}</div>
-                    <div class="lesson-item-meta">
-                        ⏱️ ${lesson.duration} | ✍️ ${lesson.exercises ? lesson.exercises.length : 0} تمرين
-                    </div>
+                    <div class="lesson-item-meta">⏱️ ${lesson.duration} | ✍️ ${lesson.exercises ? lesson.exercises.length : 0} تمرين</div>
                 </div>
             `).join('');
 
-            lessonsList.innerHTML = `
-                <h3>
-                    📚 الدروس
-                    <span style="font-size: 0.9rem;">(${lessonsData.lessons.length})</span>
-                </h3>
-                ${lessonsHTML}
-            `;
-
-            // تحديث خيارات الإدارة
+            lessonsList.innerHTML = `<h3>📚 الدروس (${lessonsData.lessons.length})</h3>${lessonsHTML}`;
             updateAdminSelects();
         }
 
-        // ====================================
-        // اختيار درس وعرض محتواه
-        // ====================================
         async function selectLesson(index) {
             currentLesson = index;
-            if (!lessonsData) {
-                lessonsData = await loadLessonsData();
-            }
-
+            if (!lessonsData) lessonsData = await loadLessonsData();
             const lesson = lessonsData.lessons[index];
             displayLesson(lesson);
-
-            // تحديث الدرس النشط
             document.querySelectorAll('.lesson-item').forEach((item, i) => {
                 item.classList.toggle('active', i === index);
             });
-
-            // تعيين السياق للمساعد الذكي
-            if (window.aiAssistant) {
-                aiAssistant.setContext('الرياضيات', lesson.title, 'intermediate');
-            }
+            if (window.aiAssistant) aiAssistant.setContext('الرياضيات', lesson.title, 'intermediate');
         }
 
-        // ====================================
-        // عرض محتوى الدرس الكامل
-        // ====================================
         function displayLesson(lesson) {
             const content = document.getElementById('lesson-content');
-
             let learningObjectives = (lesson.learning_objectives || [])
                 .map(obj => `<li>${obj}</li>`)
                 .join('');
-
             let exercisesHTML = (lesson.exercises || [])
                 .map((ex, i) => generateExerciseHTML(ex, i + 1))
                 .join('');
@@ -1088,9 +1001,7 @@
 
                 <div class="objectives-section">
                     <h3>🎯 أهداف التعلم</h3>
-                    <ul class="objectives-list">
-                        ${learningObjectives}
-                    </ul>
+                    <ul class="objectives-list">${learningObjectives}</ul>
                 </div>
 
                 <div class="exercises-section">
@@ -1100,12 +1011,8 @@
             `;
         }
 
-        // ====================================
-        // توليد HTML التمرين
-        // ====================================
         function generateExerciseHTML(exercise, number) {
             let exerciseContent = '';
-
             switch(exercise.type) {
                 case 'multiple_choice':
                     exerciseContent = `
@@ -1120,21 +1027,13 @@
                     `;
                     break;
                 case 'fill_blank':
-                    exerciseContent = `
-                        <input type="text" class="exercise-input" id="ex_${exercise.id}" placeholder="أدخل الإجابة...">
-                    `;
+                    exerciseContent = `<input type="text" class="exercise-input" id="ex_${exercise.id}" placeholder="أدخل الإجابة...">`;
                     break;
                 case 'true_false':
                     exerciseContent = `
                         <div class="exercise-options">
-                            <label class="option">
-                                <input type="radio" name="ex_${exercise.id}" value="true">
-                                صحيح ✓
-                            </label>
-                            <label class="option">
-                                <input type="radio" name="ex_${exercise.id}" value="false">
-                                خاطئ ✗
-                            </label>
+                            <label class="option"><input type="radio" name="ex_${exercise.id}" value="true"> صحيح ✓</label>
+                            <label class="option"><input type="radio" name="ex_${exercise.id}" value="false"> خاطئ ✗</label>
                         </div>
                     `;
                     break;
@@ -1165,9 +1064,6 @@
             return labels[type] || type;
         }
 
-        // ====================================
-        // التحقق من الإجابة
-        // ====================================
         function checkAnswer(exerciseId, type, exercise) {
             let userAnswer = null;
             const feedbackDiv = document.getElementById(`feedback_${exerciseId}`);
@@ -1189,7 +1085,6 @@
             }
 
             const isCorrect = checkCorrectAnswer(userAnswer, exercise);
-
             if (isCorrect) {
                 feedbackDiv.innerHTML = `✅ <strong>إجابة صحيحة!</strong><br>${exercise.explanation || 'عمل ممتاز!'}`;
                 feedbackDiv.className = 'feedback correct';
@@ -1197,13 +1092,8 @@
                 feedbackDiv.innerHTML = `❌ <strong>إجابة خاطئة</strong><br>${exercise.explanation || 'حاول مرة أخرى!'}`;
                 feedbackDiv.className = 'feedback incorrect';
             }
-
             feedbackDiv.style.display = 'block';
-
-            // تسجيل محاولة الطالب
-            if (window.adaptive) {
-                adaptive.recordExerciseAttempt(exerciseId, isCorrect, 0, 'standard');
-            }
+            if (window.adaptive) adaptive.recordExerciseAttempt(exerciseId, isCorrect, 0, 'standard');
         }
 
         function checkCorrectAnswer(userAnswer, exercise) {
@@ -1214,27 +1104,15 @@
             }
         }
 
-        // ====================================
-        // إدارة لوحة التحكم
-        // ====================================
         function toggleAdminPanel() {
             const panel = document.getElementById('admin-panel');
             panel.classList.toggle('open');
-            if (panel.classList.contains('open')) {
-                loadAdminData();
-            }
+            if (panel.classList.contains('open')) loadAdminData();
         }
 
         function switchAdminTab(tabName) {
-            // إخفاء جميع الألسنة
-            document.querySelectorAll('.admin-tab-content').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.querySelectorAll('.admin-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-
-            // إظهار اللسان المختار
+            document.querySelectorAll('.admin-tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
             document.getElementById(`tab-${tabName}`).classList.add('active');
             event.target.classList.add('active');
         }
@@ -1242,21 +1120,15 @@
         function updateAdminSelects() {
             const lessonSelect1 = document.getElementById('exercise-lesson-id');
             const lessonSelect2 = document.getElementById('video-lesson-id');
-
             const options = lessonsData.lessons.map(lesson => 
                 `<option value="${lesson.id}">${lesson.title}</option>`
             ).join('');
-
             lessonSelect1.innerHTML = `<option value="">-- اختر درس --</option>${options}`;
             lessonSelect2.innerHTML = `<option value="">-- اختر درس --</option>${options}`;
         }
 
-        // ====================================
-        // إضافة درس جديد
-        // ====================================
         function addLesson(event) {
             event.preventDefault();
-
             const title = document.getElementById('lesson-title').value;
             const chapter = document.getElementById('lesson-chapter').value;
             const duration = document.getElementById('lesson-duration').value;
@@ -1264,7 +1136,7 @@
             const objectives = document.getElementById('lesson-objectives').value.split(',').map(o => o.trim());
 
             const newLesson = {
-                id: `math_6_lesson_${Date.now()}`,
+                id: `math_5_6_lesson_${Date.now()}`,
                 title: title,
                 chapter: parseInt(chapter),
                 duration: duration,
@@ -1277,15 +1149,10 @@
             lessonsData.lessons.push(newLesson);
             saveLessonsData();
             displayLessonsList();
-
-            // مسح النموذج
             event.target.reset();
             showAdminMessage('✅ تم إضافة الدرس بنجاح!', 'success');
         }
 
-        // ====================================
-        // حذف درس
-        // ====================================
         function deleteLesson(lessonId) {
             if (confirm('هل أنت متأكد من حذف هذا الدرس؟')) {
                 lessonsData.lessons = lessonsData.lessons.filter(l => l.id !== lessonId);
@@ -1296,12 +1163,8 @@
             }
         }
 
-        // ====================================
-        // إضافة تمرين
-        // ====================================
         function addExercise(event) {
             event.preventDefault();
-
             const lessonId = document.getElementById('exercise-lesson-id').value;
             const type = document.getElementById('exercise-type').value;
             const question = document.getElementById('exercise-question').value;
@@ -1340,9 +1203,6 @@
             showAdminMessage('✅ تم إضافة التمرين بنجاح!', 'success');
         }
 
-        // ====================================
-        // حذف تمرين
-        // ====================================
         function deleteExercise(lessonId, exerciseId) {
             if (confirm('هل أنت متأكد من حذف هذا التمرين؟')) {
                 const lesson = lessonsData.lessons.find(l => l.id === lessonId);
@@ -1355,12 +1215,8 @@
             }
         }
 
-        // ====================================
-        // إضافة فيديو
-        // ====================================
         function addVideo(event) {
             event.preventDefault();
-
             const lessonId = document.getElementById('video-lesson-id').value;
             const videoUrl = document.getElementById('video-url').value;
 
@@ -1378,9 +1234,6 @@
             showAdminMessage('✅ تم إضافة الفيديو بنجاح!', 'success');
         }
 
-        // ====================================
-        // حذف فيديو
-        // ====================================
         function deleteVideo(lessonId) {
             if (confirm('هل أنت متأكد من حذف هذا الفيديو؟')) {
                 const lesson = lessonsData.lessons.find(l => l.id === lessonId);
@@ -1393,22 +1246,13 @@
             }
         }
 
-        // ====================================
-        // تحديث نموذج التمرين
-        // ====================================
         function updateExerciseForm() {
             const type = document.getElementById('exercise-type').value;
-            document.getElementById('exercise-options-form').style.display = 
-                (type === 'multiple_choice') ? 'block' : 'none';
-            document.getElementById('exercise-answer-form').style.display = 
-                (type === 'fill_blank' || type === 'true_false') ? 'block' : 'none';
+            document.getElementById('exercise-options-form').style.display = (type === 'multiple_choice') ? 'block' : 'none';
+            document.getElementById('exercise-answer-form').style.display = (type === 'fill_blank' || type === 'true_false') ? 'block' : 'none';
         }
 
-        // ====================================
-        // تحميل بيانات الإدارة
-        // ====================================
         function loadAdminData() {
-            // عرض قائمة الدروس
             const lessonsList = document.getElementById('lessons-admin-list');
             lessonsList.innerHTML = lessonsData.lessons.map(lesson => `
                 <div class="admin-item">
@@ -1420,7 +1264,6 @@
                 </div>
             `).join('');
 
-            // عرض قائمة التمارين
             const exercisesList = document.getElementById('exercises-admin-list');
             let allExercises = [];
             lessonsData.lessons.forEach(lesson => {
@@ -1439,7 +1282,6 @@
                 </div>
             `).join('') || '<p style="color: #999;">لا توجد تمارين</p>';
 
-            // عرض قائمة الفيديوهات
             const videosList = document.getElementById('videos-admin-list');
             let videos = lessonsData.lessons.filter(l => l.video_url);
             videosList.innerHTML = videos.map(lesson => `
@@ -1453,45 +1295,26 @@
             `).join('') || '<p style="color: #999;">لا توجد فيديوهات</p>';
         }
 
-        // ====================================
-        // حفظ البيانات
-        // ====================================
         function saveLessonsData() {
             localStorage.setItem(`lessons_${currentSubjectId}`, JSON.stringify(lessonsData));
         }
 
-        // ====================================
-        // رسائل الإدارة
-        // ====================================
         function showAdminMessage(message, type) {
             const messageDiv = document.getElementById('admin-message');
             messageDiv.innerHTML = `<div class="${type}-message">${message}</div>`;
-            setTimeout(() => {
-                messageDiv.innerHTML = '';
-            }, 3000);
+            setTimeout(() => messageDiv.innerHTML = '', 3000);
         }
 
-        // ====================================
-        // تبديل المساعد الذكي
-        // ====================================
         function toggleAIChat() {
             const widget = document.getElementById('ai-chat-widget');
             widget.classList.toggle('open');
-            if (widget.classList.contains('open') && window.initAIAssistant) {
-                initAIAssistant();
-            }
+            if (widget.classList.contains('open') && window.initAIAssistant) initAIAssistant();
         }
 
-        // ====================================
-        // العودة
-        // ====================================
         function goBack() {
             window.location.href = '../dashboard.html';
         }
 
-        // ====================================
-        // التهيئة عند التحميل
-        // ====================================
         window.addEventListener('DOMContentLoaded', async () => {
             await displayLessonsList();
             selectLesson(0);
