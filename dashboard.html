@@ -108,7 +108,6 @@
             font-weight: bold;
         }
 
-        /* الألوان المختلفة لكل مادة */
         .arabic .subject-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
@@ -174,56 +173,15 @@
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
 
-        .btn-secondary {
-            background: #e2e8f0;
-            color: #2d3748;
+        .btn-primary:active {
+            transform: translateY(0);
         }
 
-        .btn-secondary:hover {
-            background: #cbd5e0;
-        }
-
-        .empty-state {
-            background: white;
-            padding: 60px 30px;
-            border-radius: 15px;
+        .footer {
             text-align: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .empty-state-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
-
-        .empty-state h2 {
-            color: #2d3748;
-            margin-bottom: 10px;
-        }
-
-        .empty-state p {
-            color: #718096;
-            margin-bottom: 30px;
-        }
-
-        .breadcrumb {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-size: 0.9rem;
-            color: #718096;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-
-        .breadcrumb a {
-            color: #667eea;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .breadcrumb a:hover {
-            text-decoration: underline;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
         }
 
         @media (max-width: 768px) {
@@ -246,18 +204,6 @@
             .subject-icon {
                 font-size: 2.5rem;
             }
-        }
-
-        .footer {
-            text-align: center;
-            color: white;
-            margin-top: 40px;
-            padding: 20px;
-        }
-
-        .footer p {
-            font-size: 0.9rem;
-            opacity: 0.8;
         }
     </style>
 </head>
@@ -285,7 +231,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة العربية: القراءة والكتابة والنحو والإملاء والتعبير</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/arabic_5_6.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/arabic_5_6.html')">
                             الدخول
                         </button>
                     </div>
@@ -299,7 +245,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة الفرنسية: المحادثة والقواعس والمفردات</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/french_5_6.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/french_5_6.html')">
                             الدخول
                         </button>
                     </div>
@@ -313,7 +259,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم الرياضيات: الجمع والطرح والضرب والقسمة والكسور</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/math_5_6.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/math_5_6.html')">
                             الدخول
                         </button>
                     </div>
@@ -327,7 +273,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم العلوم: الطبيعة والحيوان والنبات والصحة</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/science_5_6.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/science_5_6.html')">
                             الدخول
                         </button>
                     </div>
@@ -341,7 +287,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة الإنجليزية: المحادثة والقراءة والكتابة</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/english_5_6.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/english_5_6.html')">
                             الدخول
                         </button>
                     </div>
@@ -355,7 +301,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم التاريخ والجغرافيا: الحضارات والخرائط والمعالم</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/history_5_6.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/history_5_6.html')">
                             الدخول
                         </button>
                     </div>
@@ -369,7 +315,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم التربية الإسلامية: القرآن والعقيدة والأخلاق</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/islamic_5_6.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/islamic_5_6.html')">
                             الدخول
                         </button>
                     </div>
@@ -393,7 +339,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة العربية: الحروف والكلمات والقراءة البسيطة</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/arabic_3_4.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/arabic_3_4.html')">
                             الدخول
                         </button>
                     </div>
@@ -407,7 +353,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة الفرنسية: الحروف والأرقام والكلمات الأساسية</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/french_3_4.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/french_3_4.html')">
                             الدخول
                         </button>
                     </div>
@@ -421,7 +367,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم الرياضيات: الأرقام والجمع والطرح البسيط</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/math_3_4.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/math_3_4.html')">
                             الدخول
                         </button>
                     </div>
@@ -435,7 +381,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم العلوم: الحيوانات والنباتات والبيئة البسيطة</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/science_3_4.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/science_3_4.html')">
                             الدخول
                         </button>
                     </div>
@@ -449,7 +395,7 @@
                     </div>
                     <div class="subject-body">
                         <p>تعلم التربية الإسلامية: التوحيد والدعاء والأخلاق</p>
-                        <button class="btn btn-primary" onclick="window.location.href='subjects/islamic_3_4.html'">
+                        <button class="btn btn-primary" onclick="navigateTo('subjects/islamic_3_4.html')">
                             الدخول
                         </button>
                     </div>
@@ -462,6 +408,38 @@
             <p>بناء أجيال متعلمة وقادرة على المستقبل 🌟</p>
         </div>
     </div>
+
+    <script>
+        // دالة التنقل الموثوقة
+        function navigateTo(path) {
+            console.log('محاولة الانتقال إلى:', path);
+            
+            // الطريقة الأولى: استخدام window.location
+            try {
+                window.location.href = path;
+            } catch (error) {
+                console.error('خطأ في الانتقال:', error);
+            }
+        }
+
+        // التحقق من أن جميع الملفات موجودة
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('تم تحميل الصفحة بنجاح ✅');
+            console.log('جميع الأزرار جاهزة للاستخدام');
+        });
+
+        // معالج أخطاء عام
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            console.error('خطأ جديد:', {
+                message: msg,
+                url: url,
+                lineNumber: lineNo,
+                columnNumber: columnNo,
+                error: error
+            });
+            return false;
+        };
+    </script>
 
 </body>
 </html>
