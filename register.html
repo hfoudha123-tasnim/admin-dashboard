@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب - المنصة التعليمية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .register-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 40px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        /* رسالة كود الإحالة */
+        .referral-message {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+            font-weight: bold;
+            animation: bounce 0.6s ease;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+            user-select: none;
+        }
+
+        .referral-hint {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .pricing-info {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .price span {
+            font-size: 1rem;
+        }
+
+        .btn-register {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-register:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            text-align: center;
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .register-container {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <!-- Logo -->
+        <div class="logo">
+            <h1>🎓 المنصة التعليمية</h1>
+            <p>أنشئ حسابك وابدأ رحلة التفوق</p>
+        </div>
+
+        <!-- رسالة كود الإحالة -->
+        <div id="referral-message" class="referral-message"></div>
+
+        <!-- رسائل الخطأ والنجاح -->
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+
+        <!-- نموذج التسجيل -->
+        <form id="register-form">
+            <!-- الاسم الكامل -->
+            <div class="form-group">
+                <label for="username">👤 الاسم الكامل</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    placeholder="أدخل اسمك الكامل"
+                    required
+                    minlength="3"
+                >
+            </div>
+
+            <!-- البريد الإلكتروني -->
+            <div class="form-group">
+                <label for="email">📧 البريد الإلكتروني</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="example@email.com"
+                    required
+                >
+            </div>
+
+            <!-- كلمة المرور -->
+            <div class="form-group">
+                <label for="password">🔒 كلمة المرور</label>
+                <div class="password-container">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="أدخل كلمة مرور قوية"
+                        required
+                        minlength="6"
+                    >
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                </div>
+            </div>
+
+            <!-- تأكيد كلمة المرور -->
+            <div class="form-group">
+                <label for="confirm-password">🔒 تأكيد كلمة المرور</label>
+                <input 
+                    type="password" 
+                    id="confirm-password" 
+                    name="confirm-password" 
+                    placeholder="أعد إدخال كلمة المرور"
+                    required
+                >
+            </div>
+
+            <!-- كود الإحالة (اختياري) -->
+            <div class="form-group">
+                <label for="referral-code">🎁 كود الإحالة (اختياري)</label>
+                <input 
+                    type="text" 
+                    id="referral-code" 
+                    name="referral-code" 
+                    placeholder="مثال: REF-AHM5847"
+                    style="text-transform: uppercase;"
+                >
+                <div class="referral-hint">
+                    💡 إذا كان لديك كود إحالة من صديق، أدخله للحصول على مزايا إضافية
+                </div>
+            </div>
+
+            <!-- معلومات السعر -->
+            <div class="pricing-info">
+                <div class="price">10 د.ت<span>/شهر</span></div>
+                <p style="margin-top: 5px; color: #666;">📅 اشتراك شهري - يمكن الإلغاء في أي وقت</p>
+            </div>
+
+            <!-- زر التسجيل -->
+            <button type="submit" class="btn-register" id="btn-submit">
+                ✨ إنشاء الحساب
+            </button>
+        </form>
+
+        <!-- رابط تسجيل الدخول -->
+        <div class="login-link">
+            لديك حساب بالفعل؟ <a href="login.html">سجل الدخول</a>
+        </div>
+    </div>
+
+    <!-- ربط ملف JavaScript لنظام الإحالة -->
+    <script src="assets/js/referral.js"></script>
+
+    <script>
+        // ====================================
+        // وظائف الصفحة
+        // ====================================
+
+        // إظهار/إخفاء كلمة المرور
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+
+        // عرض رسالة خطأ
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // عرض رسالة نجاح
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        // التحقق من كود الإحالة المحفوظ وعرضه
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedRefCode = localStorage.getItem('referral_code');
+            const refInput = document.getElementById('referral-code');
+            
+            if (savedRefCode) {
+                refInput.value = savedRefCode;
+                refInput.readOnly = true;
+                refInput.style.backgroundColor = '#f0fff4';
+            }
+        });
+
+        // معالجة نموذج التسجيل
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // الحصول على القيم
+            const username = document.getElementById('username').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const referralCodeInput = document.getElementById('referral-code').value.trim().toUpperCase();
+            
+            // التحقق من كلمة المرور
+            if (password !== confirmPassword) {
+                showError('❌ كلمة المرور غير متطابقة!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError('❌ كلمة المرور يجب أن تكون 6 أحرف على الأقل!');
+                return;
+            }
+            
+            // التحقق من البريد الإلكتروني
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('❌ البريد الإلكتروني غير صحيح!');
+                return;
+            }
+            
+            // التحقق من عدم وجود المستخدم مسبقاً
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const existingUser = users.find(u => u.email === email);
+            
+            if (existingUser) {
+                showError('❌ هذا البريد الإلكتروني مسجل مسبقاً!');
+                return;
+            }
+            
+            // حفظ كود الإحالة إذا تم إدخاله يدوياً
+            if (referralCodeInput) {
+                localStorage.setItem('referral_code', referralCodeInput);
+            }
+            
+            // تعطيل زر التسجيل
+            const btnSubmit = document.getElementById('btn-submit');
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = '⏳ جاري إنشاء الحساب...';
+            
+            // محاكاة تأخير معالجة
+            setTimeout(() => {
+                try {
+                    // إنشاء المستخدم مع نظام الإحالة
+                    const newUser = window.ReferralSystem.createUserWithReferral(
+                        username,
+                        email,
+                        password
+                    );
+                    
+                    // عرض رسالة نجاح
+                    showSuccess('✅ تم إنشاء الحساب بنجاح! جاري التحويل...');
+                    
+                    // الانتقال إلى لوحة التحكم
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 2000);
+                    
+                } catch (error) {
+                    showError('❌ حدث خطأ! حاول مرة أخرى');
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = '✨ إنشاء الحساب';
+                }
+            }, 1000);
+        });
+    </script>
+
+</body>
+</html>
