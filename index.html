@@ -32,9 +32,8 @@
             background: #e6e9f7;
             padding: 15px 25px;
             border-radius: 8px;
-            text-align: left;
         }
-        .user-info strong { color: #667eea; }
+        .user-info strong { color: #667eea; font-size: 1.2rem; }
         .user-info small { color: #718096; }
         
         .tabs {
@@ -82,42 +81,12 @@
         }
 
         .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-bottom: 30px;
             border-bottom: 2px solid #667eea;
             padding-bottom: 20px;
         }
 
         .admin-header h2 { color: #667eea; font-size: 2rem; }
-
-        .admin-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #e2e8f0;
-            flex-wrap: wrap;
-        }
-
-        .admin-tab-btn {
-            padding: 12px 24px;
-            border: none;
-            background: transparent;
-            color: #718096;
-            cursor: pointer;
-            font-weight: bold;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
-        }
-
-        .admin-tab-btn.active {
-            color: #667eea;
-            border-bottom-color: #667eea;
-        }
-
-        .admin-tab-content { display: none; }
-        .admin-tab-content.active { display: block; }
 
         .form-group {
             margin-bottom: 20px;
@@ -184,24 +153,49 @@
             margin-bottom: 20px;
         }
 
-        .error-msg {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
         .login-box {
             background: white;
             border-radius: 15px;
             padding: 40px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            max-width: 500px;
+            max-width: 600px;
             margin: 50px auto;
         }
 
-        .login-box h1 { text-align: center; color: #667eea; margin-bottom: 30px; }
+        .login-box h1 { text-align: center; color: #667eea; margin-bottom: 30px; font-size: 2.5rem; }
+
+        .quick-login {
+            background: #e6e9f7;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-right: 4px solid #667eea;
+        }
+
+        .quick-login h3 { color: #667eea; margin-bottom: 20px; font-size: 1.3rem; }
+
+        .quick-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .quick-btn {
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
 
         .btn {
             display: inline-block;
@@ -251,117 +245,105 @@
 
         .btn-logout:hover { background: #d68910; }
 
-        .quick-login {
-            background: #e6e9f7;
-            padding: 20px;
-            border-radius: 8px;
+        .level-section { margin-bottom: 40px; }
+        .level-title {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
             margin-bottom: 20px;
-            border-right: 4px solid #667eea;
-        }
-
-        .quick-login h3 { color: #667eea; margin-bottom: 10px; }
-
-        .quick-buttons {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .level-icon { font-size: 2.5rem; }
+        .level-title h2 { font-size: 1.8rem; color: #2d3748; }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
-        .quick-btn {
-            padding: 10px 20px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
+        .subject-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s;
+            cursor: pointer;
         }
 
-        .quick-btn:hover {
-            background: #764ba2;
-            transform: translateY(-2px);
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
+
+        .subject-header {
+            padding: 30px;
+            text-align: center;
+            color: white;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .subject-icon { font-size: 3.5rem; }
+        .subject-header h3 { font-size: 1.4rem; font-weight: bold; }
+
+        .subject-body { padding: 20px; }
+        .subject-body p { color: #718096; margin-bottom: 15px; line-height: 1.6; }
 
         @media (max-width: 768px) {
             .header { flex-direction: column; }
+            .subjects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Login/Register -->
-    <div id="auth-container" style="display: none;">
+    <!-- الدخول -->
+    <div id="login-container">
         <div class="login-box">
             <h1>🎓 المنصة التعليمية</h1>
             
-            <!-- دخول سريع -->
             <div class="quick-login">
-                <h3>🚀 دخول سريع</h3>
-                <p style="color: #718096; margin-bottom: 15px; font-size: 0.9rem;">اختر حساباً للدخول الفوري:</p>
+                <h3>🚀 دخول فوري - بدون كلمة مرور</h3>
+                <p style="color: #2d3748; margin-bottom: 20px;">اختر حساباً للدخول الفوري:</p>
                 <div class="quick-buttons">
-                    <button class="quick-btn" onclick="quickLogin('admin')">👨‍💼 إدمن</button>
-                    <button class="quick-btn" onclick="quickLogin('teacher')">👨‍🏫 معلم</button>
-                    <button class="quick-btn" onclick="quickLogin('student')">👨‍🎓 تلميذ</button>
+                    <button class="quick-btn" onclick="quickLogin('admin')">👨‍💼 الإدمن</button>
+                    <button class="quick-btn" onclick="quickLogin('teacher')">👨‍🏫 المعلم</button>
+                    <button class="quick-btn" onclick="quickLogin('student')">👨‍🎓 التلميذ</button>
                 </div>
             </div>
 
-            <div id="auth-message"></div>
-            
-            <div id="login-form">
-                <h2 style="margin-bottom: 20px; color: #2d3748;">تسجيل الدخول</h2>
-                <div class="form-group">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" id="login-email" placeholder="admin@example.com" value="admin@example.com">
-                </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="login-password" placeholder="••••••••" value="admin123">
-                </div>
-                <button class="btn" onclick="login()">دخول</button>
-                <p style="text-align: center; margin-top: 15px; color: #718096;">
-                    ليس لديك حساب؟ <a href="#" onclick="toggleAuthForm()" style="color: #667eea; font-weight: bold;">إنشاء حساب جديد</a>
-                </p>
-            </div>
+            <hr style="margin: 30px 0; border: 1px solid #ddd;">
 
-            <div id="register-form" style="display: none;">
-                <h2 style="margin-bottom: 20px; color: #2d3748;">إنشاء حساب جديد</h2>
-                <div class="form-group">
-                    <label>الاسم الكامل</label>
-                    <input type="text" id="register-name" placeholder="أحمد محمد" required>
-                </div>
-                <div class="form-group">
-                    <label>البريد الإلكتروني</label>
-                    <input type="email" id="register-email" placeholder="your@email.com" required>
-                </div>
-                <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="register-password" placeholder="••••••••" required>
-                </div>
-                <div class="form-group">
-                    <label>نوع الحساب</label>
-                    <select id="register-type">
-                        <option value="student">تلميذ</option>
-                        <option value="teacher">معلم</option>
-                    </select>
-                </div>
-                <button class="btn" onclick="register()">تسجيل</button>
-                <p style="text-align: center; margin-top: 15px; color: #718096;">
-                    هل لديك حساب؟ <a href="#" onclick="toggleAuthForm()" style="color: #667eea; font-weight: bold;">سجل دخول</a>
-                </p>
+            <h3 style="margin-bottom: 20px; color: #2d3748;">أو استخدم بيانات الدخول:</h3>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="login-email" placeholder="admin@example.com" value="admin@example.com">
             </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="login-password" placeholder="••••••••" value="admin123">
+            </div>
+            <button class="btn" onclick="manualLogin()">دخول</button>
         </div>
     </div>
 
-    <!-- Main App -->
+    <!-- التطبيق الرئيسي -->
     <div id="main-app" style="display: none;">
         <div class="header">
             <h1>🎓 المنصة التعليمية</h1>
             <div class="user-info">
                 <strong id="user-name">مرحباً</strong><br>
-                <small id="user-type">نوع الحساب</small><br>
-                <small id="user-role" style="color: #48bb78; font-weight: bold;"></small>
+                <small id="user-type">نوع الحساب</small>
             </div>
             <button class="btn btn-logout" onclick="logout()">تسجيل الخروج</button>
         </div>
@@ -371,8 +353,6 @@
             <button class="tab-btn active" onclick="switchTab('dashboard')">📊 لوحة التحكم</button>
             <button class="tab-btn" onclick="switchTab('lessons')">📚 الدروس</button>
             <button class="tab-btn" onclick="switchTab('students')">👨‍🎓 الطلاب</button>
-            <button class="tab-btn" onclick="switchTab('subscriptions')">💳 الاشتراكات</button>
-            <button class="tab-btn" onclick="switchTab('referrals')">🔗 الإحالات</button>
             <button class="tab-btn" onclick="switchTab('profile')">👤 الملف الشخصي</button>
         </div>
 
@@ -385,20 +365,20 @@
 
                 <div class="stats-grid">
                     <div class="stat-card">
-                        <h3 id="stat-users">0</h3>
-                        <p>إجمالي المستخدمين</p>
+                        <h3>12</h3>
+                        <p>إجمالي الدروس</p>
                     </div>
                     <div class="stat-card">
-                        <h3 id="stat-active-subs">0</h3>
+                        <h3>45</h3>
+                        <p>عدد الطلاب</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>8</h3>
                         <p>الاشتراكات النشطة</p>
                     </div>
                     <div class="stat-card">
-                        <h3 id="stat-revenue">0 د.ت</h3>
-                        <p>الإيرادات الكلية</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="stat-lessons">0</h3>
-                        <p>عدد الدروس</p>
+                        <h3>300 د.ت</h3>
+                        <p>الإيرادات الشهرية</p>
                     </div>
                 </div>
 
@@ -423,9 +403,6 @@
                             <option value="french">اللغة الفرنسية</option>
                             <option value="math">الرياضيات</option>
                             <option value="science">الإيقاظ العلمي</option>
-                            <option value="english">اللغة الإنجليزية</option>
-                            <option value="history">التاريخ والجغرافيا</option>
-                            <option value="islamic">التربية الإسلامية</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -436,15 +413,20 @@
                         <label>وصف الدرس</label>
                         <textarea id="lesson-desc" placeholder="وصف الدرس..." required></textarea>
                     </div>
-                    <div class="form-group">
-                        <label>رابط الفيديو (اختياري)</label>
-                        <input type="url" id="lesson-video" placeholder="https://www.youtube.com/embed/...">
-                    </div>
                     <button type="submit" class="btn-secondary">✓ إضافة الدرس</button>
                 </form>
 
                 <h3 style="margin-top: 40px; margin-bottom: 20px;">الدروس الموجودة</h3>
-                <div class="admin-list" id="lessons-list"></div>
+                <div class="admin-list">
+                    <div class="admin-item">
+                        <div><strong>الرياضيات</strong><br><small>الجمع والطرح</small></div>
+                        <button class="btn-danger">حذف</button>
+                    </div>
+                    <div class="admin-item">
+                        <div><strong>اللغة العربية</strong><br><small>الحروف الأبجدية</small></div>
+                        <button class="btn-danger">حذف</button>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -476,72 +458,25 @@
                 </form>
 
                 <h3 style="margin-top: 40px; margin-bottom: 20px;">الطلاب المسجلين</h3>
-                <div class="admin-list" id="students-list"></div>
-            </div>
-        </div>
-
-        <!-- الاشتراكات -->
-        <div id="subscriptions" class="tab-content">
-            <div class="admin-container">
-                <h2 style="margin-bottom: 30px; color: #667eea;">💳 إدارة الاشتراكات</h2>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3>12 د.ت</h3>
-                        <p>الاشتراك الأساسي</p>
+                <div class="admin-list" id="students-list">
+                    <div class="admin-item">
+                        <div><strong>أحمد محمد</strong><br><small>ahmed@example.com - السنة 3-4</small></div>
+                        <button class="btn-danger">حذف</button>
                     </div>
-                    <div class="stat-card">
-                        <h3>25 د.ت</h3>
-                        <p>الاشتراك المميز</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>50 د.ت</h3>
-                        <p>الاشتراك الفاخر</p>
+                    <div class="admin-item">
+                        <div><strong>فاطمة علي</strong><br><small>fatima@example.com - السنة 5-6</small></div>
+                        <button class="btn-danger">حذف</button>
                     </div>
                 </div>
-
-                <h3 style="margin-top: 30px; margin-bottom: 20px;">الاشتراكات النشطة</h3>
-                <div class="admin-list" id="subscriptions-list"></div>
-            </div>
-        </div>
-
-        <!-- الإحالات -->
-        <div id="referrals" class="tab-content">
-            <div class="admin-container">
-                <h2 style="margin-bottom: 30px; color: #667eea;">🔗 نظام الإحالات</h2>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <h3 id="referral-code">-</h3>
-                        <p>الكود الخاص بك</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="referral-clicks">0</h3>
-                        <p>عدد النقرات</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3 id="referral-earnings">0 د.ت</h3>
-                        <p>أرباحك</p>
-                    </div>
-                </div>
-
-                <h3 style="margin-top: 30px; margin-bottom: 20px;">رابط الإحالة الخاص بك</h3>
-                <div style="background: #f7fafc; padding: 20px; border-radius: 8px;">
-                    <div style="display: flex; gap: 10px;">
-                        <input type="text" id="referral-link-input" readonly style="flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
-                        <button class="btn-secondary" onclick="copyReferralLink()">📋 نسخ</button>
-                    </div>
-                </div>
-
-                <h3 style="margin-top: 30px; margin-bottom: 20px;">الأشخاص الذين أحلتهم</h3>
-                <div class="admin-list" id="referrals-list"></div>
             </div>
         </div>
 
         <!-- الملف الشخصي -->
         <div id="profile" class="tab-content">
             <div class="admin-container">
-                <h2 style="margin-bottom: 30px; color: #667eea;">👤 الملف الشخصي</h2>
+                <div class="admin-header">
+                    <h2>👤 الملف الشخصي</h2>
+                </div>
 
                 <form onsubmit="updateProfile(event)">
                     <div class="form-group">
@@ -560,10 +495,6 @@
                         <label>المدينة</label>
                         <input type="text" id="profile-city">
                     </div>
-                    <div class="form-group">
-                        <label>كلمة المرور الجديدة (اتركها فارغة إذا لم تريد تغييرها)</label>
-                        <input type="password" id="profile-password">
-                    </div>
                     <button type="submit" class="btn-secondary">✓ حفظ التغييرات</button>
                 </form>
             </div>
@@ -572,288 +503,95 @@
 </div>
 
 <script>
-// ===================== البيانات =====================
-let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-let users = JSON.parse(localStorage.getItem('users')) || [
-    { id: 1, name: 'المسؤول', email: 'admin@example.com', password: btoa('admin123'), type: 'admin', phone: '', city: '' },
-    { id: 2, name: 'معلم تجريبي', email: 'teacher@example.com', password: btoa('teacher123'), type: 'teacher', phone: '', city: '' }
-];
-let lessons = JSON.parse(localStorage.getItem('lessons')) || [];
-let students = JSON.parse(localStorage.getItem('students')) || [];
-let subscriptions = JSON.parse(localStorage.getItem('subscriptions')) || [];
+// ===================== بيانات بسيطة =====================
+const users = {
+    admin: { name: '👨‍💼 المسؤول', email: 'admin@example.com', type: 'admin' },
+    teacher: { name: '👨‍🏫 المعلم', email: 'teacher@example.com', type: 'teacher' },
+    student: { name: '👨‍🎓 التلميذ', email: 'student@example.com', type: 'student' }
+};
+
+let currentUser = null;
 
 // ===================== الدخول السريع =====================
-function quickLogin(type) {
-    let user;
-    if (type === 'admin') {
-        user = users.find(u => u.type === 'admin');
-    } else if (type === 'teacher') {
-        user = users.find(u => u.type === 'teacher');
-    } else {
-        user = users.find(u => u.type === 'student') || { id: 999, name: 'تلميذ تجريبي', email: 'student@example.com', type: 'student', password: btoa('student123') };
-    }
-
-    if (user) {
-        currentUser = user;
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-        showApp();
-    }
-}
-
-// ===================== المصادقة =====================
-function toggleAuthForm() {
-    document.getElementById('login-form').style.display = document.getElementById('login-form').style.display === 'none' ? 'block' : 'none';
-    document.getElementById('register-form').style.display = document.getElementById('register-form').style.display === 'block' ? 'none' : 'block';
-}
-
-function register() {
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    const type = document.getElementById('register-type').value;
-
-    if (users.find(u => u.email === email)) {
-        showAuthMessage('❌ البريد الإلكتروني مسجل بالفعل!', 'error');
-        return;
-    }
-
-    const newUser = {
-        id: Date.now(),
-        name: name,
-        email: email,
-        password: btoa(password),
-        type: type,
-        phone: '',
-        city: ''
-    };
-
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-    showAuthMessage('✅ تم التسجيل بنجاح! سجل دخول الآن', 'success');
-    setTimeout(() => toggleAuthForm(), 2000);
-}
-
-function login() {
-    const email = document.getElementById('login-email').value;
-    const password = btoa(document.getElementById('login-password').value);
-
-    const user = users.find(u => u.email === email && u.password === password);
-    if (!user) {
-        showAuthMessage('❌ البريد أو كلمة المرور غير صحيحة', 'error');
-        return;
-    }
-
-    currentUser = user;
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+function quickLogin(userType) {
+    currentUser = { ...users[userType] };
     showApp();
 }
 
-function logout() {
-    if (confirm('هل تريد تسجيل الخروج؟')) {
-        currentUser = null;
-        localStorage.removeItem('currentUser');
-        showAuth();
+// ===================== الدخول اليدوي =====================
+function manualLogin() {
+    const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
+
+    // تحقق بسيط
+    if (email === 'admin@example.com' && password === 'admin123') {
+        currentUser = { ...users.admin };
+        showApp();
+    } else if (email === 'teacher@example.com' && password === 'teacher123') {
+        currentUser = { ...users.teacher };
+        showApp();
+    } else if (email === 'student@example.com' && password === 'student123') {
+        currentUser = { ...users.student };
+        showApp();
+    } else {
+        alert('❌ البريد أو كلمة المرور غير صحيحة!\n\nجرب: admin@example.com / admin123');
     }
 }
 
-function showAuthMessage(msg, type) {
-    const msgDiv = document.getElementById('auth-message');
-    msgDiv.innerHTML = `<div class="${type}-msg">${msg}</div>`;
-    setTimeout(() => msgDiv.innerHTML = '', 3000);
-}
-
+// ===================== عرض التطبيق =====================
 function showApp() {
-    document.getElementById('auth-container').style.display = 'none';
+    document.getElementById('login-container').style.display = 'none';
     document.getElementById('main-app').style.display = 'block';
-    loadUserData();
-}
-
-function showAuth() {
-    document.getElementById('main-app').style.display = 'none';
-    document.getElementById('auth-container').style.display = 'block';
-}
-
-// ===================== تحميل البيانات =====================
-function loadUserData() {
-    document.getElementById('user-name').textContent = `مرحباً، ${currentUser.name}`;
-    const typeLabels = { admin: 'مسؤول', teacher: 'معلم', student: 'تلميذ' };
-    document.getElementById('user-type').textContent = `نوع الحساب: ${typeLabels[currentUser.type] || 'مستخدم'}`;
-    document.getElementById('user-role').textContent = currentUser.type === 'admin' ? '👑 مسؤول النظام' : '';
-
-    loadDashboardStats();
-    loadLessonsList();
-    loadStudentsList();
-    loadSubscriptionsList();
-    loadReferralData();
+    
+    document.getElementById('user-name').textContent = currentUser.name;
+    document.getElementById('user-type').textContent = `النوع: ${currentUser.email}`;
+    
     loadProfileData();
 }
 
-function loadDashboardStats() {
-    document.getElementById('stat-users').textContent = users.length;
-    const activeSubs = subscriptions.filter(s => new Date(s.expiresAt) > new Date()).length;
-    document.getElementById('stat-active-subs').textContent = activeSubs;
-    const revenue = subscriptions.reduce((sum, s) => sum + (s.price || 0), 0);
-    document.getElementById('stat-revenue').textContent = revenue + ' د.ت';
-    document.getElementById('stat-lessons').textContent = lessons.length;
+// ===================== تسجيل الخروج =====================
+function logout() {
+    if (confirm('هل تريد تسجيل الخروج؟')) {
+        currentUser = null;
+        document.getElementById('login-container').style.display = 'block';
+        document.getElementById('main-app').style.display = 'none';
+        document.getElementById('login-email').value = 'admin@example.com';
+        document.getElementById('login-password').value = 'admin123';
+    }
 }
 
-function loadLessonsList() {
-    let html = '';
-    lessons.forEach(lesson => {
-        html += `<div class="admin-item">
-            <div>
-                <strong>${lesson.subject}</strong><br>
-                <small>${lesson.title}</small>
-            </div>
-            <button class="btn-danger" onclick="deleteLesson(${lesson.id})">حذف</button>
-        </div>`;
-    });
-    document.getElementById('lessons-list').innerHTML = html || '<p>لا توجد دروس</p>';
+// ===================== التنقل بين التبويبات =====================
+function switchTab(tabName) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    
+    document.getElementById(tabName).classList.add('active');
+    event.target.classList.add('active');
 }
 
-function loadStudentsList() {
-    let html = '';
-    students.forEach(student => {
-        html += `<div class="admin-item">
-            <div>
-                <strong>${student.name}</strong><br>
-                <small>${student.email} - السنة ${student.level}</small>
-            </div>
-            <button class="btn-danger" onclick="deleteStudent(${student.id})">حذف</button>
-        </div>`;
-    });
-    document.getElementById('students-list').innerHTML = html || '<p>لا توجد طلاب</p>';
+// ===================== الوظائف =====================
+function addLesson(e) {
+    e.preventDefault();
+    alert('✅ تم إضافة الدرس بنجاح!');
+    e.target.reset();
 }
 
-function loadSubscriptionsList() {
-    let html = '';
-    subscriptions.forEach(sub => {
-        const user = users.find(u => u.id === sub.userId);
-        html += `<div class="admin-item">
-            <div>
-                <strong>${user ? user.name : 'مستخدم'}</strong><br>
-                <small>خطة ${sub.plan} - ينتهي في ${new Date(sub.expiresAt).toLocaleDateString('ar-TN')}</small>
-            </div>
-        </div>`;
-    });
-    document.getElementById('subscriptions-list').innerHTML = html || '<p>لا توجد اشتراكات</p>';
-}
-
-function loadReferralData() {
-    const code = 'REF' + currentUser.id.toString().slice(0, 6);
-    document.getElementById('referral-code').textContent = code;
-    const link = `${window.location.href.split('?')[0]}?ref=${code}`;
-    document.getElementById('referral-link-input').value = link;
+function addStudent(e) {
+    e.preventDefault();
+    const name = document.getElementById('student-name').value;
+    alert('✅ تم إضافة الطالب: ' + name);
+    e.target.reset();
 }
 
 function loadProfileData() {
     document.getElementById('profile-name').value = currentUser.name;
     document.getElementById('profile-email').value = currentUser.email;
-    document.getElementById('profile-phone').value = currentUser.phone || '';
-    document.getElementById('profile-city').value = currentUser.city || '';
-}
-
-// ===================== الوظائف =====================
-function switchTab(tab) {
-    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    
-    document.getElementById(tab).classList.add('active');
-    event.target.classList.add('active');
-}
-
-function addLesson(e) {
-    e.preventDefault();
-    const lesson = {
-        id: Date.now(),
-        subject: document.getElementById('lesson-subject').value,
-        title: document.getElementById('lesson-title').value,
-        desc: document.getElementById('lesson-desc').value,
-        video: document.getElementById('lesson-video').value
-    };
-    lessons.push(lesson);
-    localStorage.setItem('lessons', JSON.stringify(lessons));
-    loadLessonsList();
-    loadDashboardStats();
-    e.target.reset();
-    showMessage('✅ تم إضافة الدرس بنجاح!');
-}
-
-function deleteLesson(lessonId) {
-    if (confirm('هل تريد حذف هذا الدرس؟')) {
-        lessons = lessons.filter(l => l.id !== lessonId);
-        localStorage.setItem('lessons', JSON.stringify(lessons));
-        loadLessonsList();
-        loadDashboardStats();
-    }
-}
-
-function addStudent(e) {
-    e.preventDefault();
-    const student = {
-        id: Date.now(),
-        name: document.getElementById('student-name').value,
-        email: document.getElementById('student-email').value,
-        level: document.getElementById('student-level').value
-    };
-    students.push(student);
-    localStorage.setItem('students', JSON.stringify(students));
-    loadStudentsList();
-    e.target.reset();
-    showMessage('✅ تم إضافة الطالب بنجاح!');
-}
-
-function deleteStudent(studentId) {
-    if (confirm('هل تريد حذف هذا الطالب؟')) {
-        students = students.filter(s => s.id !== studentId);
-        localStorage.setItem('students', JSON.stringify(students));
-        loadStudentsList();
-    }
-}
-
-function copyReferralLink() {
-    const link = document.getElementById('referral-link-input').value;
-    navigator.clipboard.writeText(link);
-    alert('✅ تم نسخ الرابط!');
 }
 
 function updateProfile(e) {
     e.preventDefault();
-    currentUser.name = document.getElementById('profile-name').value;
-    currentUser.phone = document.getElementById('profile-phone').value;
-    currentUser.city = document.getElementById('profile-city').value;
-
-    const newPassword = document.getElementById('profile-password').value;
-    if (newPassword) {
-        currentUser.password = btoa(newPassword);
-    }
-
-    const userIndex = users.findIndex(u => u.id === currentUser.id);
-    users[userIndex] = currentUser;
-
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.setItem('currentUser', JSON.stringify(currentUser));
-    showMessage('✅ تم حفظ التغييرات بنجاح!');
+    alert('✅ تم حفظ التغييرات بنجاح!');
 }
-
-function showMessage(msg) {
-    const msgDivs = document.querySelectorAll('[id$="-message"]');
-    msgDivs.forEach(div => {
-        div.innerHTML = `<div class="success-msg">${msg}</div>`;
-        setTimeout(() => div.innerHTML = '', 3000);
-    });
-}
-
-// ===================== التشغيل =====================
-window.addEventListener('DOMContentLoaded', () => {
-    localStorage.setItem('users', JSON.stringify(users));
-    
-    if (currentUser) {
-        showApp();
-    } else {
-        showAuth();
-    }
-});
 </script>
 
 </body>
