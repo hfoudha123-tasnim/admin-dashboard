@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول - المنصة التعليمية</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 450px;
+            width: 100%;
+            padding: 40px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo-icon {
+            font-size: 4rem;
+            margin-bottom: 10px;
+        }
+
+        .logo h1 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .logo p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #666;
+            user-select: none;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .forgot-password {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e2e8f0;
+        }
+
+        .register-link {
+            text-align: center;
+            color: #666;
+        }
+
+        .register-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            text-align: center;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .success-message {
+            background: #c6f6d5;
+            color: #22543d;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            text-align: center;
+        }
+
+        .demo-credentials {
+            background: #edf2f7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 0.85rem;
+            color: #4a5568;
+        }
+
+        .demo-credentials strong {
+            color: #2d3748;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 25px;
+            }
+
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+
+            .remember-forgot {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <!-- Logo -->
+        <div class="logo">
+            <div class="logo-icon">🎓</div>
+            <h1>المنصة التعليمية</h1>
+            <p>سجل دخولك وتابع رحلة التفوق</p>
+        </div>
+
+        <!-- رسائل الخطأ والنجاح -->
+        <div id="error-message" class="error-message"></div>
+        <div id="success-message" class="success-message"></div>
+
+        <!-- معلومات تجريبية (يمكن حذفها لاحقاً) -->
+        <div class="demo-credentials">
+            <strong>💡 للتجربة:</strong><br>
+            يمكنك إنشاء حساب جديد عبر زر "إنشاء حساب" أدناه
+        </div>
+
+        <!-- نموذج تسجيل الدخول -->
+        <form id="login-form">
+            <!-- البريد الإلكتروني -->
+            <div class="form-group">
+                <label for="email">📧 البريد الإلكتروني</label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    placeholder="example@email.com"
+                    required
+                    autocomplete="email"
+                >
+            </div>
+
+            <!-- كلمة المرور -->
+            <div class="form-group">
+                <label for="password">🔒 كلمة المرور</label>
+                <div class="password-container">
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="أدخل كلمة المرور"
+                        required
+                        autocomplete="current-password"
+                    >
+                    <span class="toggle-password" onclick="togglePassword()">👁️</span>
+                </div>
+            </div>
+
+            <!-- تذكرني ونسيت كلمة المرور -->
+            <div class="remember-forgot">
+                <label class="remember-me">
+                    <input type="checkbox" id="remember-me">
+                    <span>تذكرني</span>
+                </label>
+                <a href="#" class="forgot-password" onclick="forgotPassword(); return false;">نسيت كلمة المرور؟</a>
+            </div>
+
+            <!-- زر تسجيل الدخول -->
+            <button type="submit" class="btn-login" id="btn-submit">
+                🚀 تسجيل الدخول
+            </button>
+        </form>
+
+        <!-- فاصل -->
+        <div class="divider">أو</div>
+
+        <!-- رابط إنشاء حساب -->
+        <div class="register-link">
+            ليس لديك حساب؟ <a href="register.html">إنشاء حساب جديد</a>
+        </div>
+    </div>
+
+    <script>
+        // ====================================
+        // إظهار/إخفاء كلمة المرور
+        // ====================================
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.textContent = '🙈';
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.textContent = '👁️';
+            }
+        }
+
+        // ====================================
+        // عرض رسالة خطأ
+        // ====================================
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                errorDiv.style.display = 'none';
+            }, 5000);
+        }
+
+        // ====================================
+        // عرض رسالة نجاح
+        // ====================================
+        function showSuccess(message) {
+            const successDiv = document.getElementById('success-message');
+            successDiv.textContent = message;
+            successDiv.style.display = 'block';
+        }
+
+        // ====================================
+        // نسيت كلمة المرور
+        // ====================================
+        function forgotPassword() {
+            alert('🔐 لإعادة تعيين كلمة المرور:\n\nتواصل مع الدعم الفني على:\nsupport@platform.tn\n\nأو اتصل بنا: +216 XX XXX XXX');
+        }
+
+        // ====================================
+        // التحقق من تسجيل الدخول التلقائي
+        // ====================================
+        window.addEventListener('DOMContentLoaded', function() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const rememberMe = localStorage.getItem('rememberMe') === 'true';
+            
+            if (currentUser && rememberMe) {
+                // المستخدم مسجل دخول ومفعل خيار "تذكرني"
+                showSuccess('✅ مرحباً بعودتك! جاري التحويل...');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }
+        });
+
+        // ====================================
+        // معالجة نموذج تسجيل الدخول
+        // ====================================
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // الحصول على القيم
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('remember-me').checked;
+            
+            // التحقق من البريد الإلكتروني
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showError('❌ البريد الإلكتروني غير صحيح!');
+                return;
+            }
+            
+            // تعطيل زر الدخول
+            const btnSubmit = document.getElementById('btn-submit');
+            btnSubmit.disabled = true;
+            btnSubmit.textContent = '⏳ جاري التحقق...';
+            
+            // محاكاة تأخير معالجة
+            setTimeout(() => {
+                try {
+                    // الحصول على جميع المستخدمين
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    
+                    // البحث عن المستخدم
+                    const user = users.find(u => u.email === email && u.password === password);
+                    
+                    if (user) {
+                        // تسجيل دخول ناجح
+                        localStorage.setItem('currentUser', JSON.stringify(user));
+                        localStorage.setItem('rememberMe', rememberMe.toString());
+                        
+                        showSuccess('✅ تم تسجيل الدخول بنجاح! جاري التحويل...');
+                        
+                        // الانتقال إلى لوحة التحكم
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 1500);
+                        
+                    } else {
+                        // فشل تسجيل الدخول
+                        showError('❌ البريد الإلكتروني أو كلمة المرور غير صحيحة!');
+                        btnSubmit.disabled = false;
+                        btnSubmit.textContent = '🚀 تسجيل الدخول';
+                    }
+                    
+                } catch (error) {
+                    console.error('خطأ في تسجيل الدخول:', error);
+                    showError('❌ حدث خطأ! حاول مرة أخرى');
+                    btnSubmit.disabled = false;
+                    btnSubmit.textContent = '🚀 تسجيل الدخول';
+                }
+            }, 1000);
+        });
+
+        // ====================================
+        // اختصارات لوحة المفاتيح
+        // ====================================
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + Enter لإرسال النموذج
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                document.getElementById('login-form').dispatchEvent(new Event('submit'));
+            }
+        });
+    </script>
+
+</body>
+</html>
