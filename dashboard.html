@@ -81,7 +81,9 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             transition: all 0.3s;
-            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
         }
 
         .subject-card:hover {
@@ -138,6 +140,9 @@
 
         .subject-body {
             padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .subject-body p {
@@ -145,35 +150,33 @@
             color: #718096;
             margin-bottom: 15px;
             line-height: 1.6;
+            flex-grow: 1;
         }
 
-        .btn {
+        .btn-link {
             display: inline-block;
             padding: 12px 24px;
-            border: none;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white !important;
+            text-decoration: none;
             border-radius: 8px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s;
-            text-decoration: none;
             text-align: center;
-            font-family: inherit;
-            font-size: 1rem;
+            border: none;
             width: 100%;
             box-sizing: border-box;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-primary:hover {
+        .btn-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+            text-decoration: none;
         }
 
-        .btn-primary:active {
+        .btn-link:active {
             transform: translateY(0);
         }
 
@@ -224,102 +227,88 @@
 
             <div class="subjects-grid">
                 <!-- اللغة العربية 5-6 -->
-                <div class="subject-card arabic">
+                <a href="subjects/arabic_5_6.html" class="subject-card arabic">
                     <div class="subject-header">
                         <div class="subject-icon">📝</div>
                         <h3>اللغة العربية</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة العربية: القراءة والكتابة والنحو والإملاء والتعبير</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/arabic_5_6.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- اللغة الفرنسية 5-6 -->
-                <div class="subject-card french">
+                <a href="subjects/french_5_6.html" class="subject-card french">
                     <div class="subject-header">
                         <div class="subject-icon">🇫🇷</div>
                         <h3>اللغة الفرنسية</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة الفرنسية: المحادثة والقواعس والمفردات</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/french_5_6.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- الرياضيات 5-6 -->
-                <div class="subject-card math">
+                <a href="subjects/math_5_6.html" class="subject-card math">
                     <div class="subject-header">
                         <div class="subject-icon">🔢</div>
                         <h3>الرياضيات</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم الرياضيات: الجمع والطرح والضرب والقسمة والكسور</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/math_5_6.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- الإيقاظ العلمي 5-6 -->
-                <div class="subject-card science">
+                <a href="subjects/science_5_6.html" class="subject-card science">
                     <div class="subject-header">
                         <div class="subject-icon">🔬</div>
                         <h3>الإيقاظ العلمي</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم العلوم: الطبيعة والحيوان والنبات والصحة</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/science_5_6.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- اللغة الإنجليزية 5-6 -->
-                <div class="subject-card english">
+                <a href="subjects/english_5_6.html" class="subject-card english">
                     <div class="subject-header">
                         <div class="subject-icon">🇬🇧</div>
                         <h3>اللغة الإنجليزية</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة الإنجليزية: المحادثة والقراءة والكتابة</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/english_5_6.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- التاريخ والجغرافيا 5-6 -->
-                <div class="subject-card history">
+                <a href="subjects/history_5_6.html" class="subject-card history">
                     <div class="subject-header">
                         <div class="subject-icon">🗺️</div>
                         <h3>التاريخ والجغرافيا</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم التاريخ والجغرافيا: الحضارات والخرائط والمعالم</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/history_5_6.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- التربية الإسلامية 5-6 -->
-                <div class="subject-card islamic">
+                <a href="subjects/islamic_5_6.html" class="subject-card islamic">
                     <div class="subject-header">
                         <div class="subject-icon">🕌</div>
                         <h3>التربية الإسلامية</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم التربية الإسلامية: القرآن والعقيدة والأخلاق</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/islamic_5_6.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -332,74 +321,64 @@
 
             <div class="subjects-grid">
                 <!-- اللغة العربية 3-4 -->
-                <div class="subject-card arabic">
+                <a href="subjects/arabic_3_4.html" class="subject-card arabic">
                     <div class="subject-header">
                         <div class="subject-icon">📝</div>
                         <h3>اللغة العربية</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة العربية: الحروف والكلمات والقراءة البسيطة</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/arabic_3_4.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- اللغة الفرنسية 3-4 -->
-                <div class="subject-card french">
+                <a href="subjects/french_3_4.html" class="subject-card french">
                     <div class="subject-header">
                         <div class="subject-icon">🇫🇷</div>
                         <h3>اللغة الفرنسية</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم اللغة الفرنسية: الحروف والأرقام والكلمات الأساسية</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/french_3_4.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- الرياضيات 3-4 -->
-                <div class="subject-card math">
+                <a href="subjects/math_3_4.html" class="subject-card math">
                     <div class="subject-header">
                         <div class="subject-icon">🔢</div>
                         <h3>الرياضيات</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم الرياضيات: الأرقام والجمع والطرح البسيط</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/math_3_4.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- الإيقاظ العلمي 3-4 -->
-                <div class="subject-card science">
+                <a href="subjects/science_3_4.html" class="subject-card science">
                     <div class="subject-header">
                         <div class="subject-icon">🔬</div>
                         <h3>الإيقاظ العلمي</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم العلوم: الحيوانات والنباتات والبيئة البسيطة</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/science_3_4.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
 
                 <!-- التربية الإسلامية 3-4 -->
-                <div class="subject-card islamic">
+                <a href="subjects/islamic_3_4.html" class="subject-card islamic">
                     <div class="subject-header">
                         <div class="subject-icon">🕌</div>
                         <h3>التربية الإسلامية</h3>
                     </div>
                     <div class="subject-body">
                         <p>تعلم التربية الإسلامية: التوحيد والدعاء والأخلاق</p>
-                        <button class="btn btn-primary" onclick="navigateTo('subjects/islamic_3_4.html')">
-                            الدخول
-                        </button>
+                        <span class="btn-link">الدخول</span>
                     </div>
-                </div>
+                </a>
             </div>
         </div>
 
@@ -408,38 +387,6 @@
             <p>بناء أجيال متعلمة وقادرة على المستقبل 🌟</p>
         </div>
     </div>
-
-    <script>
-        // دالة التنقل الموثوقة
-        function navigateTo(path) {
-            console.log('محاولة الانتقال إلى:', path);
-            
-            // الطريقة الأولى: استخدام window.location
-            try {
-                window.location.href = path;
-            } catch (error) {
-                console.error('خطأ في الانتقال:', error);
-            }
-        }
-
-        // التحقق من أن جميع الملفات موجودة
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('تم تحميل الصفحة بنجاح ✅');
-            console.log('جميع الأزرار جاهزة للاستخدام');
-        });
-
-        // معالج أخطاء عام
-        window.onerror = function(msg, url, lineNo, columnNo, error) {
-            console.error('خطأ جديد:', {
-                message: msg,
-                url: url,
-                lineNumber: lineNo,
-                columnNumber: columnNo,
-                error: error
-            });
-            return false;
-        };
-    </script>
 
 </body>
 </html>
