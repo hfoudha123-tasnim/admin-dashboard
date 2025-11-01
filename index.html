@@ -3,1559 +3,720 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم - المنصة التعليمية بالذكاء الاصطناعي</title>
+    <title>المنصة التعليمية المتقدمة</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             min-height: 100vh;
+            padding: 20px;
         }
-
-        /* Sidebar */
-        .sidebar {
-            position: fixed;
-            right: 0;
-            top: 0;
-            height: 100%;
-            width: 280px;
-            background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-            padding: 20px 0;
-            z-index: 1000;
-            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
-        }
-
-        .sidebar-header {
-            padding: 0 20px 25px;
-            border-bottom: 2px solid rgba(102,126,234,0.3);
-        }
-
-        .ai-badge {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 700;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-
-        .sidebar-header h2 {
-            color: white;
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .sidebar-header p {
-            color: #a8b2d1;
-            font-size: 14px;
-        }
-
-        .sidebar-menu {
-            margin-top: 30px;
-        }
-
-        .menu-item {
-            padding: 15px 20px;
-            color: #a8b2d1;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border-right: 3px solid transparent;
-        }
-
-        .menu-item:hover, .menu-item.active {
-            background: rgba(102,126,234,0.2);
-            border-right-color: #667eea;
-            color: white;
-        }
-
-        .menu-item i {
-            font-size: 22px;
-            width: 30px;
-        }
-
-        /* Main Content */
-        .main-content {
-            margin-right: 280px;
-            padding: 30px;
-            min-height: 100vh;
-        }
-
-        /* Header */
+        .container { max-width: 1400px; margin: 0 auto; }
         .header {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            padding: 25px 35px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: #1a1a2e;
-            font-size: 30px;
-            font-weight: 700;
-        }
-
-        .ai-status {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: 600;
-        }
-
-        .ai-pulse {
-            width: 12px;
-            height: 12px;
             background: white;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        /* Stats Cards */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .header h1 { font-size: 3rem; color: #667eea; margin-bottom: 10px; }
+        .header p { font-size: 1.2rem; color: #718096; }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
             margin-bottom: 30px;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            flex-wrap: wrap;
         }
-
-        .stat-card {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, transparent 0%, rgba(102,126,234,0.1) 100%);
-            z-index: 0;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 35px rgba(0,0,0,0.15);
-        }
-
-        .stat-icon {
-            width: 70px;
-            height: 70px;
-            border-radius: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            z-index: 1;
-        }
-
-        .stat-icon.ai { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .stat-icon.green { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); }
-        .stat-icon.blue { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
-        .stat-icon.orange { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); }
-
-        .stat-info {
-            z-index: 1;
-        }
-
-        .stat-info h3 {
-            font-size: 36px;
-            color: #1a1a2e;
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        .stat-info p {
-            color: #7f8c8d;
-            font-size: 15px;
-        }
-
-        /* Content Section */
-        .content-section {
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-            display: none;
-        }
-
-        .content-section.active {
-            display: block;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ecf0f1;
-        }
-
-        .section-header h2 {
-            color: #1a1a2e;
-            font-size: 26px;
-            font-weight: 700;
-        }
-
-        .btn {
+        
+        .tab-btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 10px;
+            background: #e2e8f0;
+            color: #2d3748;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+            font-size: 1rem;
         }
-
-        .btn-ai {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        
+        .tab-btn.active {
+            background: #667eea;
             color: white;
         }
-
-        .btn-ai:hover {
+        
+        .tab-btn:hover {
+            background: #667eea;
+            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102,126,234,0.4);
         }
-
-        /* AI Generation Cards */
-        .ai-cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
+        
+        .tab-content {
+            display: none;
         }
-
-        .ai-card {
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .level-section { margin-bottom: 40px; }
+        
+        .level-title {
             background: white;
-            border-radius: 15px;
             padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .ai-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
-            border-color: #667eea;
-        }
-
-        .ai-card-header {
+            border-radius: 10px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 15px;
-            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        .ai-card-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-        }
-
-        .ai-card h3 {
-            color: #1a1a2e;
-            font-size: 20px;
-            font-weight: 700;
-        }
-
-        .ai-card p {
-            color: #7f8c8d;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .ai-progress {
-            margin: 15px 0;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: #666;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #ecf0f1;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-            border-radius: 10px;
-            transition: width 1s ease;
-        }
-
-        /* AI Features Table */
-        .features-table {
-            width: 100%;
-            margin-top: 25px;
-        }
-
-        .feature-row {
-            display: grid;
-            grid-template-columns: 60px 1fr 120px 100px;
-            gap: 15px;
-            padding: 20px;
-            background: white;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            align-items: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .feature-row:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .feature-icon {
-            font-size: 32px;
-        }
-
-        .feature-info h4 {
-            color: #1a1a2e;
-            font-size: 18px;
-            margin-bottom: 5px;
-        }
-
-        .feature-info p {
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-
-        .status-badge {
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 600;
-            text-align: center;
-        }
-
-        .status-active {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-generating {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        /* Tunisian Curriculum Table */
-        .curriculum-grid {
+        
+        .level-icon { font-size: 2.5rem; }
+        .level-title h2 { font-size: 1.8rem; color: #2d3748; }
+        
+        .subjects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            margin-top: 25px;
         }
-
-        .curriculum-card {
+        
+        .subject-card {
             background: white;
             border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .subject-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .subject-header {
+            padding: 30px;
+            text-align: center;
+            color: white;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .subject-icon { font-size: 3.5rem; }
+        .subject-header h3 { font-size: 1.4rem; font-weight: bold; }
+        
+        .arabic { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .french { background: linear-gradient(135deg, #0055a4 0%, #003d7a 100%); }
+        .math { background: linear-gradient(135deg, #e53e3e 0%, #c42e2e 100%); }
+        .science { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); }
+        .english { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); }
+        .history { background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%); }
+        .islamic { background: linear-gradient(135deg, #2c5282 0%, #1e3a8a 100%); }
+        
+        .subject-body {
             padding: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
         }
-
-        .curriculum-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 35px rgba(0,0,0,0.12);
-        }
-
-        .curriculum-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        
+        .subject-body p {
+            color: #718096;
             margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #ecf0f1;
+            line-height: 1.6;
         }
-
-        .curriculum-header h4 {
-            color: #1a1a2e;
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .grade-badge {
+        
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 14px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 5px 12px;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .lesson-container {
+            background: white;
             border-radius: 15px;
-            font-size: 13px;
-            font-weight: 600;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        .subject-list {
-            list-style: none;
-        }
-
-        .subject-item {
-            padding: 10px 0;
+        
+        .lesson-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-
-        .subject-item:last-child {
-            border-bottom: none;
-        }
-
-        .ai-lessons-count {
-            background: #ecf0f1;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            color: #666;
-        }
-
-        /* AI Tutor Section */
-        .ai-tutor-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 15px;
-            padding: 35px;
+        
+        .lesson-header h1 { color: #667eea; font-size: 2.5rem; }
+        
+        .back-btn {
+            padding: 12px 24px;
+            background: #667eea;
             color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+        
+        .back-btn:hover { background: #764ba2; }
+        
+        .lesson-nav {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 30px;
         }
-
-        .ai-tutor-header {
+        
+        .lesson-list {
             display: flex;
-            align-items: center;
-            gap: 20px;
-            margin-bottom: 25px;
+            flex-direction: column;
+            gap: 10px;
         }
-
-        .ai-tutor-avatar {
-            width: 80px;
-            height: 80px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 40px;
-        }
-
-        .ai-capabilities {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .capability-item {
-            background: rgba(255,255,255,0.15);
+        
+        .lesson-item {
             padding: 15px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        /* Modal Styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.7);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
             background: white;
-            padding: 35px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 700px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-        }
-
-        .modal-header h3 {
-            color: #1a1a2e;
-            font-size: 24px;
-            font-weight: 700;
-        }
-
-        .close-modal {
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 32px;
-            color: #7f8c8d;
-            transition: color 0.3s;
+            border-right: 3px solid #667eea;
+            transition: all 0.3s;
         }
-
-        .close-modal:hover {
-            color: #e74c3c;
+        
+        .lesson-item:hover {
+            background: #e6e9f7;
         }
-
-        .form-group {
+        
+        .lesson-item.active {
+            background: #e6e9f7;
+            font-weight: bold;
+        }
+        
+        .lesson-content {
+            background: #f7fafc;
+            padding: 20px;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
-
-        .form-group label {
-            display: block;
-            color: #1a1a2e;
+        
+        .section-title {
+            font-size: 1.4rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .exercise {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        .exercise-q {
             font-weight: 600;
-            font-size: 15px;
-            margin-bottom: 8px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
         }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 15px;
-            font-family: inherit;
-            transition: all 0.3s ease;
+        
+        .exercise-opts {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
         }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
+        
+        .opt-label {
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
-
-        /* Responsive */
+        
+        .opt-label:hover {
+            background: #e6e9f7;
+        }
+        
+        .opt-label input { margin-left: 10px; }
+        
+        .btn-check {
+            padding: 10px 20px;
+            background: #48bb78;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        .btn-check:hover { background: #38a169; }
+        
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .feedback.show { display: block; }
+        .feedback.correct { background: #d4edda; color: #155724; }
+        .feedback.wrong { background: #f8d7da; color: #721c24; }
+        
+        .footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
         @media (max-width: 768px) {
-            .sidebar {
-                width: 70px;
-            }
-
-            .sidebar-header h2,
-            .sidebar-header p,
-            .menu-item span,
-            .ai-badge {
-                display: none;
-            }
-
-            .main-content {
-                margin-right: 70px;
-            }
-
-            .feature-row {
-                grid-template-columns: 1fr;
-                text-align: center;
-            }
+            .header h1 { font-size: 2rem; }
+            .header-icon { font-size: 2rem; }
+            .subjects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <div class="sidebar-header">
-            <div class="ai-badge">🤖 مدعوم بالذكاء الاصطناعي</div>
-            <h2>لوحة التحكم</h2>
-            <p>منصة تعليمية ذكية 100%</p>
-        </div>
-        <div class="sidebar-menu">
-            <div class="menu-item active" onclick="showSection('dashboard')">
-                <i>🏠</i>
-                <span>الرئيسية</span>
-            </div>
-            <div class="menu-item" onclick="showSection('ai-content')">
-                <i>🤖</i>
-                <span>المحتوى الذكي</span>
-            </div>
-            <div class="menu-item" onclick="showSection('curriculum')">
-                <i>📚</i>
-                <span>المنهج التونسي</span>
-            </div>
-            <div class="menu-item" onclick="showSection('ai-tutor')">
-                <i>👨‍🏫</i>
-                <span>المعلم الذكي</span>
-            </div>
-            <div class="menu-item" onclick="showSection('exercises')">
-                <i>✏️</i>
-                <span>التمارين التفاعلية</span>
-            </div>
-            <div class="menu-item" onclick="showSection('analytics')">
-                <i>📊</i>
-                <span>التحليلات الذكية</span>
-            </div>
-            <div class="menu-item" onclick="showSection('subscriptions')">
-                <i>💳</i>
-                <span>الاشتراكات</span>
-            </div>
-            <div class="menu-item" onclick="showSection('referral')">
-                <i>🎁</i>
-                <span>برنامج الإحالة</span>
-            </div>
-            <div class="menu-item" onclick="showSection('settings')">
-                <i>⚙️</i>
-                <span>الإعدادات</span>
-            </div>
-        </div>
+
+<div class="container">
+    <div class="header">
+        <h1>🎓 المنصة التعليمية المتقدمة</h1>
+        <p>تعليم ذكي وتفاعلي للسنة 3 و 4 و 5 و 6 ابتدائي</p>
     </div>
 
-    <!-- Main Content -->
-    <div class="main-content">
-        <!-- Header -->
-        <div class="header">
-            <div>
-                <h1>المنصة التعليمية الذكية</h1>
+    <!-- القائمة -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('subjects')">📚 المواد</button>
+        <button class="tab-btn" onclick="switchTab('lesson')">📖 درس تفاعلي</button>
+    </div>
+
+    <!-- تاب المواد -->
+    <div id="subjects" class="tab-content active">
+        <!-- السنة 5-6 -->
+        <div class="level-section">
+            <div class="level-title">
+                <div class="level-icon">📚</div>
+                <h2>السنة الخامسة والسادسة ابتدائي</h2>
             </div>
-            <div class="ai-status">
-                <div class="ai-pulse"></div>
-                <span>الذكاء الاصطناعي نشط</span>
-            </div>
-        </div>
-
-        <!-- Dashboard Section -->
-        <div class="content-section active" id="dashboard">
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon ai">🤖</div>
-                    <div class="stat-info">
-                        <h3>100%</h3>
-                        <p>محتوى مولد بالذكاء الاصطناعي</p>
+            <div class="subjects-grid">
+                <div class="subject-card" onclick="loadLesson('arabic_5_6', this)">
+                    <div class="subject-header arabic">
+                        <div class="subject-icon">📝</div>
+                        <h3>اللغة العربية</h3>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green">📚</div>
-                    <div class="stat-info">
-                        <h3>2,847</h3>
-                        <p>درس ذكي متاح</p>
+                    <div class="subject-body">
+                        <p>القراءة والكتابة والنحو والإملاء</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon blue">✏️</div>
-                    <div class="stat-info">
-                        <h3>5,632</h3>
-                        <p>تمرين تفاعلي</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon orange">👥</div>
-                    <div class="stat-info">
-                        <h3>1,547</h3>
-                        <p>طالب نشط</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="ai-tutor-container">
-                <div class="ai-tutor-header">
-                    <div class="ai-tutor-avatar">🧠</div>
-                    <div>
-                        <h2 style="margin-bottom: 8px;">المعلم الذكي - AI Tutor</h2>
-                        <p style="font-size: 16px;">معلم شخصي متاح 24/7 لكل طالب</p>
-                    </div>
-                </div>
-                <div class="ai-capabilities">
-                    <div class="capability-item">
-                        <span style="font-size: 24px;">💬</span>
-                        <span>إجابة فورية على الأسئلة</span>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 24px;">📝</span>
-                        <span>شرح تفصيلي للدروس</span>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 24px;">✅</span>
-                        <span>تصحيح تلقائي للتمارين</span>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 24px;">🎯</span>
-                        <span>مسارات تعليمية مخصصة</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- AI Content Generation Section -->
-        <div class="content-section" id="ai-content">
-            <div class="section-header">
-                <h2>توليد المحتوى بالذكاء الاصطناعي</h2>
-                <button class="btn btn-ai" onclick="openModal('generateContentModal')">
-                    <span>🤖</span>
-                    <span>توليد محتوى جديد</span>
-                </button>
-            </div>
-
-            <div class="ai-cards-grid">
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">📖</div>
-                        <div>
-                            <h3>توليد الدروس</h3>
-                            <span class="status-badge status-active">نشط</span>
-                        </div>
-                    </div>
-                    <p>الذكاء الاصطناعي يولد دروساً تفصيلية تلقائياً لجميع المواد والمستويات الدراسية</p>
-                    <div class="ai-progress">
-                        <div class="progress-label">
-                            <span>الدروس المولدة اليوم</span>
-                            <span><strong>147</strong> درس</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 75%;"></div>
-                        </div>
-                    </div>
-                    <button class="btn btn-ai" style="width: 100%; margin-top: 15px;">عرض الدروس</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">✏️</div>
-                        <div>
-                            <h3>توليد التمارين</h3>
-                            <span class="status-badge status-active">نشط</span>
-                        </div>
+                <div class="subject-card" onclick="loadLesson('french_5_6', this)">
+                    <div class="subject-header french">
+                        <div class="subject-icon">🇫🇷</div>
+                        <h3>اللغة الفرنسية</h3>
                     </div>
-                    <p>إنشاء تمارين تفاعلية متنوعة (اختيار متعدد، ملء فراغات، صح/خطأ) تلقائياً</p>
-                    <div class="ai-progress">
-                        <div class="progress-label">
-                            <span>التمارين المولدة اليوم</span>
-                            <span><strong>324</strong> تمرين</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 85%;"></div>
-                        </div>
+                    <div class="subject-body">
+                        <p>المحادثة والقواعد والمفردات</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%; margin-top: 15px;">عرض التمارين</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">❓</div>
-                        <div>
-                            <h3>توليد الأسئلة</h3>
-                            <span class="status-badge status-active">نشط</span>
-                        </div>
+                <div class="subject-card" onclick="loadLesson('math_5_6', this)">
+                    <div class="subject-header math">
+                        <div class="subject-icon">🔢</div>
+                        <h3>الرياضيات</h3>
                     </div>
-                    <p>أسئلة ذكية متعددة المستويات تُنشأ تلقائياً لتقييم فهم الطالب</p>
-                    <div class="ai-progress">
-                        <div class="progress-label">
-                            <span>الأسئلة المولدة اليوم</span>
-                            <span><strong>856</strong> سؤال</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 92%;"></div>
-                        </div>
+                    <div class="subject-body">
+                        <p>الجمع والطرح والضرب والقسمة</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%; margin-top: 15px;">عرض الأسئلة</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">💡</div>
-                        <div>
-                            <h3>الشروحات الذكية</h3>
-                            <span class="status-badge status-active">نشط</span>
-                        </div>
+                <div class="subject-card" onclick="loadLesson('science_5_6', this)">
+                    <div class="subject-header science">
+                        <div class="subject-icon">🔬</div>
+                        <h3>الإيقاظ العلمي</h3>
                     </div>
-                    <p>شروحات مبسطة ومخصصة حسب مستوى الطالب تُولد آلياً</p>
-                    <div class="ai-progress">
-                        <div class="progress-label">
-                            <span>الشروحات المولدة اليوم</span>
-                            <span><strong>523</strong> شرح</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 68%;"></div>
-                        </div>
+                    <div class="subject-body">
+                        <p>الطبيعة والحيوان والنبات</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%; margin-top: 15px;">عرض الشروحات</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">📊</div>
-                        <div>
-                            <h3>التقييم التلقائي</h3>
-                            <span class="status-badge status-active">نشط</span>
-                        </div>
+                <div class="subject-card" onclick="loadLesson('english_5_6', this)">
+                    <div class="subject-header english">
+                        <div class="subject-icon">🇬🇧</div>
+                        <h3>اللغة الإنجليزية</h3>
                     </div>
-                    <p>تصحيح وتقييم إجابات الطلاب تلقائياً مع تقديم تغذية راجعة فورية</p>
-                    <div class="ai-progress">
-                        <div class="progress-label">
-                            <span>التقييمات اليوم</span>
-                            <span><strong>1,247</strong> تقييم</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 95%;"></div>
-                        </div>
+                    <div class="subject-body">
+                        <p>المحادثة والقراءة والكتابة</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%; margin-top: 15px;">عرض التقييمات</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">🎯</div>
-                        <div>
-                            <h3>المسارات المخصصة</h3>
-                            <span class="status-badge status-active">نشط</span>
-                        </div>
+                <div class="subject-card" onclick="loadLesson('history_5_6', this)">
+                    <div class="subject-header history">
+                        <div class="subject-icon">🗺️</div>
+                        <h3>التاريخ والجغرافيا</h3>
                     </div>
-                    <p>إنشاء مسار تعليمي مخصص لكل طالب حسب مستواه وسرعة تعلمه</p>
-                    <div class="ai-progress">
-                        <div class="progress-label">
-                            <span>المسارات النشطة</span>
-                            <span><strong>1,547</strong> مسار</span>
-                        </div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" style="width: 100%;"></div>
-                        </div>
+                    <div class="subject-body">
+                        <p>الحضارات والخرائط والمعالم</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%; margin-top: 15px;">عرض المسارات</button>
-                </div>
-            </div>
-
-            <h3 style="margin: 40px 0 20px; color: #1a1a2e; font-size: 22px;">قدرات الذكاء الاصطناعي</h3>
-            <div class="features-table">
-                <div class="feature-row">
-                    <div class="feature-icon">🧠</div>
-                    <div class="feature-info">
-                        <h4>معالجة اللغة الطبيعية</h4>
-                        <p>فهم وتحليل الأسئلة والإجابات بالعربية والفرنسية</p>
-                    </div>
-                    <div class="status-badge status-active">نشط</div>
-                    <button class="btn btn-ai" style="padding: 8px 16px; font-size: 13px;">إعدادات</button>
                 </div>
 
-                <div class="feature-row">
-                    <div class="feature-icon">🎓</div>
-                    <div class="feature-info">
-                        <h4>التعلم التكيفي</h4>
-                        <p>تكييف المحتوى تلقائياً حسب مستوى وأداء كل طالب</p>
+                <div class="subject-card" onclick="loadLesson('islamic_5_6', this)">
+                    <div class="subject-header islamic">
+                        <div class="subject-icon">🕌</div>
+                        <h3>التربية الإسلامية</h3>
                     </div>
-                    <div class="status-badge status-active">نشط</div>
-                    <button class="btn btn-ai" style="padding: 8px 16px; font-size: 13px;">إعدادات</button>
-                </div>
-
-                <div class="feature-row">
-                    <div class="feature-icon">📈</div>
-                    <div class="feature-info">
-                        <h4>التحليل التنبؤي</h4>
-                        <p>توقع نتائج الطلاب وتحديد نقاط الضعف مبكراً</p>
-                    </div>
-                    <div class="status-badge status-active">نشط</div>
-                    <button class="btn btn-ai" style="padding: 8px 16px; font-size: 13px;">إعدادات</button>
-                </div>
-
-                <div class="feature-row">
-                    <div class="feature-icon">🔄</div>
-                    <div class="feature-info">
-                        <h4>التحديث المستمر</h4>
-                        <p>تحديث المحتوى التعليمي تلقائياً وفقاً لآخر البرامج</p>
-                    </div>
-                    <div class="status-badge status-active">نشط</div>
-                    <button class="btn btn-ai" style="padding: 8px 16px; font-size: 13px;">إعدادات</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Tunisian Curriculum Section -->
-        <div class="content-section" id="curriculum">
-            <div class="section-header">
-                <h2>المنهج التعليمي التونسي</h2>
-                <button class="btn btn-ai" onclick="openModal('syncCurriculumModal')">
-                    <span>🔄</span>
-                    <span>مزامنة مع وزارة التربية</span>
-                </button>
-            </div>
-
-            <div class="curriculum-grid">
-                <!-- السنة الثالثة -->
-                <div class="curriculum-card">
-                    <div class="curriculum-header">
-                        <h4>السنة الثالثة ابتدائي</h4>
-                        <span class="grade-badge">3</span>
-                    </div>
-                    <ul class="subject-list">
-                        <li class="subject-item">
-                            <span>📐 الرياضيات</span>
-                            <span class="ai-lessons-count">127 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>📖 اللغة العربية</span>
-                            <span class="ai-lessons-count">145 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🇫🇷 اللغة الفرنسية</span>
-                            <span class="ai-lessons-count">98 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🔬 الإيقاظ العلمي</span>
-                            <span class="ai-lessons-count">112 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🕌 التربية الإسلامية</span>
-                            <span class="ai-lessons-count">67 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🏛️ التربية المدنية</span>
-                            <span class="ai-lessons-count">54 درس</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- السنة الرابعة -->
-                <div class="curriculum-card">
-                    <div class="curriculum-header">
-                        <h4>السنة الرابعة ابتدائي</h4>
-                        <span class="grade-badge">4</span>
-                    </div>
-                    <ul class="subject-list">
-                        <li class="subject-item">
-                            <span>📐 الرياضيات</span>
-                            <span class="ai-lessons-count">142 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>📖 اللغة العربية</span>
-                            <span class="ai-lessons-count">156 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🇫🇷 اللغة الفرنسية</span>
-                            <span class="ai-lessons-count">108 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🔬 الإيقاظ العلمي</span>
-                            <span class="ai-lessons-count">124 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🕌 التربية الإسلامية</span>
-                            <span class="ai-lessons-count">72 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🏛️ التربية المدنية</span>
-                            <span class="ai-lessons-count">58 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>💻 الإعلامية</span>
-                            <span class="ai-lessons-count">45 درس</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- السنة الخامسة -->
-                <div class="curriculum-card">
-                    <div class="curriculum-header">
-                        <h4>السنة الخامسة ابتدائي</h4>
-                        <span class="grade-badge">5</span>
-                    </div>
-                    <ul class="subject-list">
-                        <li class="subject-item">
-                            <span>📐 الرياضيات</span>
-                            <span class="ai-lessons-count">158 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>📖 اللغة العربية</span>
-                            <span class="ai-lessons-count">167 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🇫🇷 اللغة الفرنسية</span>
-                            <span class="ai-lessons-count">118 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🇬🇧 اللغة الإنجليزية</span>
-                            <span class="ai-lessons-count">87 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🌍 علوم الحياة والأرض</span>
-                            <span class="ai-lessons-count">134 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🗺️ التاريخ والجغرافيا</span>
-                            <span class="ai-lessons-count">96 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🕌 التربية الإسلامية</span>
-                            <span class="ai-lessons-count">78 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🏛️ التربية المدنية</span>
-                            <span class="ai-lessons-count">62 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>💻 الإعلامية</span>
-                            <span class="ai-lessons-count">52 درس</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- السنة السادسة -->
-                <div class="curriculum-card">
-                    <div class="curriculum-header">
-                        <h4>السنة السادسة ابتدائي</h4>
-                        <span class="grade-badge">6</span>
-                    </div>
-                    <ul class="subject-list">
-                        <li class="subject-item">
-                            <span>📐 الرياضيات</span>
-                            <span class="ai-lessons-count">172 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>📖 اللغة العربية</span>
-                            <span class="ai-lessons-count">178 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🇫🇷 اللغة الفرنسية</span>
-                            <span class="ai-lessons-count">128 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🇬🇧 اللغة الإنجليزية</span>
-                            <span class="ai-lessons-count">95 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🌍 علوم الحياة والأرض</span>
-                            <span class="ai-lessons-count">145 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🗺️ التاريخ والجغرافيا</span>
-                            <span class="ai-lessons-count">104 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🕌 التربية الإسلامية</span>
-                            <span class="ai-lessons-count">84 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>🏛️ التربية المدنية</span>
-                            <span class="ai-lessons-count">68 درس</span>
-                        </li>
-                        <li class="subject-item">
-                            <span>💻 الإعلامية</span>
-                            <span class="ai-lessons-count">58 درس</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- AI Tutor Section -->
-        <div class="content-section" id="ai-tutor">
-            <div class="section-header">
-                <h2>المعلم الذكي - AI Tutor</h2>
-                <button class="btn btn-ai" onclick="openModal('tutorSettingsModal')">
-                    <span>⚙️</span>
-                    <span>إعدادات المعلم الذكي</span>
-                </button>
-            </div>
-
-            <div class="ai-tutor-container" style="margin-bottom: 0;">
-                <h3 style="font-size: 22px; margin-bottom: 15px;">قدرات المعلم الذكي</h3>
-                <p style="font-size: 16px; line-height: 1.8; margin-bottom: 25px;">
-                    معلم افتراضي مدعوم بأحدث تقنيات الذكاء الاصطناعي، متاح 24/7 لمساعدة الطلاب في جميع المواد الدراسية. يتكيف مع مستوى كل طالب ويقدم شروحات مخصصة وإجابات فورية.
-                </p>
-                <div class="ai-capabilities">
-                    <div class="capability-item">
-                        <span style="font-size: 28px;">💬</span>
-                        <div>
-                            <strong>محادثة ذكية</strong>
-                            <p style="font-size: 13px; margin-top: 5px; opacity: 0.9;">يفهم الأسئلة ويجيب بطريقة واضحة</p>
-                        </div>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 28px;">📝</span>
-                        <div>
-                            <strong>شرح تفصيلي</strong>
-                            <p style="font-size: 13px; margin-top: 5px; opacity: 0.9;">شرح الدروس خطوة بخطوة</p>
-                        </div>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 28px;">✅</span>
-                        <div>
-                            <strong>تصحيح فوري</strong>
-                            <p style="font-size: 13px; margin-top: 5px; opacity: 0.9;">تصحيح الإجابات وتقديم الملاحظات</p>
-                        </div>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 28px;">🎯</span>
-                        <div>
-                            <strong>تخصيص المحتوى</strong>
-                            <p style="font-size: 13px; margin-top: 5px; opacity: 0.9;">محتوى مناسب لمستوى الطالب</p>
-                        </div>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 28px;">🔊</span>
-                        <div>
-                            <strong>نطق صوتي</strong>
-                            <p style="font-size: 13px; margin-top: 5px; opacity: 0.9;">قراءة النصوص بالعربية والفرنسية</p>
-                        </div>
-                    </div>
-                    <div class="capability-item">
-                        <span style="font-size: 28px;">🎨</span>
-                        <div>
-                            <strong>صور توضيحية</strong>
-                            <p style="font-size: 13px; margin-top: 5px; opacity: 0.9;">توليد رسومات وأمثلة مرئية</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3 style="margin: 40px 0 20px; color: #1a1a2e; font-size: 22px;">إحصائيات المعلم الذكي</h3>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon blue">💬</div>
-                    <div class="stat-info">
-                        <h3>12,847</h3>
-                        <p>محادثة اليوم</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green">✅</div>
-                    <div class="stat-info">
-                        <h3>98.7%</h3>
-                        <p>دقة الإجابات</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon orange">⚡</div>
-                    <div class="stat-info">
-                        <h3>0.3 ث</h3>
-                        <p>متوسط وقت الاستجابة</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon ai">😊</div>
-                    <div class="stat-info">
-                        <h3>4.9/5</h3>
-                        <p>تقييم الطلاب</p>
+                    <div class="subject-body">
+                        <p>القرآن والعقيدة والأخلاق</p>
+                        <button class="btn">الدخول</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Interactive Exercises Section -->
-        <div class="content-section" id="exercises">
-            <div class="section-header">
-                <h2>التمارين التفاعلية المولدة آلياً</h2>
-                <button class="btn btn-ai" onclick="openModal('generateExerciseModal')">
-                    <span>🤖</span>
-                    <span>توليد تمارين جديدة</span>
-                </button>
+        <!-- السنة 3-4 -->
+        <div class="level-section">
+            <div class="level-title">
+                <div class="level-icon">🎯</div>
+                <h2>السنة الثالثة والرابعة ابتدائي</h2>
             </div>
-
-            <div class="ai-cards-grid">
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">☑️</div>
-                        <h3>اختيار متعدد</h3>
+            <div class="subjects-grid">
+                <div class="subject-card" onclick="loadLesson('arabic_3_4', this)">
+                    <div class="subject-header arabic">
+                        <div class="subject-icon">📝</div>
+                        <h3>اللغة العربية</h3>
                     </div>
-                    <p>أسئلة اختيار من متعدد مع 4 خيارات، يولدها الذكاء الاصطناعي تلقائياً</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                        <strong style="color: #1a1a2e;">عدد الأسئلة المتاحة:</strong> 2,847 سؤال
+                    <div class="subject-body">
+                        <p>الحروف والكلمات والقراءة</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%;">عرض الأسئلة</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">📝</div>
-                        <h3>ملء الفراغات</h3>
+                <div class="subject-card" onclick="loadLesson('french_3_4', this)">
+                    <div class="subject-header french">
+                        <div class="subject-icon">🇫🇷</div>
+                        <h3>اللغة الفرنسية</h3>
                     </div>
-                    <p>تمارين ملء الفراغات التفاعلية مع تصحيح تلقائي وذكي</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                        <strong style="color: #1a1a2e;">عدد التمارين المتاحة:</strong> 1,563 تمرين
+                    <div class="subject-body">
+                        <p>الحروف والأرقام والكلمات</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%;">عرض التمارين</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">✔️</div>
-                        <h3>صح أو خطأ</h3>
+                <div class="subject-card" onclick="loadLesson('math_3_4', this)">
+                    <div class="subject-header math">
+                        <div class="subject-icon">🔢</div>
+                        <h3>الرياضيات</h3>
                     </div>
-                    <p>أسئلة صح أو خطأ مع شرح تفصيلي للإجابة الصحيحة</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                        <strong style="color: #1a1a2e;">عدد الأسئلة المتاحة:</strong> 3,124 سؤال
+                    <div class="subject-body">
+                        <p>الأرقام والجمع والطرح</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%;">عرض الأسئلة</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">🔢</div>
-                        <h3>ترتيب العناصر</h3>
+                <div class="subject-card" onclick="loadLesson('science_3_4', this)">
+                    <div class="subject-header science">
+                        <div class="subject-icon">🔬</div>
+                        <h3>الإيقاظ العلمي</h3>
                     </div>
-                    <p>ترتيب الخطوات أو العناصر بالترتيب الصحيح</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                        <strong style="color: #1a1a2e;">عدد التمارين المتاحة:</strong> 687 تمرين
+                    <div class="subject-body">
+                        <p>الحيوانات والنباتات</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%;">عرض التمارين</button>
                 </div>
 
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">🔗</div>
-                        <h3>المطابقة</h3>
+                <div class="subject-card" onclick="loadLesson('islamic_3_4', this)">
+                    <div class="subject-header islamic">
+                        <div class="subject-icon">🕌</div>
+                        <h3>التربية الإسلامية</h3>
                     </div>
-                    <p>ربط العناصر المتطابقة في عمودين</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                        <strong style="color: #1a1a2e;">عدد التمارين المتاحة:</strong> 924 تمرين
+                    <div class="subject-body">
+                        <p>التوحيد والدعاء والأخلاق</p>
+                        <button class="btn">الدخول</button>
                     </div>
-                    <button class="btn btn-ai" style="width: 100%;">عرض التمارين</button>
-                </div>
-
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">🎯</div>
-                        <h3>السحب والإفلات</h3>
-                    </div>
-                    <p>تمارين تفاعلية بتقنية السحب والإفلات</p>
-                    <div style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 15px 0;">
-                        <strong style="color: #1a1a2e;">عدد التمارين المتاحة:</strong> 1,156 تمرين
-                    </div>
-                    <button class="btn btn-ai" style="width: 100%;">عرض التمارين</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Analytics Section -->
-        <div class="content-section" id="analytics">
-            <div class="section-header">
-                <h2>التحليلات الذكية</h2>
-                <button class="btn btn-ai">
-                    <span>📊</span>
-                    <span>تصدير التقرير</span>
-                </button>
-            </div>
-
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon blue">👥</div>
-                    <div class="stat-info">
-                        <h3>1,547</h3>
-                        <p>طالب نشط</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green">📚</div>
-                    <div class="stat-info">
-                        <h3>87.3%</h3>
-                        <p>معدل إتمام الدروس</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon orange">⏱️</div>
-                    <div class="stat-info">
-                        <h3>3.4 س</h3>
-                        <p>متوسط وقت التعلم يومياً</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon ai">🎯</div>
-                    <div class="stat-info">
-                        <h3>92.1%</h3>
-                        <p>معدل النجاح</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Subscriptions Section -->
-        <div class="content-section" id="subscriptions">
-            <div class="section-header">
-                <h2>خطط الاشتراك</h2>
-                <button class="btn btn-ai" onclick="openModal('addPlanModal')">
-                    <span>+</span>
-                    <span>إضافة خطة جديدة</span>
-                </button>
-            </div>
-
-            <div class="ai-cards-grid">
-                <div class="ai-card">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">🆓</div>
-                        <h3>الخطة المجانية</h3>
-                    </div>
-                    <h2 style="font-size: 36px; color: #1a1a2e; margin: 15px 0;">0 د.ت</h2>
-                    <p>وصول محدود للدروس والتمارين</p>
-                    <ul style="list-style: none; margin: 20px 0;">
-                        <li style="padding: 8px 0; color: #666;">✅ 10 دروس شهرياً</li>
-                        <li style="padding: 8px 0; color: #666;">✅ 20 تمرين شهرياً</li>
-                        <li style="padding: 8px 0; color: #666;">❌ المعلم الذكي</li>
-                    </ul>
-                    <button class="btn btn-ai" style="width: 100%;">إدارة</button>
-                </div>
-
-                <div class="ai-card" style="border: 3px solid #667eea;">
-                    <div class="ai-card-header">
-                        <div class="ai-card-icon">💎</div>
-                        <h3>الخطة المميزة</h3>
-                    </div>
-                    <h2 style="font-size: 36px; color: #667eea; margin: 15px 0;">36 د.ت/شهر</h2>
-                    <p>وصول كامل لجميع الميزات</p>
-                    <ul style="list-style: none; margin: 20px 0;">
-                        <li style="padding: 8px 0; color: #666;">✅ دروس غير محدودة</li>
-                        <li style="padding: 8px 0; color: #666;">✅ تمارين غير محدودة</li>
-                        <li style="padding: 8px 0; color: #666;">✅ المعلم الذكي 24/7</li>
-                        <li style="padding: 8px 0; color: #666;">✅ تقارير مفصلة</li>
-                    </ul>
-                    <button class="btn btn-ai" style="width: 100%;">إدارة</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Referral Section -->
-        <div class="content-section" id="referral">
-            <div class="section-header">
-                <h2>برنامج الإحالة</h2>
-            </div>
-
-            <div class="ai-tutor-container">
-                <h2 style="font-size: 28px; margin-bottom: 15px;">شارك واربح!</h2>
-                <p style="font-size: 18px; margin-bottom: 25px;">احصل على 20% من قيمة كل اشتراك عبر رابط الإحالة الخاص بك</p>
-                <div style="background: rgba(255,255,255,0.2); padding: 25px; border-radius: 15px; text-align: center;">
-                    <p style="font-size: 16px; margin-bottom: 15px;">رمز الإحالة الخاص بك</p>
-                    <h2 style="font-size: 42px; letter-spacing: 5px; margin-bottom: 20px;">REFER2025</h2>
-                    <button class="btn" style="background: white; color: #667eea; padding: 15px 40px; font-size: 16px;">نسخ الرابط</button>
-                </div>
-            </div>
-
-            <div class="stats-grid" style="margin-top: 30px;">
-                <div class="stat-card">
-                    <div class="stat-icon blue">👥</div>
-                    <div class="stat-info">
-                        <h3>127</h3>
-                        <p>إجمالي الإحالات</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon green">✅</div>
-                    <div class="stat-info">
-                        <h3>89</h3>
-                        <p>اشتراكات ناجحة</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon orange">💰</div>
-                    <div class="stat-info">
-                        <h3>1,847 د.ت</h3>
-                        <p>إجمالي العمولات</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon ai">📊</div>
-                    <div class="stat-info">
-                        <h3>70%</h3>
-                        <p>معدل التحويل</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Settings Section -->
-        <div class="content-section" id="settings">
-            <div class="section-header">
-                <h2>إعدادات المنصة</h2>
-                <button class="btn btn-ai">
-                    <span>💾</span>
-                    <span>حفظ التغييرات</span>
-                </button>
-            </div>
-
-            <div style="display: grid; gap: 20px;">
-                <div class="form-group">
-                    <label>نموذج الذكاء الاصطناعي</label>
-                    <select>
-                        <option selected>GPT-4 Turbo (الأحدث)</option>
-                        <option>GPT-4</option>
-                        <option>Claude 3 Opus</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>اللغة الافتراضية</label>
-                    <select>
-                        <option selected>العربية</option>
-                        <option>الفرنسية</option>
-                        <option>الإنجليزية</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>مستوى صعوبة المحتوى التلقائي</label>
-                    <select>
-                        <option>سهل</option>
-                        <option selected>متوسط</option>
-                        <option>صعب</option>
-                        <option>تكيفي (موصى به)</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label>تكرار توليد المحتوى الجديد</label>
-                    <select>
-                        <option>يومياً</option>
-                        <option selected>أسبوعياً</option>
-                        <option>شهرياً</option>
-                    </select>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modals -->
-    <!-- Generate Content Modal -->
-    <div class="modal" id="generateContentModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>توليد محتوى تعليمي جديد بالذكاء الاصطناعي</h3>
-                <span class="close-modal" onclick="closeModal('generateContentModal')">×</span>
+    <!-- تاب الدرس -->
+    <div id="lesson" class="tab-content">
+        <div class="lesson-container">
+            <div class="lesson-header">
+                <h1 id="lesson-title">درس تفاعلي</h1>
+                <button class="back-btn" onclick="goBackToSubjects()">← العودة</button>
             </div>
-            <div class="form-group">
-                <label>نوع المحتوى</label>
-                <select>
-                    <option>درس كامل</option>
-                    <option>تمارين تفاعلية</option>
-                    <option>أسئلة تقييمية</option>
-                    <option>شرح مبسط</option>
-                </select>
+
+            <div class="lesson-nav">
+                <div class="section-title">📚 الدروس المتاحة</div>
+                <div class="lesson-list" id="lesson-list"></div>
             </div>
-            <div class="form-group">
-                <label>المادة</label>
-                <select>
-                    <option>الرياضيات</option>
-                    <option>اللغة العربية</option>
-                    <option>اللغة الفرنسية</option>
-                    <option>علوم الحياة والأرض</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>المستوى الدراسي</label>
-                <select>
-                    <option>السنة الثالثة ابتدائي</option>
-                    <option>السنة الرابعة ابتدائي</option>
-                    <option>السنة الخامسة ابتدائي</option>
-                    <option>السنة السادسة ابتدائي</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label>الموضوع</label>
-                <input type="text" placeholder="مثال: الكسور العشرية">
-            </div>
-            <button class="btn btn-ai" style="width: 100%; padding: 15px; font-size: 16px;">
-                <span>🤖</span>
-                <span>بدء التوليد</span>
-            </button>
+
+            <div id="lesson-body"></div>
         </div>
     </div>
+</div>
 
-    <!-- Other modals can be added similarly -->
+<div class="footer">
+    <p>© 2025 المنصة التعليمية المتقدمة - جميع الحقوق محفوظة</p>
+    <p>🌟 تعليم ذكي وتفاعلي للأجيال القادمة</p>
+</div>
 
-    <script>
-        // Show Section Function
-        function showSection(sectionId) {
-            document.querySelectorAll('.content-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            document.getElementById(sectionId).classList.add('active');
-            
-            document.querySelectorAll('.menu-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-        }
+<script>
+// ===================== البيانات =====================
+const lessons = {
+    'arabic_3_4': {
+        name: 'اللغة العربية - السنة 3 و 4',
+        lessons: [
+            {
+                title: 'الحروف الأبجدية',
+                exercises: [
+                    { q: 'حرف الألف يُكتب:', opts: ['ا', 'ب', 'ج'], ans: 'ا' },
+                    { q: 'حرف الباء يأتي بعد:', opts: ['الألف', 'الجيم', 'الدال'], ans: 'الألف' }
+                ]
+            }
+        ]
+    },
+    'french_3_4': {
+        name: 'اللغة الفرنسية - السنة 3 و 4',
+        lessons: [
+            {
+                title: 'Bonjour',
+                exercises: [
+                    { q: 'Bonjour يعني:', opts: ['صباح الخير', 'مساء الخير', 'وداعاً'], ans: 'صباح الخير' }
+                ]
+            }
+        ]
+    },
+    'math_3_4': {
+        name: 'الرياضيات - السنة 3 و 4',
+        lessons: [
+            {
+                title: 'الجمع',
+                exercises: [
+                    { q: '5 + 3 =', opts: ['6', '8', '10'], ans: '8' },
+                    { q: '2 + 4 =', opts: ['5', '6', '7'], ans: '6' }
+                ]
+            }
+        ]
+    },
+    'science_3_4': {
+        name: 'الإيقاظ العلمي - السنة 3 و 4',
+        lessons: [
+            {
+                title: 'الحيوانات',
+                exercises: [
+                    { q: 'الأسد حيوان:', opts: ['مفترس', 'أليف', 'طائر'], ans: 'مفترس' }
+                ]
+            }
+        ]
+    },
+    'islamic_3_4': {
+        name: 'التربية الإسلامية - السنة 3 و 4',
+        lessons: [
+            {
+                title: 'التوحيد',
+                exercises: [
+                    { q: 'الله هو:', opts: ['ثلاثة', 'واحد', 'كثير'], ans: 'واحد' }
+                ]
+            }
+        ]
+    },
+    'arabic_5_6': {
+        name: 'اللغة العربية - السنة 5 و 6',
+        lessons: [
+            {
+                title: 'النحو',
+                exercises: [
+                    { q: 'المبتدأ هو:', opts: ['الفعل', 'الاسم في بداية الجملة', 'الحرف'], ans: 'الاسم في بداية الجملة' }
+                ]
+            }
+        ]
+    },
+    'french_5_6': {
+        name: 'اللغة الفرنسية - السنة 5 و 6',
+        lessons: [
+            {
+                title: 'المحادثة',
+                exercises: [
+                    { q: 'Comment allez-vous يعني:', opts: ['كيف حالك؟', 'من أنت؟', 'أين أنت؟'], ans: 'كيف حالك؟' }
+                ]
+            }
+        ]
+    },
+    'math_5_6': {
+        name: 'الرياضيات - السنة 5 و 6',
+        lessons: [
+            {
+                title: 'الضرب والقسمة',
+                exercises: [
+                    { q: '5 × 3 =', opts: ['12', '15', '18'], ans: '15' },
+                    { q: '12 ÷ 3 =', opts: ['3', '4', '5'], ans: '4' }
+                ]
+            }
+        ]
+    },
+    'science_5_6': {
+        name: 'الإيقاظ العلمي - السنة 5 و 6',
+        lessons: [
+            {
+                title: 'جسم الإنسان',
+                exercises: [
+                    { q: 'عدد عظام جسم الإنسان حوالي:', opts: ['150', '206', '250'], ans: '206' }
+                ]
+            }
+        ]
+    },
+    'english_5_6': {
+        name: 'اللغة الإنجليزية - السنة 5 و 6',
+        lessons: [
+            {
+                title: 'الألوان',
+                exercises: [
+                    { q: 'Red يعني:', opts: ['أحمر', 'أزرق', 'أخضر'], ans: 'أحمر' }
+                ]
+            }
+        ]
+    },
+    'history_5_6': {
+        name: 'التاريخ والجغرافيا - السنة 5 و 6',
+        lessons: [
+            {
+                title: 'الحضارة الإسلامية',
+                exercises: [
+                    { q: 'عاصمة الدولة الأموية:', opts: ['بغداد', 'دمشق', 'القاهرة'], ans: 'دمشق' }
+                ]
+            }
+        ]
+    },
+    'islamic_5_6': {
+        name: 'التربية الإسلامية - السنة 5 و 6',
+        lessons: [
+            {
+                title: 'السيرة النبوية',
+                exercises: [
+                    { q: 'الرسول محمد ولد في مدينة:', opts: ['المدينة', 'مكة', 'الطائف'], ans: 'مكة' }
+                ]
+            }
+        ]
+    }
+};
 
-        // Modal Functions
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.add('active');
-        }
+// ===================== الوظائف =====================
+function switchTab(tab) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    
+    document.getElementById(tab).classList.add('active');
+    event.target.classList.add('active');
+}
 
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
+function loadLesson(subjectId, element) {
+    const data = lessons[subjectId];
+    if (!data) return;
 
-        // Close modal when clicking outside
-        document.querySelectorAll('.modal').forEach(modal => {
-            modal.addEventListener('click', function(e) {
-                if (e.target === this) {
-                    this.classList.remove('active');
-                }
-            });
+    document.getElementById('lesson-title').textContent = data.name;
+    
+    let lessonListHTML = '';
+    data.lessons.forEach((lesson, idx) => {
+        lessonListHTML += `<div class="lesson-item ${idx === 0 ? 'active' : ''}" onclick="displayLesson(${idx})">${lesson.title}</div>`;
+    });
+    document.getElementById('lesson-list').innerHTML = lessonListHTML;
+    
+    switchTab('lesson');
+    displayLesson(0);
+}
+
+function displayLesson(idx) {
+    const subjectId = Object.keys(lessons).find(key => {
+        const item = document.querySelector('.lesson-item.active');
+        return item && item.textContent === lessons[key].lessons[idx]?.title;
+    });
+    
+    const allItems = document.querySelectorAll('.lesson-item');
+    allItems.forEach((item, i) => {
+        item.classList.toggle('active', i === idx);
+    });
+    
+    let subj = Object.values(lessons).find(s => s.lessons[idx]);
+    if (!subj) subj = Object.values(lessons)[0];
+    
+    const lesson = subj.lessons[idx];
+    if (!lesson) return;
+
+    let html = `<div class="section-title">✍️ التمارين</div>`;
+    lesson.exercises.forEach((ex, i) => {
+        html += `<div class="exercise">
+            <div class="exercise-q">${ex.q}</div>
+            <div class="exercise-opts">`;
+        ex.opts.forEach((opt, j) => {
+            html += `<label class="opt-label"><input type="radio" name="ex${i}" value="${opt}"> ${opt}</label>`;
         });
+        html += `</div>
+            <button class="btn-check" onclick="checkAns(${i}, '${ex.ans}')">التحقق</button>
+            <div id="fb${i}" class="feedback"></div>
+        </div>`;
+    });
+    
+    document.getElementById('lesson-body').innerHTML = html;
+}
 
-        // Animate progress bars on load
-        window.addEventListener('load', function() {
-            document.querySelectorAll('.progress-fill').forEach(fill => {
-                const width = fill.style.width;
-                fill.style.width = '0';
-                setTimeout(() => {
-                    fill.style.width = width;
-                }, 500);
-            });
-        });
+function checkAns(idx, correct) {
+    const selected = document.querySelector(`input[name="ex${idx}"]:checked`);
+    if (!selected) {
+        alert('اختر إجابة أولاً!');
+        return;
+    }
+    
+    const fb = document.getElementById(`fb${idx}`);
+    if (selected.value === correct) {
+        fb.innerHTML = '✅ إجابة صحيحة!';
+        fb.className = 'feedback show correct';
+    } else {
+        fb.innerHTML = `❌ خطأ! الإجابة الصحيحة: ${correct}`;
+        fb.className = 'feedback show wrong';
+    }
+}
 
-        console.log('🤖 المنصة التعليمية الذكية - مدعومة بالذكاء الاصطناعي 100%');
-    </script>
+function goBackToSubjects() {
+    switchTab('subjects');
+}
+</script>
+
 </body>
 </html>
