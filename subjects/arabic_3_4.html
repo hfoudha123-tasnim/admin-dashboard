@@ -1313,6 +1313,30 @@
             selectLesson(0);
         });
     </script>
+<script>
+// التأكد من أن زر العودة يعمل بشكل صحيح
+function goBack() {
+    // جرب الطريقة الأولى
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        // إذا فشلت، اذهب للرئيسية مباشرة
+        let paths = [
+            '../dashboard.html',
+            '../../dashboard.html',
+            '/dashboard.html',
+            window.location.origin + '/dashboard.html'
+        ];
+        
+        for (let path of paths) {
+            try {
+                window.location.href = path;
+                return;
+            } catch (e) {}
+        }
+    }
+}
+</script>
 
 </body>
 </html>
