@@ -58,6 +58,15 @@
             margin-top: 5px;
         }
 
+        .grade-display {
+            background: rgba(102, 126, 234, 0.3);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: white;
+        }
+
         .menu {
             padding: 20px 0;
         }
@@ -170,9 +179,7 @@
             font-size: 0.9rem;
         }
 
-        /* ====================================
-           قسم الإحالة - Referral Section
-        ==================================== */
+        /* Referral Section */
         .referral-section {
             background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
             border-radius: 15px;
@@ -351,7 +358,7 @@
             padding-right: 20px;
         }
 
-        /* Subjects Grid */
+        /* Subjects Section */
         .subjects-section {
             background: white;
             padding: 30px;
@@ -360,10 +367,66 @@
         }
 
         .subjects-section h3 {
-            margin-bottom: 20px;
             color: #2d3748;
         }
 
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        /* Grade Selector */
+        .grade-selector select {
+            padding: 10px 15px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .grade-selector select:hover {
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .grade-selector select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .grade-selector label {
+            font-weight: 600;
+            margin-left: 10px;
+            color: #2d3748;
+        }
+
+        /* Info Box */
+        .info-box {
+            background: #f7fafc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .info-box span {
+            font-size: 1.1rem;
+            color: #4a5568;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        /* Subjects Grid */
         .subjects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -379,6 +442,24 @@
             cursor: pointer;
             transition: all 0.3s;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .subject-card:hover::before {
+            transform: translateY(0);
         }
 
         .subject-card:hover {
@@ -389,10 +470,42 @@
         .subject-icon {
             font-size: 3rem;
             margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
         }
 
         .subject-card h4 {
             font-size: 1.2rem;
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .subject-card p {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lessons-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(255,255,255,0.3);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        /* Loading Spinner */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+            grid-column: 1/-1;
         }
 
         /* Responsive */
@@ -410,8 +523,9 @@
                 margin-right: 0;
             }
 
-            .referral-header {
+            .section-header {
                 flex-direction: column;
+                align-items: flex-start;
             }
         }
 
@@ -428,6 +542,10 @@
                 flex-direction: column;
                 gap: 15px;
             }
+
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
@@ -442,19 +560,22 @@
             <div class="user-info">
                 مرحباً،
                 <strong id="user-name">الطالب</strong>
+                <div class="grade-display" id="current-grade-display">
+                    📚 السنة السادسة ابتدائي
+                </div>
             </div>
         </div>
 
         <nav class="menu">
-            <a href="#" class="menu-item active">
+            <a href="#" class="menu-item active" onclick="scrollToSection('top')">
                 <span class="menu-icon">🏠</span>
                 <span>الرئيسية</span>
             </a>
-            <a href="#subjects" class="menu-item">
+            <a href="#subjects" class="menu-item" onclick="scrollToSection('subjects')">
                 <span class="menu-icon">📚</span>
                 <span>المواد الدراسية</span>
             </a>
-            <a href="#referral" class="menu-item">
+            <a href="#referral" class="menu-item" onclick="scrollToSection('referral')">
                 <span class="menu-icon">🎁</span>
                 <span>برنامج الإحالة</span>
             </a>
@@ -474,7 +595,7 @@
     </aside>
 
     <!-- Main Content -->
-    <main class="main-content">
+    <main class="main-content" id="top">
         <!-- Top Bar -->
         <div class="top-bar">
             <div class="welcome-text">
@@ -492,7 +613,7 @@
                 <div class="stat-header">
                     <span class="stat-icon">📚</span>
                 </div>
-                <div class="stat-value">6</div>
+                <div class="stat-value" id="total-subjects-stat">10</div>
                 <div class="stat-label">المواد الدراسية</div>
             </div>
 
@@ -521,9 +642,7 @@
             </div>
         </div>
 
-        <!-- ====================================
-             قسم الإحالة - Referral Section
-        ==================================== -->
+        <!-- Referral Section -->
         <section class="referral-section" id="referral">
             <div class="referral-header">
                 <h3>🎁 برنامج الإحالة</h3>
@@ -533,7 +652,6 @@
                 </div>
             </div>
 
-            <!-- كود الإحالة -->
             <div class="referral-code-box">
                 <label>🏷️ كود الإحالة الخاص بك:</label>
                 <div class="code-display">
@@ -542,7 +660,6 @@
                 </div>
             </div>
 
-            <!-- رابط الإحالة -->
             <div class="referral-link-box">
                 <label>🔗 رابط الإحالة:</label>
                 <div class="link-display" id="referral-link">
@@ -553,7 +670,6 @@
                 </button>
             </div>
 
-            <!-- إحصائيات الإحالة -->
             <div class="referral-stats">
                 <div class="ref-stat-card">
                     <div class="stat-number" id="total-referrals">0</div>
@@ -576,7 +692,6 @@
                 </div>
             </div>
 
-            <!-- قائمة المحالين -->
             <div class="referrals-list-section">
                 <h4>👥 قائمة المحالين من طرفك:</h4>
                 <div id="referrals-list">
@@ -587,7 +702,6 @@
                 </div>
             </div>
 
-            <!-- نصائح للإحالة -->
             <div class="tips-box">
                 <h4>💡 نصائح لزيادة دخلك:</h4>
                 <ul>
@@ -601,50 +715,150 @@
 
         <!-- Subjects Section -->
         <section class="subjects-section" id="subjects">
-            <h3>📖 المواد الدراسية</h3>
-            <div class="subjects-grid">
-                <div class="subject-card" onclick="goToSubject('math')">
-                    <div class="subject-icon">🔢</div>
-                    <h4>الرياضيات</h4>
+            <div class="section-header">
+                <h3>📖 المواد الدراسية</h3>
+                <div class="grade-selector">
+                    <label for="grade-select">اختر السنة:</label>
+                    <select id="grade-select" onchange="loadSubjects()">
+                        <option value="grade_3">السنة الثالثة ابتدائي</option>
+                        <option value="grade_4">السنة الرابعة ابتدائي</option>
+                        <option value="grade_5">السنة الخامسة ابتدائي</option>
+                        <option value="grade_6" selected>السنة السادسة ابتدائي</option>
+                    </select>
                 </div>
+            </div>
 
-                <div class="subject-card" onclick="goToSubject('arabic')">
-                    <div class="subject-icon">📝</div>
-                    <h4>العربية</h4>
-                </div>
+            <div class="info-box">
+                <span>
+                    📚 عدد المواد: <strong id="subjects-count">0</strong> | 
+                    📝 إجمالي الدروس: <strong id="lessons-count">0</strong>
+                </span>
+            </div>
 
-                <div class="subject-card" onclick="goToSubject('french')">
-                    <div class="subject-icon">🇫🇷</div>
-                    <h4>الفرنسية</h4>
-                </div>
-
-                <div class="subject-card" onclick="goToSubject('science')">
-                    <div class="subject-icon">🔬</div>
-                    <h4>الإيقاظ العلمي</h4>
-                </div>
-
-                <div class="subject-card" onclick="goToSubject('history')">
-                    <div class="subject-icon">🌍</div>
-                    <h4>التاريخ والجغرافيا</h4>
-                </div>
-
-                <div class="subject-card" onclick="goToSubject('islamic')">
-                    <div class="subject-icon">🕌</div>
-                    <h4>التربية الإسلامية</h4>
-                </div>
+            <div class="subjects-grid" id="subjects-grid">
+                <div class="loading">⏳ جاري تحميل المواد...</div>
             </div>
         </section>
 
     </main>
 
-    <!-- ربط ملف نظام الإحالة -->
+    <!-- Scripts -->
     <script src="assets/js/referral.js"></script>
 
     <script>
         // ====================================
-        // وظائف نسخ الكود والرابط
+        // متغيرات عامة
         // ====================================
-        
+        let subjectsData = null;
+        let currentGrade = 'grade_6';
+
+        // ====================================
+        // تحميل بيانات المواد من JSON
+        // ====================================
+        async function loadSubjectsData() {
+            try {
+                const response = await fetch('assets/data/subjects.json');
+                if (!response.ok) {
+                    throw new Error('فشل تحميل البيانات');
+                }
+                subjectsData = await response.json();
+                return subjectsData;
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                
+                // بيانات احتياطية في حالة فشل التحميل
+                return {
+                    grades: {
+                        grade_6: {
+                            name: "السنة السادسة ابتدائي",
+                            subjects: [
+                                { id: "arabic_6", name: "اللغة العربية", icon: "📝", description: "قراءة وكتابة", lessons_count: 30 },
+                                { id: "french_6", name: "اللغة الفرنسية", icon: "🇫🇷", description: "Français", lessons_count: 26 },
+                                { id: "english_6", name: "اللغة الإنجليزية", icon: "🇬🇧", description: "English", lessons_count: 20 },
+                                { id: "math_6", name: "الرياضيات", icon: "🔢", description: "حساب وهندسة", lessons_count: 34 }
+                            ]
+                        }
+                    }
+                };
+            }
+        }
+
+        // ====================================
+        // تحميل وعرض المواد
+        // ====================================
+        async function loadSubjects() {
+            const selectedGrade = document.getElementById('grade-select').value;
+            currentGrade = selectedGrade;
+            
+            const grid = document.getElementById('subjects-grid');
+            grid.innerHTML = '<div class="loading">⏳ جاري تحميل المواد...</div>';
+            
+            // تحميل البيانات إذا لم تكن محملة
+            if (!subjectsData) {
+                subjectsData = await loadSubjectsData();
+            }
+            
+            const gradeData = subjectsData.grades[selectedGrade];
+            
+            if (!gradeData) {
+                grid.innerHTML = '<div class="loading">❌ لم يتم العثور على بيانات هذه السنة</div>';
+                return;
+            }
+            
+            // تحديث عرض السنة في الشريط الجانبي
+            document.getElementById('current-grade-display').textContent = `📚 ${gradeData.name}`;
+            
+            // تحديث الإحصائيات
+            const subjects = gradeData.subjects;
+            const totalLessons = subjects.reduce((sum, subject) => sum + subject.lessons_count, 0);
+            
+            document.getElementById('subjects-count').textContent = subjects.length;
+            document.getElementById('lessons-count').textContent = totalLessons;
+            document.getElementById('total-subjects-stat').textContent = subjects.length;
+            
+            // عرض المواد
+            grid.innerHTML = '';
+            subjects.forEach(subject => {
+                const card = document.createElement('div');
+                card.className = 'subject-card';
+                card.onclick = () => goToSubject(subject.id);
+                
+                card.innerHTML = `
+                    <span class="lessons-badge">${subject.lessons_count} درس</span>
+                    <div class="subject-icon">${subject.icon}</div>
+                    <h4>${subject.name}</h4>
+                    <p>${subject.description}</p>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        // ====================================
+        // الانتقال إلى صفحة المادة
+        // ====================================
+        function goToSubject(subjectId) {
+            // حفظ السنة المختارة
+            localStorage.setItem('selectedGrade', currentGrade);
+            localStorage.setItem('selectedSubject', subjectId);
+            
+            // الانتقال إلى صفحة المادة
+            window.location.href = `subjects/${subjectId}.html`;
+        }
+
+        // ====================================
+        // التمرير إلى قسم معين
+        // ====================================
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // ====================================
+        // نسخ كود ورابط الإحالة
+        // ====================================
         function copyReferralCode() {
             const codeElement = document.getElementById('referral-code');
             const code = codeElement.textContent;
@@ -668,28 +882,6 @@
         }
 
         // ====================================
-        // تحميل بيانات الإحالة عند فتح الصفحة
-        // ====================================
-        window.addEventListener('DOMContentLoaded', function() {
-            // التحقق من تسجيل الدخول
-            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
-            
-            if (!currentUser) {
-                // إذا لم يكن مسجل دخول، توجيه لصفحة تسجيل الدخول
-                window.location.href = 'login.html';
-                return;
-            }
-            
-            // عرض اسم المستخدم
-            document.getElementById('user-name').textContent = currentUser.username;
-            
-            // عرض معلومات الإحالة
-            if (window.ReferralSystem) {
-                window.ReferralSystem.displayReferralInfo();
-            }
-        });
-
-        // ====================================
         // تسجيل الخروج
         // ====================================
         function logout() {
@@ -700,18 +892,35 @@
         }
 
         // ====================================
-        // الانتقال إلى صفحة المادة
+        // التهيئة عند تحميل الصفحة
         // ====================================
-        function goToSubject(subject) {
-            window.location.href = `subjects/${subject}.html`;
-        }
-
-        // ====================================
-        // القائمة الجانبية للموبايل
-        // ====================================
-        function toggleSidebar() {
-            document.querySelector('.sidebar').classList.toggle('active');
-        }
+        window.addEventListener('DOMContentLoaded', async function() {
+            // التحقق من تسجيل الدخول
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            
+            if (!currentUser) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // عرض اسم المستخدم
+            document.getElementById('user-name').textContent = currentUser.username;
+            
+            // استرجاع السنة المحفوظة
+            const savedGrade = localStorage.getItem('selectedGrade');
+            if (savedGrade) {
+                document.getElementById('grade-select').value = savedGrade;
+                currentGrade = savedGrade;
+            }
+            
+            // تحميل المواد
+            await loadSubjects();
+            
+            // عرض معلومات الإحالة
+            if (window.ReferralSystem) {
+                window.ReferralSystem.displayReferralInfo();
+            }
+        });
     </script>
 
 </body>
