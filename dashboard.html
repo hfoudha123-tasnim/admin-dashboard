@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم الذكية</title>
+    <title>لوحة التحكم الذكية - المنصة التعليمية</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; direction: rtl; }
@@ -30,6 +30,7 @@
         table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
         th { background: #f7fafc; padding: 15px; text-align: right; font-weight: 700; color: #2d3748; border-bottom: 2px solid #e2e8f0; }
         td { padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #4a5568; }
+        tr:hover { background: #f7fafc; }
         .badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
         .badge-ai { background: linear-gradient(135deg, #48bb78 0%, #38a169 100%); color: white; }
         .badge-active { background: #bee3f8; color: #2c5282; }
@@ -41,13 +42,17 @@
         .dashboard-modal.active { display: flex; align-items: center; justify-content: center; }
         .dashboard-modal-content { background: white; padding: 40px; border-radius: 15px; width: 90%; max-width: 700px; max-height: 90vh; overflow-y: auto; }
         .dashboard-modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        .close-btn { font-size: 2rem; color: #718096; cursor: pointer; border: none; background: none; }
         .dashboard-stats-section { background: white; padding: 25px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .dashboard-stats-section h2 { margin-bottom: 20px; color: #2d3748; }
         .dashboard-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 20px; }
         .dashboard-stat-card { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; }
         .dashboard-stat-card h3 { font-size: 2rem; margin-bottom: 10px; }
         .dashboard-stat-card p { font-size: 0.9rem; opacity: 0.9; }
         .dashboard-lesson-card { background: white; padding: 20px; border-radius: 10px; margin-bottom: 15px; border-right: 4px solid #667eea; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .dashboard-lesson-card h4 { color: #2d3748; margin-bottom: 10px; }
         .dashboard-empty-state { text-align: center; padding: 40px 20px; color: #999; }
+        .dashboard-empty-state-icon { font-size: 3rem; margin-bottom: 10px; }
         @media (max-width: 768px) { 
             .dashboard-header { flex-direction: column; } 
             .dashboard-nav-tabs { flex-direction: column; } 
@@ -108,15 +113,8 @@
             <div class="dashboard-stats-section"><h2>📚 المواد الدراسية</h2></div>
             <div class="dashboard-table-wrapper">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>المادة</th>
-                            <th>المستويات</th>
-                            <th>عدد الدروس</th>
-                            <th>الذكاء الاصطناعي</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dashboard-subjects-tbody"><tr><td colspan="4" style="text-align:center;color:#999;">جاري التحميل...</td></tr></tbody>
+                    <thead><tr><th>المادة</th><th>المستويات</th><th>عدد الدروس</th><th>الذكاء الاصطناعي</th></tr></thead>
+                    <tbody id="dashboard-subjects-tbody"><tr><td colspan="4" style="text-align:center;">جاري التحميل...</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -125,7 +123,7 @@
         <div id="dashboard-lessons" class="dashboard-content">
             <div class="dashboard-stats-section">
                 <h2>📖 إدارة الدروس</h2>
-                <button class="btn btn-success" onclick="openDashboardAddLessonModal()">➕ إضافة درس</button>
+                <button class="btn btn-success" onclick="openAddLessonModal()">➕ إضافة درس</button>
             </div>
             <div id="dashboard-lessons-list"></div>
         </div>
@@ -134,19 +132,12 @@
         <div id="dashboard-videos" class="dashboard-content">
             <div class="dashboard-stats-section">
                 <h2>🎬 إدارة الفيديوهات</h2>
-                <button class="btn btn-success" onclick="openDashboardAddVideoModal()">➕ إضافة فيديو</button>
+                <button class="btn btn-success" onclick="openAddVideoModal()">➕ إضافة فيديو</button>
             </div>
             <div class="dashboard-table-wrapper">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>الفيديو</th>
-                            <th>الدرس</th>
-                            <th>الحالة</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dashboard-videos-tbody"><tr><td colspan="4" style="text-align:center;color:#999;">لا توجد فيديوهات</td></tr></tbody>
+                    <thead><tr><th>الفيديو</th><th>الدرس</th><th>الحالة</th><th>الإجراءات</th></tr></thead>
+                    <tbody id="dashboard-videos-tbody"><tr><td colspan="4" style="text-align:center;">لا توجد فيديوهات</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -155,19 +146,12 @@
         <div id="dashboard-exercises" class="dashboard-content">
             <div class="dashboard-stats-section">
                 <h2>✍️ إدارة التمارين</h2>
-                <button class="btn btn-success" onclick="openDashboardAddExerciseModal()">➕ إضافة تمرين</button>
+                <button class="btn btn-success" onclick="openAddExerciseModal()">➕ إضافة تمرين</button>
             </div>
             <div class="dashboard-table-wrapper">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>السؤال</th>
-                            <th>الدرس</th>
-                            <th>النوع</th>
-                            <th>الإجراءات</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dashboard-exercises-tbody"><tr><td colspan="4" style="text-align:center;color:#999;">لا توجد تمارين</td></tr></tbody>
+                    <thead><tr><th>السؤال</th><th>الدرس</th><th>النوع</th><th>الإجراءات</th></tr></thead>
+                    <tbody id="dashboard-exercises-tbody"><tr><td colspan="4" style="text-align:center;">لا توجد تمارين</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -176,19 +160,12 @@
         <div id="dashboard-students" class="dashboard-content">
             <div class="dashboard-stats-section">
                 <h2>👥 إدارة الطلاب</h2>
-                <button class="btn btn-success" onclick="openDashboardAddStudentModal()">➕ إضافة طالب</button>
+                <button class="btn btn-success" onclick="openAddStudentModal()">➕ إضافة طالب</button>
             </div>
             <div class="dashboard-table-wrapper">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>الاسم</th>
-                            <th>المستوى</th>
-                            <th>الأداء</th>
-                            <th>الحالة</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dashboard-students-tbody"><tr><td colspan="4" style="text-align:center;color:#999;">لا يوجد طلاب</td></tr></tbody>
+                    <thead><tr><th>الاسم</th><th>المستوى</th><th>الأداء</th><th>الحالة</th></tr></thead>
+                    <tbody id="dashboard-students-tbody"><tr><td colspan="4" style="text-align:center;">لا يوجد طلاب</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -197,19 +174,12 @@
         <div id="dashboard-subscriptions" class="dashboard-content">
             <div class="dashboard-stats-section">
                 <h2>💳 إدارة الاشتراكات</h2>
-                <button class="btn btn-success" onclick="openDashboardAddSubscriptionModal()">➕ إضافة خطة</button>
+                <button class="btn btn-success" onclick="openAddSubscriptionModal()">➕ إضافة خطة</button>
             </div>
             <div class="dashboard-table-wrapper">
                 <table>
-                    <thead>
-                        <tr>
-                            <th>الخطة</th>
-                            <th>السعر</th>
-                            <th>المدة</th>
-                            <th>الحالة</th>
-                        </tr>
-                    </thead>
-                    <tbody id="dashboard-subscriptions-tbody"><tr><td colspan="4" style="text-align:center;color:#999;">لا توجد خطط</td></tr></tbody>
+                    <thead><tr><th>الخطة</th><th>السعر</th><th>المدة</th><th>الحالة</th></tr></thead>
+                    <tbody id="dashboard-subscriptions-tbody"><tr><td colspan="4" style="text-align:center;">لا توجد خطط</td></tr></tbody>
                 </table>
             </div>
         </div>
@@ -224,311 +194,321 @@
     </div>
 
     <!-- MODALS -->
-    <div id="dashboardAddLessonModal" class="dashboard-modal">
+    <div id="addLessonModal" class="dashboard-modal">
         <div class="dashboard-modal-content">
             <div class="dashboard-modal-header">
-                <h2>إضافة درس ذكي</h2>
-                <button style="font-size:2rem;color:#718096;cursor:pointer;border:none;background:none;" onclick="closeDashboardModal('dashboardAddLessonModal')">×</button>
+                <h2>إضافة درس</h2>
+                <button class="close-btn" onclick="closeModal('addLessonModal')">×</button>
             </div>
-            <div class="form-group"><label>اسم الدرس</label><input type="text" id="dashboardLessonTitle" placeholder="أدخل اسم الدرس"></div>
-            <div class="form-group"><label>المادة</label><select id="dashboardLessonSubject"></select></div>
-            <div class="form-group"><label>المستوى</label><select id="dashboardLessonLevel"><option value="3">السنة 3</option><option value="4">السنة 4</option><option value="5">السنة 5</option><option value="6">السنة 6</option></select></div>
-            <div class="form-group"><label>الملخص</label><textarea id="dashboardLessonSummary" placeholder="أدخل ملخص الدرس" rows="3"></textarea></div>
-            <button class="btn btn-success" onclick="addDashboardLesson()" style="width:100%; margin-top:10px;">✓ إضافة</button>
+            <div class="form-group"><label>اسم الدرس</label><input type="text" id="lessonTitle" placeholder="أدخل اسم الدرس"></div>
+            <div class="form-group"><label>المادة</label><select id="lessonSubject"></select></div>
+            <div class="form-group"><label>المستوى</label><select id="lessonLevel"><option value="3">السنة 3</option><option value="4">السنة 4</option><option value="5">السنة 5</option><option value="6">السنة 6</option></select></div>
+            <div class="form-group"><label>الملخص</label><textarea id="lessonSummary" rows="3"></textarea></div>
+            <button class="btn btn-success" onclick="addLesson()" style="width:100%;">✓ إضافة</button>
         </div>
     </div>
 
-    <div id="dashboardAddVideoModal" class="dashboard-modal">
+    <div id="addVideoModal" class="dashboard-modal">
         <div class="dashboard-modal-content">
             <div class="dashboard-modal-header">
                 <h2>إضافة فيديو</h2>
-                <button style="font-size:2rem;color:#718096;cursor:pointer;border:none;background:none;" onclick="closeDashboardModal('dashboardAddVideoModal')">×</button>
+                <button class="close-btn" onclick="closeModal('addVideoModal')">×</button>
             </div>
-            <div class="form-group"><label>عنوان الفيديو</label><input type="text" id="dashboardVideoTitle" placeholder="أدخل عنوان الفيديو"></div>
-            <div class="form-group"><label>الدرس</label><select id="dashboardVideoLesson"></select></div>
-            <div class="form-group"><label>رابط YouTube</label><input type="url" id="dashboardVideoUrl" placeholder="https://youtube.com/..."></div>
-            <button class="btn btn-success" onclick="addDashboardVideo()" style="width:100%; margin-top:10px;">✓ إضافة</button>
+            <div class="form-group"><label>عنوان الفيديو</label><input type="text" id="videoTitle"></div>
+            <div class="form-group"><label>الدرس</label><select id="videoLesson"></select></div>
+            <div class="form-group"><label>رابط YouTube</label><input type="url" id="videoUrl"></div>
+            <button class="btn btn-success" onclick="addVideo()" style="width:100%;">✓ إضافة</button>
         </div>
     </div>
 
-    <div id="dashboardAddExerciseModal" class="dashboard-modal">
+    <div id="addExerciseModal" class="dashboard-modal">
         <div class="dashboard-modal-content">
             <div class="dashboard-modal-header">
                 <h2>إضافة تمرين</h2>
-                <button style="font-size:2rem;color:#718096;cursor:pointer;border:none;background:none;" onclick="closeDashboardModal('dashboardAddExerciseModal')">×</button>
+                <button class="close-btn" onclick="closeModal('addExerciseModal')">×</button>
             </div>
-            <div class="form-group"><label>السؤال</label><textarea id="dashboardExerciseQuestion" placeholder="أدخل السؤال" rows="3"></textarea></div>
-            <div class="form-group"><label>الدرس</label><select id="dashboardExerciseLesson"></select></div>
-            <div class="form-group"><label>النوع</label><select id="dashboardExerciseType"><option value="multiple">اختيار من متعدد</option><option value="blank">ملء الفراغ</option><option value="true-false">صح/خطأ</option></select></div>
-            <button class="btn btn-success" onclick="addDashboardExercise()" style="width:100%; margin-top:10px;">✓ إضافة</button>
+            <div class="form-group"><label>السؤال</label><textarea id="exerciseQuestion" rows="3"></textarea></div>
+            <div class="form-group"><label>الدرس</label><select id="exerciseLesson"></select></div>
+            <div class="form-group"><label>النوع</label><select id="exerciseType"><option value="multiple">اختيار من متعدد</option><option value="blank">ملء الفراغ</option><option value="true-false">صح/خطأ</option></select></div>
+            <button class="btn btn-success" onclick="addExercise()" style="width:100%;">✓ إضافة</button>
         </div>
     </div>
 
-    <div id="dashboardAddStudentModal" class="dashboard-modal">
+    <div id="addStudentModal" class="dashboard-modal">
         <div class="dashboard-modal-content">
             <div class="dashboard-modal-header">
                 <h2>إضافة طالب</h2>
-                <button style="font-size:2rem;color:#718096;cursor:pointer;border:none;background:none;" onclick="closeDashboardModal('dashboardAddStudentModal')">×</button>
+                <button class="close-btn" onclick="closeModal('addStudentModal')">×</button>
             </div>
-            <div class="form-group"><label>اسم الطالب</label><input type="text" id="dashboardStudentName" placeholder="أدخل اسم الطالب"></div>
-            <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="dashboardStudentEmail" placeholder="example@mail.com"></div>
-            <div class="form-group"><label>المستوى</label><select id="dashboardStudentLevel"><option value="3">السنة 3</option><option value="4">السنة 4</option><option value="5">السنة 5</option><option value="6">السنة 6</option></select></div>
-            <button class="btn btn-success" onclick="addDashboardStudent()" style="width:100%; margin-top:10px;">✓ إضافة</button>
+            <div class="form-group"><label>اسم الطالب</label><input type="text" id="studentName"></div>
+            <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="studentEmail"></div>
+            <div class="form-group"><label>المستوى</label><select id="studentLevel"><option value="3">السنة 3</option><option value="4">السنة 4</option><option value="5">السنة 5</option><option value="6">السنة 6</option></select></div>
+            <button class="btn btn-success" onclick="addStudent()" style="width:100%;">✓ إضافة</button>
         </div>
     </div>
 
-    <div id="dashboardAddSubscriptionModal" class="dashboard-modal">
+    <div id="addSubscriptionModal" class="dashboard-modal">
         <div class="dashboard-modal-content">
             <div class="dashboard-modal-header">
                 <h2>إضافة خطة اشتراك</h2>
-                <button style="font-size:2rem;color:#718096;cursor:pointer;border:none;background:none;" onclick="closeDashboardModal('dashboardAddSubscriptionModal')">×</button>
+                <button class="close-btn" onclick="closeModal('addSubscriptionModal')">×</button>
             </div>
-            <div class="form-group"><label>اسم الخطة</label><input type="text" id="dashboardSubscriptionName" placeholder="مثال: خطة أساسية"></div>
-            <div class="form-group"><label>السعر (د.ت)</label><input type="number" id="dashboardSubscriptionPrice" placeholder="12" min="0" step="0.01"></div>
-            <div class="form-group"><label>المدة (بالأيام)</label><input type="number" id="dashboardSubscriptionDuration" placeholder="30" min="1"></div>
-            <button class="btn btn-success" onclick="addDashboardSubscription()" style="width:100%; margin-top:10px;">✓ إضافة</button>
+            <div class="form-group"><label>اسم الخطة</label><input type="text" id="subscriptionName"></div>
+            <div class="form-group"><label>السعر (د.ت)</label><input type="number" id="subscriptionPrice" step="0.01"></div>
+            <div class="form-group"><label>المدة (أيام)</label><input type="number" id="subscriptionDuration"></div>
+            <button class="btn btn-success" onclick="addSubscription()" style="width:100%;">✓ إضافة</button>
         </div>
     </div>
 
     <!-- SCRIPT -->
-    <script src="js/dashboard.js"></script>
     <script>
+        // ====== نظام التحكم بلوحة التحكم ======
+        const subjects = [
+            {id:'arabic',name:'اللغة العربية'},
+            {id:'math',name:'الرياضيات'},
+            {id:'french',name:'الفرنسية'},
+            {id:'science',name:'الإيقاظ العلمي'},
+            {id:'islamic',name:'التربية الإسلامية'},
+            {id:'english',name:'الإنجليزية'},
+            {id:'history',name:'التاريخ'},
+            {id:'geography',name:'الجغرافيا'}
+        ];
+
+        let lessons = JSON.parse(localStorage.getItem('lessons')) || [];
+        let videos = JSON.parse(localStorage.getItem('videos')) || [];
+        let exercises = JSON.parse(localStorage.getItem('exercises')) || [];
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+        let subscriptions = JSON.parse(localStorage.getItem('subscriptions')) || [];
+
+        // حفظ البيانات
+        function saveData() {
+            localStorage.setItem('lessons', JSON.stringify(lessons));
+            localStorage.setItem('videos', JSON.stringify(videos));
+            localStorage.setItem('exercises', JSON.stringify(exercises));
+            localStorage.setItem('students', JSON.stringify(students));
+            localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
+        }
+
+        // تبديل التبويبات
         function switchDashboardTab(e, tabName) {
             document.querySelectorAll('.dashboard-content').forEach(tab => tab.classList.remove('active'));
             document.querySelectorAll('.dashboard-nav-tab').forEach(tab => tab.classList.remove('active'));
             document.getElementById(tabName).classList.add('active');
             e.target.classList.add('active');
-            updateDashboardAll();
+            updateAll();
         }
 
-        function updateDashboardAll() {
-            updateDashboardStats();
-            updateDashboardSubjects();
-            updateDashboardLessons();
-            updateDashboardVideos();
-            updateDashboardExercises();
-            updateDashboardStudents();
-            updateDashboardSubscriptions();
-            updateDashboardAI();
+        // تحديث جميع البيانات
+        function updateAll() {
+            updateStats();
+            updateSubjects();
+            updateLessons();
+            updateVideos();
+            updateExercises();
+            updateStudents();
+            updateSubscriptions();
+            updateAI();
         }
 
-        function updateDashboardStats() {
-            const stats = dashboard.getStats();
-            document.getElementById('dashboard-total-subjects').textContent = stats.totalSubjects;
-            document.getElementById('dashboard-total-lessons').textContent = stats.totalLessons;
-            document.getElementById('dashboard-total-videos').textContent = stats.totalVideos;
-            document.getElementById('dashboard-total-exercises').textContent = stats.totalExercises;
-            document.getElementById('dashboard-total-students').textContent = stats.totalStudents;
-            document.getElementById('dashboard-active-students').textContent = stats.activeStudents;
-            document.getElementById('dashboard-avg-performance').textContent = stats.avgPerformance + '%';
-            document.getElementById('dashboard-total-revenue').textContent = stats.totalRevenue.toFixed(2) + ' د.ت';
+        // تحديث الإحصائيات
+        function updateStats() {
+            document.getElementById('dashboard-total-subjects').textContent = subjects.length;
+            document.getElementById('dashboard-total-lessons').textContent = lessons.length;
+            document.getElementById('dashboard-total-videos').textContent = videos.length;
+            document.getElementById('dashboard-total-exercises').textContent = exercises.length;
+            document.getElementById('dashboard-total-students').textContent = students.length;
+            document.getElementById('dashboard-active-students').textContent = students.filter(s => s.status === 'نشط').length;
+            const avgPerf = students.length > 0 ? Math.round(students.reduce((a,s) => a + (s.performance || 0), 0) / students.length) : 0;
+            document.getElementById('dashboard-avg-performance').textContent = avgPerf + '%';
+            const revenue = subscriptions.reduce((a,s) => a + (s.price * (s.subscribers || 0)), 0);
+            document.getElementById('dashboard-total-revenue').textContent = revenue.toFixed(2) + ' د.ت';
         }
 
-        function updateDashboardSubjects() {
-            let html = dashboard.subjects.map(s => {
-                const lessonCount = dashboard.lessons.filter(l => l.subject === s.id).length;
-                return `<tr><td><strong>${s.name}</strong></td><td>${s.levels.join(', ')}</td><td>${lessonCount}</td><td><span class="badge badge-ai">🤖 مفعّل</span></td></tr>`;
+        // تحديث المواد
+        function updateSubjects() {
+            let html = subjects.map(s => {
+                const count = lessons.filter(l => l.subject === s.id).length;
+                return `<tr><td><strong>${s.name}</strong></td><td>3,4,5,6</td><td>${count}</td><td><span class="badge badge-ai">🤖 مفعّل</span></td></tr>`;
             }).join('');
             document.getElementById('dashboard-subjects-tbody').innerHTML = html;
         }
 
-        function updateDashboardLessons() {
-            if (dashboard.lessons.length === 0) {
-                document.getElementById('dashboard-lessons-list').innerHTML = '<div class="dashboard-empty-state"><div style="font-size:3rem;">📖</div><p>لا توجد دروس</p></div>';
+        // تحديث الدروس
+        function updateLessons() {
+            if (lessons.length === 0) {
+                document.getElementById('dashboard-lessons-list').innerHTML = '<div class="dashboard-empty-state"><div class="dashboard-empty-state-icon">📖</div><p>لا توجد دروس</p></div>';
                 return;
             }
-            let html = dashboard.lessons.map(l => {
-                const subject = dashboard.subjects.find(s => s.id === l.subject);
-                return `<div class="dashboard-lesson-card"><h4>${l.title}</h4><div style="font-size:0.9rem;color:#718096;margin-bottom:10px;">📚 ${subject?.name} | السنة ${l.level}</div><button class="btn btn-danger" onclick="deleteDashboardLesson('${l.id}')" style="margin-top:10px;">🗑️ حذف</button></div>`;
+            let html = lessons.map(l => {
+                const subj = subjects.find(s => s.id === l.subject);
+                return `<div class="dashboard-lesson-card"><h4>${l.title}</h4><p style="color:#718096;margin:10px 0;">📚 ${subj.name} | السنة ${l.level}</p><button class="btn btn-danger" onclick="deleteLesson('${l.id}')" style="margin-top:10px;">🗑️ حذف</button></div>`;
             }).join('');
             document.getElementById('dashboard-lessons-list').innerHTML = html;
         }
 
-        function updateDashboardVideos() {
-            if (dashboard.videos.length === 0) {
-                document.getElementById('dashboard-videos-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:#999;">لا توجد فيديوهات</td></tr>';
+        // تحديث الفيديوهات
+        function updateVideos() {
+            if (videos.length === 0) {
+                document.getElementById('dashboard-videos-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد فيديوهات</td></tr>';
                 return;
             }
-            let html = dashboard.videos.map(v => {
-                const lesson = dashboard.lessons.find(l => l.id === v.lessonId);
-                return `<tr><td>${v.title}</td><td>${lesson?.title || 'N/A'}</td><td><span class="badge badge-active">متاح</span></td><td><button class="btn btn-danger" onclick="deleteDashboardVideo('${v.id}')" style="padding:6px 10px;font-size:0.85rem;">حذف</button></td></tr>`;
+            let html = videos.map(v => {
+                const lesson = lessons.find(l => l.id === v.lessonId);
+                return `<tr><td>${v.title}</td><td>${lesson ? lesson.title : 'N/A'}</td><td><span class="badge badge-active">متاح</span></td><td><button class="btn btn-danger" onclick="deleteVideo('${v.id}')" style="padding:6px 10px;">حذف</button></td></tr>`;
             }).join('');
             document.getElementById('dashboard-videos-tbody').innerHTML = html;
         }
 
-        function updateDashboardExercises() {
-            if (dashboard.exercises.length === 0) {
-                document.getElementById('dashboard-exercises-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:#999;">لا توجد تمارين</td></tr>';
+        // تحديث التمارين
+        function updateExercises() {
+            if (exercises.length === 0) {
+                document.getElementById('dashboard-exercises-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد تمارين</td></tr>';
                 return;
             }
-            let html = dashboard.exercises.map(e => {
-                return `<tr><td>${e.question.substring(0, 40)}...</td><td>درس</td><td>${e.type}</td><td><button class="btn btn-danger" onclick="deleteDashboardExercise('${e.id}')" style="padding:6px 10px;font-size:0.85rem;">حذف</button></td></tr>`;
+            let html = exercises.map(e => {
+                return `<tr><td>${e.question.substring(0,40)}...</td><td>درس</td><td>${e.type}</td><td><button class="btn btn-danger" onclick="deleteExercise('${e.id}')" style="padding:6px 10px;">حذف</button></td></tr>`;
             }).join('');
             document.getElementById('dashboard-exercises-tbody').innerHTML = html;
         }
 
-        function updateDashboardStudents() {
-            if (dashboard.students.length === 0) {
-                document.getElementById('dashboard-students-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:#999;">لا يوجد طلاب</td></tr>';
+        // تحديث الطلاب
+        function updateStudents() {
+            if (students.length === 0) {
+                document.getElementById('dashboard-students-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;">لا يوجد طلاب</td></tr>';
                 return;
             }
-            let html = dashboard.students.map(s => {
+            let html = students.map(s => {
                 return `<tr><td>${s.name}</td><td>السنة ${s.level}</td><td>${s.performance}%</td><td><span class="badge badge-active">نشط</span></td></tr>`;
             }).join('');
             document.getElementById('dashboard-students-tbody').innerHTML = html;
         }
 
-        function updateDashboardSubscriptions() {
-            if (dashboard.subscriptions.length === 0) {
-                document.getElementById('dashboard-subscriptions-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:#999;">لا توجد خطط</td></tr>';
+        // تحديث الاشتراكات
+        function updateSubscriptions() {
+            if (subscriptions.length === 0) {
+                document.getElementById('dashboard-subscriptions-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد خطط</td></tr>';
                 return;
             }
-            let html = dashboard.subscriptions.map(s => {
+            let html = subscriptions.map(s => {
                 return `<tr><td><strong>${s.name}</strong></td><td>${s.price} د.ت</td><td>${s.duration} يوم</td><td><span class="badge badge-active">مفعل</span></td></tr>`;
             }).join('');
             document.getElementById('dashboard-subscriptions-tbody').innerHTML = html;
         }
 
-        function updateDashboardAI() {
-            const insights = dashboard.generateAIInsights();
-            let html = insights.map(i => {
-                return `<div class="dashboard-lesson-card"><h4>${i.icon} ${i.type}</h4><p>${i.message}</p></div>`;
-            }).join('');
+        // تحديث الرؤى الذكية
+        function updateAI() {
+            let insights = [];
+            if (lessons.length < 10) insights.push({ icon: '⚠️', type: 'تحذير', msg: `أضف ${10-lessons.length} دروس` });
+            if (exercises.length < 50) insights.push({ icon: '💡', type: 'اقتراح', msg: `أضف ${50-exercises.length} تمرين` });
+            insights.push({ icon: '📊', type: 'معلومة', msg: `لديك ${students.length} طالب مسجل` });
+            
+            let html = insights.map(i => `<div class="dashboard-lesson-card"><h4>${i.icon} ${i.type}</h4><p>${i.msg}</p></div>`).join('');
             document.getElementById('dashboard-ai-content').innerHTML = html;
         }
 
-        function openDashboardAddLessonModal() {
-            const select = document.getElementById('dashboardLessonSubject');
-            select.innerHTML = dashboard.subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-            document.getElementById('dashboardAddLessonModal').classList.add('active');
+        // فتح/إغلاق النماذج
+        function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+        function openAddLessonModal() {
+            document.getElementById('lessonSubject').innerHTML = subjects.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+            document.getElementById('addLessonModal').classList.add('active');
+        }
+        function openAddVideoModal() {
+            document.getElementById('videoLesson').innerHTML = lessons.length ? lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('') : '<option>لا توجد دروس</option>';
+            document.getElementById('addVideoModal').classList.add('active');
+        }
+        function openAddExerciseModal() {
+            document.getElementById('exerciseLesson').innerHTML = lessons.length ? lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('') : '<option>لا توجد دروس</option>';
+            document.getElementById('addExerciseModal').classList.add('active');
+        }
+        function openAddStudentModal() { document.getElementById('addStudentModal').classList.add('active'); }
+        function openAddSubscriptionModal() { document.getElementById('addSubscriptionModal').classList.add('active'); }
+
+        // إضافة البيانات
+        function addLesson() {
+            const title = document.getElementById('lessonTitle').value;
+            const subject = document.getElementById('lessonSubject').value;
+            const level = document.getElementById('lessonLevel').value;
+            const summary = document.getElementById('lessonSummary').value;
+            if (!title || !subject) { alert('⚠️ ملء الحقول المطلوبة'); return; }
+            lessons.push({id: 'L'+Date.now(), title, subject, level, summary, createdAt: new Date().toLocaleString('ar-TN')});
+            saveData();
+            closeModal('addLessonModal');
+            document.getElementById('lessonTitle').value = '';
+            updateAll();
+            alert('✅ تم الإضافة');
         }
 
-        function addDashboardLesson() {
-            const title = document.getElementById('dashboardLessonTitle').value;
-            const subject = document.getElementById('dashboardLessonSubject').value;
-            const level = document.getElementById('dashboardLessonLevel').value;
-            const summary = document.getElementById('dashboardLessonSummary').value;
-            const result = dashboard.addLesson(title, subject, level, summary, true);
-            if (result.success) {
-                alert('✅ ' + result.message);
-                document.getElementById('dashboardAddLessonModal').classList.remove('active');
-                document.getElementById('dashboardLessonTitle').value = '';
-                updateDashboardAll();
-            }
+        function addVideo() {
+            const title = document.getElementById('videoTitle').value;
+            const lessonId = document.getElementById('videoLesson').value;
+            const url = document.getElementById('videoUrl').value;
+            if (!title || !lessonId || !url) { alert('⚠️ ملء الحقول المطلوبة'); return; }
+            videos.push({id: 'V'+Date.now(), title, lessonId, url, createdAt: new Date().toLocaleString('ar-TN')});
+            saveData();
+            closeModal('addVideoModal');
+            document.getElementById('videoTitle').value = '';
+            updateAll();
+            alert('✅ تم الإضافة');
         }
 
-        function deleteDashboardLesson(id) {
-            if (confirm('هل تريد حذف هذا الدرس؟')) {
-                dashboard.deleteLesson(id);
-                updateDashboardAll();
-            }
+        function addExercise() {
+            const question = document.getElementById('exerciseQuestion').value;
+            const lessonId = document.getElementById('exerciseLesson').value;
+            const type = document.getElementById('exerciseType').value;
+            if (!question || !lessonId) { alert('⚠️ ملء الحقول المطلوبة'); return; }
+            exercises.push({id: 'E'+Date.now(), question, lessonId, type, createdAt: new Date().toLocaleString('ar-TN')});
+            saveData();
+            closeModal('addExerciseModal');
+            document.getElementById('exerciseQuestion').value = '';
+            updateAll();
+            alert('✅ تم الإضافة');
         }
 
-        function openDashboardAddVideoModal() {
-            const select = document.getElementById('dashboardVideoLesson');
-            select.innerHTML = dashboard.lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
-            if (dashboard.lessons.length === 0) select.innerHTML = '<option>لا توجد دروس</option>';
-            document.getElementById('dashboardAddVideoModal').classList.add('active');
+        function addStudent() {
+            const name = document.getElementById('studentName').value;
+            const email = document.getElementById('studentEmail').value;
+            const level = document.getElementById('studentLevel').value;
+            if (!name || !email) { alert('⚠️ ملء الحقول المطلوبة'); return; }
+            students.push({id: 'S'+Date.now(), name, email, level, status: 'نشط', performance: 0});
+            saveData();
+            closeModal('addStudentModal');
+            document.getElementById('studentName').value = '';
+            updateAll();
+            alert('✅ تم الإضافة');
         }
 
-        function addDashboardVideo() {
-            const title = document.getElementById('dashboardVideoTitle').value;
-            const lessonId = document.getElementById('dashboardVideoLesson').value;
-            const url = document.getElementById('dashboardVideoUrl').value;
-            const result = dashboard.addVideo(title, lessonId, url, 10);
-            if (result.success) {
-                alert('✅ ' + result.message);
-                document.getElementById('dashboardAddVideoModal').classList.remove('active');
-                document.getElementById('dashboardVideoTitle').value = '';
-                updateDashboardAll();
-            }
+        function addSubscription() {
+            const name = document.getElementById('subscriptionName').value;
+            const price = parseFloat(document.getElementById('subscriptionPrice').value);
+            const duration = parseInt(document.getElementById('subscriptionDuration').value);
+            if (!name || !price || !duration) { alert('⚠️ ملء الحقول المطلوبة'); return; }
+            subscriptions.push({id: 'SB'+Date.now(), name, price, duration, subscribers: 0});
+            saveData();
+            closeModal('addSubscriptionModal');
+            document.getElementById('subscriptionName').value = '';
+            updateAll();
+            alert('✅ تم الإضافة');
         }
 
-        function deleteDashboardVideo(id) {
-            if (confirm('هل تريد حذف هذا الفيديو؟')) {
-                dashboard.deleteVideo(id);
-                updateDashboardAll();
-            }
-        }
+        // حذف البيانات
+        function deleteLesson(id) { if (confirm('حذف؟')) { lessons = lessons.filter(l => l.id !== id); saveData(); updateAll(); } }
+        function deleteVideo(id) { if (confirm('حذف؟')) { videos = videos.filter(v => v.id !== id); saveData(); updateAll(); } }
+        function deleteExercise(id) { if (confirm('حذف؟')) { exercises = exercises.filter(e => e.id !== id); saveData(); updateAll(); } }
 
-        function openDashboardAddExerciseModal() {
-            const select = document.getElementById('dashboardExerciseLesson');
-            select.innerHTML = dashboard.lessons.map(l => `<option value="${l.id}">${l.title}</option>`).join('');
-            if (dashboard.lessons.length === 0) select.innerHTML = '<option>لا توجد دروس</option>';
-            document.getElementById('dashboardAddExerciseModal').classList.add('active');
-        }
-
-        function addDashboardExercise() {
-            const question = document.getElementById('dashboardExerciseQuestion').value;
-            const lessonId = document.getElementById('dashboardExerciseLesson').value;
-            const type = document.getElementById('dashboardExerciseType').value;
-            const result = dashboard.addExercise(question, lessonId, type, 'إجابة', true);
-            if (result.success) {
-                alert('✅ ' + result.message);
-                document.getElementById('dashboardAddExerciseModal').classList.remove('active');
-                document.getElementById('dashboardExerciseQuestion').value = '';
-                updateDashboardAll();
-            }
-        }
-
-        function deleteDashboardExercise(id) {
-            if (confirm('هل تريد حذف هذا التمرين؟')) {
-                dashboard.deleteExercise(id);
-                updateDashboardAll();
-            }
-        }
-
-        function openDashboardAddStudentModal() {
-            document.getElementById('dashboardAddStudentModal').classList.add('active');
-        }
-
-        function addDashboardStudent() {
-            const name = document.getElementById('dashboardStudentName').value;
-            const email = document.getElementById('dashboardStudentEmail').value;
-            const level = document.getElementById('dashboardStudentLevel').value;
-            const result = dashboard.addStudent(name, email, level);
-            if (result.success) {
-                alert('✅ ' + result.message);
-                document.getElementById('dashboardAddStudentModal').classList.remove('active');
-                document.getElementById('dashboardStudentName').value = '';
-                updateDashboardAll();
-            }
-        }
-
-        function openDashboardAddSubscriptionModal() {
-            document.getElementById('dashboardAddSubscriptionModal').classList.add('active');
-        }
-
-        function addDashboardSubscription() {
-            const name = document.getElementById('dashboardSubscriptionName').value;
-            const price = document.getElementById('dashboardSubscriptionPrice').value;
-            const duration = document.getElementById('dashboardSubscriptionDuration').value;
-            const result = dashboard.addSubscription(name, price, duration, 'ميزة 1\nميزة 2');
-            if (result.success) {
-                alert('✅ ' + result.message);
-                document.getElementById('dashboardAddSubscriptionModal').classList.remove('active');
-                document.getElementById('dashboardSubscriptionName').value = '';
-                updateDashboardAll();
-            }
-        }
-
-        function closeDashboardModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
+        // تحميل التقرير
         function downloadDashboardReport() {
-            const stats = dashboard.getStats();
-            const report = `تقرير لوحة التحكم - ${new Date().toLocaleString('ar-TN')}\n════════════════════════════════════════\n📊 الإحصائيات:\n- المواد: ${stats.totalSubjects}\n- الدروس: ${stats.totalLessons}\n- الفيديوهات: ${stats.totalVideos}\n- التمارين: ${stats.totalExercises}\n- الطلاب: ${stats.totalStudents}\n- الإيرادات: ${stats.totalRevenue.toFixed(2)} د.ت\n════════════════════════════════════════`;
-            const blob = new Blob([report], { type: 'text/plain' });
+            const stats = `تقرير لوحة التحكم\n${'='.repeat(40)}\nالمواد: ${subjects.length}\nالدروس: ${lessons.length}\nالفيديوهات: ${videos.length}\nالتمارين: ${exercises.length}\nالطلاب: ${students.length}`;
+            const blob = new Blob([stats], { type: 'text/plain' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'dashboard-report-' + Date.now() + '.txt';
+            a.download = 'report.txt';
             a.click();
         }
 
-        document.addEventListener('DOMContentLoaded', () => updateDashboardAll());
-        setInterval(updateDashboardAll, 30000);
+        // التهيئة
+        document.addEventListener('DOMContentLoaded', updateAll);
+        window.onclick = (e) => { if (e.target.classList.contains('dashboard-modal')) e.target.classList.remove('active'); }
     </script>
 </body>
 </html>
