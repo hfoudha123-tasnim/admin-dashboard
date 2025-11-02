@@ -3,30 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرياضيات - السنة 3 و 4</title>
+    <title>لوحة التحكم - المنصة التعليمية</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
+        
+        body {
             font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        .container { max-width: 1400px; margin: 0 auto; }
+
+        .container { max-width: 1600px; margin: 0 auto; }
+
+        /* ==================== الرأس ==================== */
         .header {
             background: white;
-            padding: 20px;
+            padding: 25px;
             border-radius: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        .header h1 { color: #667eea; font-size: 2rem; }
-        .header-actions { display: flex; gap: 10px; }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-left h1 {
+            color: #667eea;
+            font-size: 2.5rem;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* ==================== الأزرار ==================== */
         .btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -35,759 +76,1172 @@
             font-family: inherit;
             font-size: 1rem;
             text-decoration: none;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
         }
-        .btn-back {
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
             background: #667eea;
             color: white;
         }
-        .btn-back:hover {
+
+        .btn-primary:hover:not(:disabled) {
             background: #764ba2;
             transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        .btn-admin {
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover:not(:disabled) {
+            background: #38a169;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
             background: #f39c12;
             color: white;
         }
-        .btn-admin:hover {
+
+        .btn-warning:hover:not(:disabled) {
             background: #d68910;
+            transform: translateY(-2px);
         }
-        .content-wrapper {
-            display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 20px;
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
         }
-        .lessons-sidebar {
+
+        .btn-danger:hover:not(:disabled) {
+            background: #c53030;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #4a5568;
+            transform: translateY(-2px);
+        }
+
+        .btn-logout {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-logout:hover {
+            background: #c53030;
+        }
+
+        /* ==================== قائمة التنقل ==================== */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
             background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            max-height: 700px;
-            overflow-y: auto;
-            order: 2;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
-        .lessons-sidebar h3 {
-            margin-bottom: 15px;
-            color: #2d3748;
-        }
-        .lesson-item {
-            padding: 12px;
-            margin-bottom: 10px;
-            background: #f7fafc;
-            border-radius: 8px;
+
+        .nav-tab {
+            padding: 12px 20px;
+            border: 2px solid transparent;
+            background: #f0f0f0;
             cursor: pointer;
-            border-right: 3px solid transparent;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #4a5568;
             transition: all 0.3s;
         }
-        .lesson-item:hover {
-            background: #edf2f7;
-            border-right-color: #667eea;
+
+        .nav-tab:hover {
+            background: #e2e8f0;
+            border-color: #667eea;
         }
-        .lesson-item.active {
-            background: #e6e9f7;
-            border-right-color: #667eea;
-            font-weight: bold;
+
+        .nav-tab.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
         }
-        .lesson-item-title { font-weight: 600; margin-bottom: 5px; }
-        .lesson-item-meta { font-size: 0.8rem; color: #718096; }
-        .lesson-content {
+
+        /* ==================== المحتوى الرئيسي ==================== */
+        .content {
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
             background: white;
+            padding: 25px;
             border-radius: 15px;
-            padding: 30px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            order: 1;
+            transition: all 0.3s;
         }
-        .lesson-header {
-            border-bottom: 2px solid #667eea;
-            padding-bottom: 20px;
-            margin-bottom: 20px;
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
-        .lesson-header h2 {
-            font-size: 2rem;
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
             color: #2d3748;
             margin-bottom: 10px;
+            font-size: 1.5rem;
         }
-        .lesson-meta { display: flex; gap: 20px; font-size: 0.95rem; color: #718096; flex-wrap: wrap; }
-        .video-section {
-            margin-bottom: 30px;
-        }
-        .video-section h3 {
+
+        .card p {
+            color: #718096;
             margin-bottom: 15px;
-            color: #2d3748;
+            line-height: 1.6;
         }
-        .video-container {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-            border-radius: 10px;
-            background: #000;
+
+        .card-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
         }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+
+        .card-actions {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            font-size: 3rem;
+            gap: 10px;
+            flex-wrap: wrap;
         }
-        .summary-section {
-            background: #f7fafc;
+
+        /* ==================== الجداول ==================== */
+        .table-wrapper {
+            background: white;
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            overflow-x: auto;
             margin-bottom: 30px;
-            border-right: 4px solid #667eea;
         }
-        .summary-section h3 {
-            margin-bottom: 15px;
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        th {
+            background: #f7fafc;
+            padding: 15px;
+            text-align: right;
+            font-weight: 700;
             color: #2d3748;
+            border-bottom: 2px solid #e2e8f0;
         }
-        .summary-section p {
-            line-height: 1.8;
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
             color: #4a5568;
         }
-        .objectives-section {
-            background: #f0fff4;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            border-right: 4px solid #48bb78;
+
+        tr:hover {
+            background: #f7fafc;
         }
-        .objectives-section h3 {
-            margin-bottom: 15px;
-            color: #22543d;
+
+        tr:last-child td {
+            border-bottom: none;
         }
-        .objectives-list {
-            list-style: none;
-        }
-        .objectives-list li {
-            padding: 8px 0;
-            color: #2f855a;
+
+        .table-actions {
             display: flex;
-            align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
-        .objectives-list li::before {
-            content: "✓";
-            font-weight: bold;
-            color: #48bb78;
-            font-size: 1.2rem;
-        }
-        .exercises-section {
-            margin-bottom: 30px;
-        }
-        .exercises-section h3 {
-            margin-bottom: 20px;
-            color: #2d3748;
-        }
-        .exercise {
-            background: #fef5e7;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            border-right: 4px solid #f39c12;
-        }
-        .exercise-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .exercise-number {
-            background: #f39c12;
-            color: white;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-weight: bold;
-        }
-        .exercise-type {
-            background: white;
+
+        .badge {
+            display: inline-block;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
-            color: #666;
-        }
-        .exercise-question {
             font-weight: 600;
-            margin-bottom: 15px;
+        }
+
+        .badge-success { background: #c6f6d5; color: #22543d; }
+        .badge-warning { background: #feebc8; color: #7c2d12; }
+        .badge-danger { background: #fed7d7; color: #742a2a; }
+        .badge-primary { background: #bee3f8; color: #2c5aa0; }
+
+        /* ==================== الفورمات ==================== */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
             color: #2d3748;
         }
-        .exercise-options {
-            display: grid;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .option {
-            background: white;
-            padding: 12px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-        .option:hover {
-            border-color: #667eea;
-            background: #f7fafc;
-        }
-        .option label {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
-        .exercise-input {
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ddd;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            font-size: 1rem;
             font-family: inherit;
+            font-size: 1rem;
         }
-        .btn-check-answer {
-            background: #667eea;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            margin-top: 10px;
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
         }
-        .btn-check-answer:hover {
-            background: #764ba2;
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
         }
-        .feedback {
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 8px;
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        /* ==================== المودال ==================== */
+        .modal {
             display: none;
-        }
-        .feedback.correct {
-            background: #d4edda;
-            color: #155724;
-        }
-        .feedback.incorrect {
-            background: #f8d7da;
-            color: #721c24;
-        }
-        .ai-widget-toggle {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal.active {
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            font-size: 2rem;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
-            z-index: 999;
-            transition: transform 0.3s;
-            border: none;
         }
-        .ai-widget-toggle:hover {
-            transform: scale(1.1);
-        }
-        #ai-chat-widget {
-            position: fixed;
-            bottom: 100px;
-            left: 20px;
-            width: 350px;
-            height: 500px;
-            background: white;
+
+        .modal-content {
+            background-color: white;
+            padding: 40px;
             border-radius: 15px;
-            box-shadow: 0 5px 40px rgba(0,0,0,0.2);
-            display: none;
-            flex-direction: column;
-            z-index: 998;
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
         }
-        #ai-chat-widget.open {
-            display: flex;
-        }
-        .ai-widget-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 15px 15px 0 0;
+
+        .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 15px;
         }
-        #ai-messages {
-            flex: 1;
-            overflow-y: auto;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+
+        .modal-header h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
         }
-        .ai-message {
-            display: flex;
+
+        .close-btn {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #718096;
+            cursor: pointer;
+            border: none;
+            background: none;
+        }
+
+        .close-btn:hover {
+            color: #2d3748;
+        }
+
+        /* ==================== الإحصائيات ==================== */
+        .stats-section {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .stats-section h2 {
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
             margin-bottom: 10px;
         }
-        .ai-message-user {
-            justify-content: flex-end;
+
+        .stat-label {
+            font-size: 0.95rem;
+            opacity: 0.9;
         }
-        .ai-message-ai {
-            justify-content: flex-start;
-        }
-        .ai-message-content {
-            max-width: 80%;
-            padding: 10px 15px;
-            border-radius: 10px;
-            line-height: 1.5;
-            font-size: 0.9rem;
-        }
-        .ai-message-user .ai-message-content {
-            background: #667eea;
-            color: white;
-        }
-        .ai-message-ai .ai-message-content {
-            background: #f0f0f0;
-            color: #333;
-        }
-        .ai-widget-input {
-            padding: 15px;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 10px;
-        }
-        #ai-message-input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
+
+        /* ==================== التنبيهات ==================== */
+        .alert {
+            padding: 15px 20px;
             border-radius: 8px;
-            font-family: inherit;
-        }
-        #ai-send-btn {
-            background: #667eea;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        #ai-send-btn:hover {
-            background: #764ba2;
-        }
-        .close-btn {
-            background: rgba(255,255,255,0.3);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            padding: 0;
-            width: 30px;
-            height: 30px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            border-radius: 50%;
+            gap: 15px;
         }
-        @media (max-width: 1024px) {
-            .content-wrapper {
+
+        .alert-success {
+            background: #c6f6d5;
+            color: #22543d;
+            border-left: 4px solid #48bb78;
+        }
+
+        .alert-danger {
+            background: #fed7d7;
+            color: #742a2a;
+            border-left: 4px solid #e53e3e;
+        }
+
+        .alert-warning {
+            background: #feebc8;
+            color: #7c2d12;
+            border-left: 4px solid #f39c12;
+        }
+
+        .alert-info {
+            background: #bee3f8;
+            color: #2c5aa0;
+            border-left: 4px solid #667eea;
+        }
+
+        /* ==================== التجاوب ==================== */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .header-left {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .header-actions {
+                justify-content: center;
+                width: 100%;
+            }
+
+            .form-row {
                 grid-template-columns: 1fr;
             }
-            .lessons-sidebar { order: 1; }
-            .lesson-content { order: 2; }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-tabs {
+                flex-direction: column;
+            }
+
+            .nav-tab {
+                text-align: center;
+                width: 100%;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 10px 8px;
+            }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
+        <!-- ==================== الرأس ==================== -->
         <div class="header">
-            <div>
-                <div style="font-size: 2rem;">🔢</div>
-                <h1>الرياضيات - السنة 3 و 4</h1>
+            <div class="header-left">
+                <div style="font-size: 3rem;">📚</div>
+                <h1>المنصة التعليمية</h1>
+            </div>
+            <div class="user-info">
+                <div>
+                    <div style="font-weight: 600; color: #2d3748;">مرحباً، الإدارة</div>
+                    <div style="font-size: 0.9rem; color: #718096;">مسؤول النظام</div>
+                </div>
+                <div class="user-avatar">👤</div>
             </div>
             <div class="header-actions">
-                <button class="btn btn-back" onclick="goBack()">← العودة</button>
+                <button class="btn btn-secondary" onclick="showSettings()">⚙️ الإعدادات</button>
+                <button class="btn btn-logout" onclick="logout()">🚪 تسجيل الخروج</button>
             </div>
         </div>
 
-        <div class="content-wrapper">
-            <div class="lesson-content" id="lesson-content">
-                <div style="text-align: center; padding: 50px;">⏳ جاري تحميل الدرس...</div>
+        <!-- ==================== قائمة التنقل ==================== -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="switchTab('overview')">📊 نظرة عامة</div>
+            <div class="nav-tab" onclick="switchTab('subjects')">📚 المواد الدراسية</div>
+            <div class="nav-tab" onclick="switchTab('students')">👨‍🎓 الطلاب</div>
+            <div class="nav-tab" onclick="switchTab('subscriptions')">💳 الاشتراكات</div>
+            <div class="nav-tab" onclick="switchTab('referrals')">🔗 الإحالات</div>
+        </div>
+
+        <!-- ==================== نظرة عامة ==================== -->
+        <div id="overview" class="content active">
+            <div class="stats-section">
+                <h2>📊 إحصائيات المنصة</h2>
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-number" id="total-students">0</div>
+                        <div class="stat-label">إجمالي الطلاب</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="total-subjects">7</div>
+                        <div class="stat-label">المواد الدراسية</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="active-subscriptions">0</div>
+                        <div class="stat-label">الاشتراكات النشطة</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number" id="total-revenue">0 د.ت</div>
+                        <div class="stat-label">إجمالي الإيرادات</div>
+                    </div>
+                </div>
             </div>
 
-            <div class="lessons-sidebar" id="lessons-list">
-                <h3>📚 الدروس</h3>
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-icon">📚</div>
+                    <h3>المواد الدراسية</h3>
+                    <p>إدارة المواد والدروس والتمارين</p>
+                    <button class="btn btn-primary" onclick="switchTab('subjects')" style="width: 100%;">
+                        ➜ إدارة المواد
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">👨‍🎓</div>
+                    <h3>الطلاب</h3>
+                    <p>إضافة وإدارة حسابات الطلاب</p>
+                    <button class="btn btn-primary" onclick="switchTab('students')" style="width: 100%;">
+                        ➜ إدارة الطلاب
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💳</div>
+                    <h3>الاشتراكات</h3>
+                    <p>إدارة خطط الاشتراك والدفع</p>
+                    <button class="btn btn-primary" onclick="switchTab('subscriptions')" style="width: 100%;">
+                        ➜ إدارة الاشتراكات
+                    </button>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔗</div>
+                    <h3>الإحالات</h3>
+                    <p>نظام الإحالات والعمولات (20%)</p>
+                    <button class="btn btn-primary" onclick="switchTab('referrals')" style="width: 100%;">
+                        ➜ إدارة الإحالات
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== المواد الدراسية ==================== -->
+        <div id="subjects" class="content">
+            <div class="stats-section">
+                <h2>📚 إدارة المواد الدراسية</h2>
+                <button class="btn btn-success" onclick="openAddSubjectModal()">➕ إضافة مادة جديدة</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="subjects-table">
+                    <thead>
+                        <tr>
+                            <th>المادة</th>
+                            <th>المستويات</th>
+                            <th>عدد الدروس</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subjects-tbody">
+                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== الطلاب ==================== -->
+        <div id="students" class="content">
+            <div class="stats-section">
+                <h2>👨‍🎓 إدارة الطلاب</h2>
+                <button class="btn btn-success" onclick="openAddStudentModal()">➕ إضافة طالب جديد</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="students-table">
+                    <thead>
+                        <tr>
+                            <th>اسم الطالب</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>المستوى</th>
+                            <th>حالة الاشتراك</th>
+                            <th>تاريخ التسجيل</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-tbody">
+                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== الاشتراكات ==================== -->
+        <div id="subscriptions" class="content">
+            <div class="stats-section">
+                <h2>💳 إدارة الاشتراكات</h2>
+                <button class="btn btn-success" onclick="openAddSubscriptionModal()">➕ إنشاء اشتراك جديد</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="subscriptions-table">
+                    <thead>
+                        <tr>
+                            <th>الطالب</th>
+                            <th>خطة الاشتراك</th>
+                            <th>السعر</th>
+                            <th>تاريخ البدء</th>
+                            <th>تاريخ الانتهاء</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subscriptions-tbody">
+                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ==================== الإحالات ==================== -->
+        <div id="referrals" class="content">
+            <div class="stats-section">
+                <h2>🔗 إدارة نظام الإحالات</h2>
+                <p style="margin-top: 10px; color: #718096;">العمولة المعطاة للمحيل: <strong>20%</strong> من قيمة الاشتراك</p>
+                <button class="btn btn-success" onclick="openAddReferralModal()">➕ إنشاء رمز إحالة جديد</button>
+            </div>
+
+            <div class="table-wrapper">
+                <table id="referrals-table">
+                    <thead>
+                        <tr>
+                            <th>رمز الإحالة</th>
+                            <th>المحيل</th>
+                            <th>عدد الإحالات</th>
+                            <th>الإيرادات (د.ت)</th>
+                            <th>العمولة المستحقة (د.ت)</th>
+                            <th>الحالة</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="referrals-tbody">
+                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
-    <button class="ai-widget-toggle" onclick="toggleAIChat()">🤖</button>
-
-    <div id="ai-chat-widget">
-        <div class="ai-widget-header">
-            <span>🤖 المساعد الذكي</span>
-            <button class="close-btn" onclick="toggleAIChat()">✕</button>
+    <!-- ==================== مودال إضافة مادة ==================== -->
+    <div id="addSubjectModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة مادة جديدة</h2>
+                <button class="close-btn" onclick="closeModal('addSubjectModal')">×</button>
+            </div>
+            <div class="form-group">
+                <label>اسم المادة</label>
+                <input type="text" id="subject-name" placeholder="مثال: الرياضيات">
+            </div>
+            <div class="form-group">
+                <label>الرمز التعريفي</label>
+                <input type="text" id="subject-id" placeholder="مثال: math">
+            </div>
+            <div class="form-group">
+                <label>المستويات</label>
+                <select id="subject-levels" multiple>
+                    <option value="grade-3">السنة الثالثة</option>
+                    <option value="grade-4">السنة الرابعة</option>
+                    <option value="grade-5">السنة الخامسة</option>
+                    <option value="grade-6">السنة السادسة</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>الوصف</label>
+                <textarea id="subject-description" placeholder="وصف المادة..."></textarea>
+            </div>
+            <button class="btn btn-success" onclick="addSubject()" style="width: 100%;">✓ إضافة المادة</button>
         </div>
-        <div id="ai-messages"></div>
-        <div class="ai-widget-input">
-            <input type="text" id="ai-message-input" placeholder="اسأل سؤالك..." />
-            <button id="ai-send-btn" onclick="sendAIMessage()">↩️</button>
+    </div>
+
+    <!-- ==================== مودال إضافة طالب ==================== -->
+    <div id="addStudentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إضافة طالب جديد</h2>
+                <button class="close-btn" onclick="closeModal('addStudentModal')">×</button>
+            </div>
+            <div class="form-group">
+                <label>اسم الطالب</label>
+                <input type="text" id="student-name" placeholder="اسم الطالب الكامل">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="student-email" placeholder="example@example.com">
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="student-password" placeholder="كلمة مرور آمنة">
+            </div>
+            <div class="form-group">
+                <label>المستوى الدراسي</label>
+                <select id="student-level">
+                    <option value="">اختر المستوى</option>
+                    <option value="grade-3">السنة الثالثة ابتدائي</option>
+                    <option value="grade-4">السنة الرابعة ابتدائي</option>
+                    <option value="grade-5">السنة الخامسة ابتدائي</option>
+                    <option value="grade-6">السنة السادسة ابتدائي</option>
+                </select>
+            </div>
+            <button class="btn btn-success" onclick="addStudent()" style="width: 100%;">✓ إضافة الطالب</button>
+        </div>
+    </div>
+
+    <!-- ==================== مودال إضافة اشتراك ==================== -->
+    <div id="addSubscriptionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إنشاء اشتراك جديد</h2>
+                <button class="close-btn" onclick="closeModal('addSubscriptionModal')">×</button>
+            </div>
+            <div class="form-group">
+                <label>الطالب</label>
+                <select id="subscription-student">
+                    <option value="">اختر الطالب</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>خطة الاشتراك</label>
+                <select id="subscription-plan">
+                    <option value="monthly">شهري - 12 د.ت</option>
+                    <option value="quarterly">ثلاثي - 30 د.ت</option>
+                    <option value="yearly">سنوي - 100 د.ت</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>تاريخ البدء</label>
+                <input type="date" id="subscription-start">
+            </div>
+            <button class="btn btn-success" onclick="addSubscription()" style="width: 100%;">✓ إنشاء الاشتراك</button>
+        </div>
+    </div>
+
+    <!-- ==================== مودال إضافة إحالة ==================== -->
+    <div id="addReferralModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>إنشاء رمز إحالة جديد</h2>
+                <button class="close-btn" onclick="closeModal('addReferralModal')">×</button>
+            </div>
+            <div class="form-group">
+                <label>اسم المحيل</label>
+                <input type="text" id="referrer-name" placeholder="اسم الشخص الذي يحيل">
+            </div>
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="referrer-email" placeholder="البريد الإلكتروني للمحيل">
+            </div>
+            <div class="form-group">
+                <label>رمز الإحالة (سيتم توليده تلقائياً)</label>
+                <input type="text" id="referral-code" placeholder="مثال: REF2025XYZ" readonly>
+            </div>
+            <button class="btn btn-success" onclick="generateReferralCode()">🔄 توليد رمز جديد</button>
+            <button class="btn btn-success" onclick="addReferral()" style="width: 100%; margin-top: 10px;">✓ إنشاء الإحالة</button>
         </div>
     </div>
 
     <script>
-        // =====================
-        // متغيرات عامة
-        // =====================
-        let lessonsData = null;
-        let currentLesson = 0;
-        let currentSubjectId = 'math_3_4';
-        let aiMessages = [];
-        let userProgress = {};
+        // ===================== البيانات =====================
+        let subjects = [
+            { id: 'arabic', name: 'اللغة العربية', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 24, active: true },
+            { id: 'math', name: 'الرياضيات', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 20, active: true },
+            { id: 'french', name: 'اللغة الفرنسية', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 18, active: true },
+            { id: 'english', name: 'اللغة الإنجليزية', levels: ['grade-5', 'grade-6'], lessons: 12, active: true },
+            { id: 'history', name: 'التاريخ', levels: ['grade-5', 'grade-6'], lessons: 15, active: true },
+            { id: 'geography', name: 'الجغرافيا', levels: ['grade-5', 'grade-6'], lessons: 14, active: true },
+            { id: 'islamic', name: 'التربية الإسلامية', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 16, active: true }
+        ];
 
-        // =====================
-        // بيانات الدروس الافتراضية
-        // =====================
-        function getDefaultLessons() {
-            return {
-                name: "الرياضيات - السنة 3 و 4",
-                icon: "🔢",
-                color: "#e53e3e",
-                lessons: [
-                    {
-                        id: "math_3_4_lesson_1",
-                        title: "الجمع والطرح",
-                        chapter: 1,
-                        duration: "30 دقيقة",
-                        summary: "تعلم أساسيات الجمع والطرح. فهم كيفية إضافة وطرح الأرقام البسيطة.",
-                        video_url: "https://www.youtube.com/embed/dQw4w9WgXcQ",
-                        learning_objectives: ["فهم الجمع", "فهم الطرح", "حل مسائل بسيطة"],
-                        exercises: [
-                            {
-                                id: "ex_1",
-                                type: "fill_blank",
-                                question: "5 + 3 = ___",
-                                correct_answer: "8",
-                                acceptable_answers: ["8"],
-                                explanation: "5 زائد 3 يساوي 8"
-                            },
-                            {
-                                id: "ex_2",
-                                type: "multiple_choice",
-                                question: "ما نتيجة 10 - 4؟",
-                                options: ["5", "6", "7", "8"],
-                                correct_answer: 1,
-                                explanation: "10 ناقص 4 يساوي 6"
-                            },
-                            {
-                                id: "ex_3",
-                                type: "true_false",
-                                question: "2 + 3 = 6",
-                                correct_answer: false,
-                                explanation: "2 زائد 3 يساوي 5 وليس 6"
-                            }
-                        ]
-                    }
-                ]
-            };
+        let students = [];
+        let subscriptions = [];
+        let referrals = [];
+
+        // ===================== تحويل التبويبات =====================
+        function switchTab(tabName) {
+            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            // تحديث البيانات
+            updateAllData();
         }
 
-        // =====================
-        // تحميل بيانات الدروس
-        // =====================
-        async function loadLessonsData() {
-            try {
-                const saved = localStorage.getItem(`lessons_${currentSubjectId}`);
-                if (saved) return JSON.parse(saved);
-                return getDefaultLessons();
-            } catch (error) {
-                console.error('خطأ:', error);
-                return getDefaultLessons();
-            }
+        // ===================== تحديث جميع البيانات =====================
+        function updateAllData() {
+            updateSubjectsTable();
+            updateStudentsTable();
+            updateSubscriptionsTable();
+            updateReferralsTable();
+            updateStatistics();
         }
 
-        // =====================
-        // عرض قائمة الدروس
-        // =====================
-        async function displayLessonsList() {
-            if (!lessonsData) lessonsData = await loadLessonsData();
-            const lessonsList = document.getElementById('lessons-list');
-            if (!lessonsData || !lessonsData.lessons) return;
+        // ===================== الإحصائيات =====================
+        function updateStatistics() {
+            document.getElementById('total-students').textContent = students.length;
+            document.getElementById('total-subjects').textContent = subjects.length;
+            document.getElementById('active-subscriptions').textContent = subscriptions.filter(s => s.active).length;
+            
+            let revenue = subscriptions.filter(s => s.active).reduce((sum, s) => sum + (s.price || 0), 0);
+            document.getElementById('total-revenue').textContent = revenue.toFixed(2) + ' د.ت';
+        }
 
-            const lessonsHTML = lessonsData.lessons.map((lesson, index) => `
-                <div class="lesson-item ${index === 0 ? 'active' : ''}" onclick="selectLesson(${index})">
-                    <div class="lesson-item-title">الدرس ${lesson.chapter}: ${lesson.title}</div>
-                    <div class="lesson-item-meta">⏱️ ${lesson.duration} | ✍️ ${lesson.exercises ? lesson.exercises.length : 0} تمرين</div>
-                </div>
+        // ===================== إدارة المواد =====================
+        function updateSubjectsTable() {
+            const tbody = document.getElementById('subjects-tbody');
+            tbody.innerHTML = subjects.map(subject => `
+                <tr>
+                    <td><strong>${subject.name}</strong></td>
+                    <td>${subject.levels.length} مستويات</td>
+                    <td>${subject.lessons} درس</td>
+                    <td><span class="badge badge-success">${subject.active ? 'نشط' : 'معطل'}</span></td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="btn btn-primary" onclick="editSubject('${subject.id}')" title="تعديل">✏️</button>
+                            <button class="btn btn-danger" onclick="deleteSubject('${subject.id}')" title="حذف">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
             `).join('');
-
-            lessonsList.innerHTML = `<h3>📚 الدروس (${lessonsData.lessons.length})</h3>${lessonsHTML}`;
         }
 
-        // =====================
-        // اختيار درس
-        // =====================
-        async function selectLesson(index) {
-            currentLesson = index;
-            if (!lessonsData) lessonsData = await loadLessonsData();
-            const lesson = lessonsData.lessons[index];
-            displayLesson(lesson);
-            document.querySelectorAll('.lesson-item').forEach((item, i) => {
-                item.classList.toggle('active', i === index);
-            });
+        function openAddSubjectModal() {
+            document.getElementById('addSubjectModal').classList.add('active');
         }
 
-        // =====================
-        // عرض درس محدد
-        // =====================
-        function displayLesson(lesson) {
-            const content = document.getElementById('lesson-content');
-            let learningObjectives = (lesson.learning_objectives || [])
-                .map(obj => `<li>${obj}</li>`)
-                .join('');
-            let exercisesHTML = (lesson.exercises || [])
-                .map((ex, i) => generateExerciseHTML(ex, i + 1))
-                .join('');
-
-            content.innerHTML = `
-                <div class="lesson-header">
-                    <h2>الدرس ${lesson.chapter}: ${lesson.title}</h2>
-                    <div class="lesson-meta">
-                        <div class="meta-item">⏱️ ${lesson.duration}</div>
-                        <div class="meta-item">✍️ ${(lesson.exercises || []).length} تمارين</div>
-                    </div>
-                </div>
-
-                <div class="video-section">
-                    <h3>🎬 فيديو تعليمي</h3>
-                    <div class="video-container">
-                        ${lesson.video_url ? 
-                            `<iframe src="${lesson.video_url}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` :
-                            '<div class="video-placeholder">📹 لا يوجد فيديو متاح</div>'
-                        }
-                    </div>
-                </div>
-
-                <div class="summary-section">
-                    <h3>📖 ملخص الدرس</h3>
-                    <p>${lesson.summary}</p>
-                </div>
-
-                <div class="objectives-section">
-                    <h3>🎯 أهداف التعلم</h3>
-                    <ul class="objectives-list">${learningObjectives}</ul>
-                </div>
-
-                <div class="exercises-section">
-                    <h3>✍️ التمارين</h3>
-                    ${exercisesHTML || '<p style="text-align: center; color: #999;">لا توجد تمارين حتى الآن</p>'}
-                </div>
-            `;
-        }
-
-        // =====================
-        // توليد HTML التمرين
-        // =====================
-        function generateExerciseHTML(exercise, number) {
-            let exerciseContent = '';
-            switch(exercise.type) {
-                case 'multiple_choice':
-                    exerciseContent = `
-                        <div class="exercise-options">
-                            ${exercise.options.map((opt, i) => `
-                                <label class="option">
-                                    <input type="radio" name="ex_${exercise.id}" value="${i}">
-                                    ${opt}
-                                </label>
-                            `).join('')}
-                        </div>
-                    `;
-                    break;
-                case 'fill_blank':
-                    exerciseContent = `<input type="text" class="exercise-input" id="ex_${exercise.id}" placeholder="أدخل الإجابة...">`;
-                    break;
-                case 'true_false':
-                    exerciseContent = `
-                        <div class="exercise-options">
-                            <label class="option"><input type="radio" name="ex_${exercise.id}" value="true"> صحيح ✓</label>
-                            <label class="option"><input type="radio" name="ex_${exercise.id}" value="false"> خاطئ ✗</label>
-                        </div>
-                    `;
-                    break;
-            }
-
-            return `
-                <div class="exercise">
-                    <div class="exercise-header">
-                        <span class="exercise-number">تمرين ${number}</span>
-                        <span class="exercise-type">${getExerciseTypeLabel(exercise.type)}</span>
-                    </div>
-                    <div class="exercise-question">${exercise.question}</div>
-                    ${exerciseContent}
-                    <button class="btn-check-answer" onclick="checkAnswer('${exercise.id}', '${exercise.type}', ${JSON.stringify(exercise).split('"').join('\\"')})">
-                        التحقق من الإجابة
-                    </button>
-                    <div id="feedback_${exercise.id}" class="feedback"></div>
-                </div>
-            `;
-        }
-
-        // =====================
-        // وصف نوع التمرين
-        // =====================
-        function getExerciseTypeLabel(type) {
-            const labels = {
-                'multiple_choice': 'اختيار من متعدد',
-                'fill_blank': 'ملء الفراغ',
-                'true_false': 'صح/خطأ'
-            };
-            return labels[type] || type;
-        }
-
-        // =====================
-        // فحص الإجابة
-        // =====================
-        function checkAnswer(exerciseId, type, exercise) {
-            let userAnswer = null;
-            const feedbackDiv = document.getElementById(`feedback_${exerciseId}`);
-
-            if (type === 'multiple_choice' || type === 'true_false') {
-                const selected = document.querySelector(`input[name="ex_${exerciseId}"]:checked`);
-                userAnswer = selected ? (type === 'true_false' ? selected.value === 'true' : parseInt(selected.value)) : null;
-            } else if (type === 'fill_blank') {
-                userAnswer = document.getElementById(`ex_${exerciseId}`).value.trim();
-            }
-
-            if (userAnswer === null) {
-                feedbackDiv.textContent = '⚠️ يجب اختيار إجابة أولاً!';
-                feedbackDiv.className = 'feedback';
-                feedbackDiv.style.background = '#fff3cd';
-                feedbackDiv.style.color = '#856404';
-                feedbackDiv.style.display = 'block';
+        function addSubject() {
+            const name = document.getElementById('subject-name').value;
+            const id = document.getElementById('subject-id').value;
+            const levels = Array.from(document.getElementById('subject-levels').selectedOptions).map(el => el.value);
+            
+            if (!name || !id || levels.length === 0) {
+                alert('⚠️ يرجى ملء جميع الحقول');
                 return;
             }
 
-            const isCorrect = checkCorrectAnswer(userAnswer, exercise);
-            if (isCorrect) {
-                feedbackDiv.innerHTML = `✅ <strong>إجابة صحيحة!</strong><br>${exercise.explanation || 'عمل ممتاز!'}`;
-                feedbackDiv.className = 'feedback correct';
-            } else {
-                feedbackDiv.innerHTML = `❌ <strong>إجابة خاطئة</strong><br>${exercise.explanation || 'حاول مرة أخرى!'}`;
-                feedbackDiv.className = 'feedback incorrect';
+            subjects.push({
+                id: id,
+                name: name,
+                levels: levels,
+                lessons: 0,
+                active: true
+            });
+
+            closeModal('addSubjectModal');
+            document.getElementById('subject-name').value = '';
+            document.getElementById('subject-id').value = '';
+            updateSubjectsTable();
+            showAlert('✅ تم إضافة المادة بنجاح', 'success');
+        }
+
+        function deleteSubject(id) {
+            if (confirm('هل أنت متأكد من حذف هذه المادة؟')) {
+                subjects = subjects.filter(s => s.id !== id);
+                updateSubjectsTable();
+                showAlert('✅ تم حذف المادة بنجاح', 'success');
             }
-            feedbackDiv.style.display = 'block';
-            recordProgress(exerciseId, isCorrect);
         }
 
-        // =====================
-        // فحص الإجابة الصحيحة
-        // =====================
-        function checkCorrectAnswer(userAnswer, exercise) {
-            if (exercise.type === 'fill_blank') {
-                return (exercise.acceptable_answers || []).includes(userAnswer) || userAnswer === exercise.correct_answer;
-            } else {
-                return userAnswer === exercise.correct_answer;
+        function editSubject(id) {
+            alert('💡 سيتم تطوير هذه الميزة قريباً');
+        }
+
+        // ===================== إدارة الطلاب =====================
+        function updateStudentsTable() {
+            const tbody = document.getElementById('students-tbody');
+            if (students.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">لا توجد بيانات</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = students.map(student => `
+                <tr>
+                    <td><strong>${student.name}</strong></td>
+                    <td>${student.email}</td>
+                    <td>${student.level}</td>
+                    <td><span class="badge badge-success">${student.subscribed ? 'مشترك' : 'غير مشترك'}</span></td>
+                    <td>${new Date(student.dateAdded).toLocaleDateString('ar-TN')}</td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="btn btn-warning" onclick="viewStudent('${student.id}')" title="عرض">👁️</button>
+                            <button class="btn btn-danger" onclick="deleteStudent('${student.id}')" title="حذف">🗑️</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openAddStudentModal() {
+            document.getElementById('addStudentModal').classList.add('active');
+        }
+
+        function addStudent() {
+            const name = document.getElementById('student-name').value;
+            const email = document.getElementById('student-email').value;
+            const password = document.getElementById('student-password').value;
+            const level = document.getElementById('student-level').value;
+
+            if (!name || !email || !password || !level) {
+                alert('⚠️ يرجى ملء جميع الحقول');
+                return;
+            }
+
+            const newStudent = {
+                id: 'STU' + Date.now(),
+                name: name,
+                email: email,
+                level: level,
+                subscribed: false,
+                dateAdded: new Date().toISOString()
+            };
+
+            students.push(newStudent);
+            closeModal('addStudentModal');
+            document.getElementById('student-name').value = '';
+            document.getElementById('student-email').value = '';
+            document.getElementById('student-password').value = '';
+            document.getElementById('student-level').value = '';
+            updateStudentsTable();
+            showAlert('✅ تم إضافة الطالب بنجاح', 'success');
+        }
+
+        function deleteStudent(id) {
+            if (confirm('هل أنت متأكد من حذف هذا الطالب؟')) {
+                students = students.filter(s => s.id !== id);
+                updateStudentsTable();
+                showAlert('✅ تم حذف الطالب بنجاح', 'success');
             }
         }
 
-        // =====================
-        // تسجيل التقدم
-        // =====================
-        function recordProgress(exerciseId, isCorrect) {
-            if (!userProgress[exerciseId]) {
-                userProgress[exerciseId] = { attempts: 0, correct: 0 };
+        function viewStudent(id) {
+            const student = students.find(s => s.id === id);
+            alert(`📋 بيانات الطالب:\n\nالاسم: ${student.name}\nالبريد: ${student.email}\nالمستوى: ${student.level}`);
+        }
+
+        // ===================== إدارة الاشتراكات =====================
+        function updateSubscriptionsTable() {
+            const tbody = document.getElementById('subscriptions-tbody');
+            if (subscriptions.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #999;">لا توجد بيانات</td></tr>';
+                return;
             }
-            userProgress[exerciseId].attempts++;
-            if (isCorrect) userProgress[exerciseId].correct++;
-            localStorage.setItem(`progress_${currentSubjectId}`, JSON.stringify(userProgress));
+
+            tbody.innerHTML = subscriptions.map(sub => `
+                <tr>
+                    <td>${sub.studentName}</td>
+                    <td>${sub.plan === 'monthly' ? 'شهري' : sub.plan === 'quarterly' ? 'ثلاثي' : 'سنوي'}</td>
+                    <td>${sub.price} د.ت</td>
+                    <td>${new Date(sub.startDate).toLocaleDateString('ar-TN')}</td>
+                    <td>${new Date(sub.endDate).toLocaleDateString('ar-TN')}</td>
+                    <td><span class="badge ${sub.active ? 'badge-success' : 'badge-danger'}">${sub.active ? 'نشط' : 'منتهي'}</span></td>
+                    <td>
+                        <div class="table-actions">
+                            <button class="btn btn-warning" onclick="renewSubscription('${sub.id}')" title="تجديد">🔄</button>
+                            <button class="btn btn-danger" onclick="cancelSubscription('${sub.id}')" title="إلغاء">❌</button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
         }
 
-        // =====================
-        // المساعد الذكي
-        // =====================
-        function toggleAIChat() {
-            const widget = document.getElementById('ai-chat-widget');
-            widget.classList.toggle('open');
+        function openAddSubscriptionModal() {
+            const select = document.getElementById('subscription-student');
+            select.innerHTML = '<option value="">اختر الطالب</option>' + 
+                students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+            document.getElementById('addSubscriptionModal').classList.add('active');
         }
 
-        function sendAIMessage() {
-            const input = document.getElementById('ai-message-input');
-            const message = input.value.trim();
-            
-            if (!message) return;
+        function addSubscription() {
+            const studentId = document.getElementById('subscription-student').value;
+            const plan = document.getElementById('subscription-plan').value;
+            const startDate = document.getElementById('subscription-start').value;
 
-            // إضافة رسالة المستخدم
-            const messagesDiv = document.getElementById('ai-messages');
-            const userMsgEl = document.createElement('div');
-            userMsgEl.className = 'ai-message ai-message-user';
-            userMsgEl.innerHTML = `<div class="ai-message-content">${message}</div>`;
-            messagesDiv.appendChild(userMsgEl);
+            if (!studentId || !plan || !startDate) {
+                alert('⚠️ يرجى ملء جميع الحقول');
+                return;
+            }
 
-            // رد المساعد
-            setTimeout(() => {
-                const aiMsgEl = document.createElement('div');
-                aiMsgEl.className = 'ai-message ai-message-ai';
-                const response = generateAIResponse(message);
-                aiMsgEl.innerHTML = `<div class="ai-message-content">${response}</div>`;
-                messagesDiv.appendChild(aiMsgEl);
-                messagesDiv.scrollTop = messagesDiv.scrollHeight;
-            }, 500);
+            const student = students.find(s => s.id === studentId);
+            const prices = { monthly: 12, quarterly: 30, yearly: 100 };
+            const duration = { monthly: 30, quarterly: 90, yearly: 365 };
 
-            input.value = '';
-            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            const endDate = new Date(startDate);
+            endDate.setDate(endDate.getDate() + duration[plan]);
+
+            const newSub = {
+                id: 'SUB' + Date.now(),
+                studentId: studentId,
+                studentName: student.name,
+                plan: plan,
+                price: prices[plan],
+                startDate: startDate,
+                endDate: endDate.toISOString().split('T')[0],
+                active: true
+            };
+
+            subscriptions.push(newSub);
+            student.subscribed = true;
+            closeModal('addSubscriptionModal');
+            updateSubscriptionsTable();
+            updateStudentsTable();
+            updateStatistics();
+            showAlert('✅ تم إنشاء الاشتراك بنجاح', 'success');
         }
 
-        function generateAIResponse(message) {
-            const responses = [
-                'شكراً على سؤالك! هل تريد توضيح أكثر؟',
-                'يمكنك محاولة إعادة صياغة السؤال بطريقة مختلفة',
-                'هذا سؤال جيد جداً! حاول التفكير أكثر قليلاً',
-                'أنا هنا لمساعدتك في فهم الدرس بشكل أفضل'
-            ];
-            return responses[Math.floor(Math.random() * responses.length)];
+        function renewSubscription(id) {
+            alert('💡 سيتم تطوير هذه الميزة قريباً');
         }
 
-        // =====================
-        // العودة
-        // =====================
-        function goBack() {
-            window.location.href = '../dashboard.html';
+        function cancelSubscription(id) {
+            if (confirm('هل أنت متأكد من إلغاء هذا الاشتراك؟')) {
+                const sub = subscriptions.find(s => s.id === id);
+                sub.active = false;
+                updateSubscriptionsTable();
+                updateStatistics();
+                showAlert('✅ تم إلغاء الاشتراك بنجاح', 'success');
+            }
         }
 
-        // =====================
-        // تحميل عند فتح الصفحة
-        // =====================
-        document.addEventListener('DOMContentLoaded', async () => {
-            await displayLessonsList();
-            selectLesson(0);
-            console.log('✅ تم تحميل الصفحة بنجاح');
-        });
+        // ===================== إدارة الإحالات =====================
+        function updateReferralsTable() {
+            const tbody = document.getElementById('referrals-tbody');
+            if (referrals.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #999;">لا توجد بيانات</td></tr>';
+                return;
+            }
 
-        // معالج Enter في حقل الرسالة
+            tbody.innerHTML = referrals.map(ref => {
+                const referralCount = subscriptions.filter(s => s.referralCode === ref.code).length;
+                const totalRevenue = subscriptions
+                    .filter(s => s.referralCode === ref.code && s.active)
+                    .reduce((sum, s) => sum + s.price, 0);
+                const commission = totalRevenue * 0.20; // 20% عمولة
+
+                return `
+                    <tr>
+                        <td><strong>${ref.code}</strong></td>
+                        <td>${ref.referrerName}</td>
+                        <td>${referralCount}</td>
+                        <td>${totalRevenue.toFixed(2)}</td>
+                        <td>${commission.toFixed(2)}</td>
+                        <td><span class="badge badge-success">نشط</span></td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn btn-warning" onclick="copyReferralCode('${ref.code}')" title="نسخ">📋</button>
+                                <button class="btn btn-danger" onclick="deleteReferral('${ref.id}')" title="حذف">🗑️</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function openAddReferralModal() {
+            document.getElementById('addReferralModal').classList.add('active');
+        }
+
+        function generateReferralCode() {
+            const code = 'REF' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            document.getElementById('referral-code').value = code;
+        }
+
+        function addReferral() {
+            const name = document.getElementById('referrer-name').value;
+            const email = document.getElementById('referrer-email').value;
+            const code = document.getElementById('referral-code').value;
+
+            if (!name || !email || !code) {
+                alert('⚠️ يرجى ملء جميع الحقول');
+                return;
+            }
+
+            const newReferral = {
+                id: 'REF' + Date.now(),
+                referrerName: name,
+                referrerEmail: email,
+                code: code,
+                active: true,
+                dateCreated: new Date().toISOString()
+            };
+
+            referrals.push(newReferral);
+            closeModal('addReferralModal');
+            document.getElementById('referrer-name').value = '';
+            document.getElementById('referrer-email').value = '';
+            document.getElementById('referral-code').value = '';
+            updateReferralsTable();
+            showAlert('✅ تم إنشاء رمز الإحالة بنجاح', 'success');
+        }
+
+        function copyReferralCode(code) {
+            navigator.clipboard.writeText(code);
+            showAlert('✅ تم نسخ الرمز: ' + code, 'success');
+        }
+
+        function deleteReferral(id) {
+            if (confirm('هل أنت متأكد من حذف رمز الإحالة؟')) {
+                referrals = referrals.filter(r => r.id !== id);
+                updateReferralsTable();
+                showAlert('✅ تم حذف الرمز بنجاح', 'success');
+            }
+        }
+
+        // ===================== إدارة المودالات =====================
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+
+        // ===================== الإجراءات العامة =====================
+        function showAlert(message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.style.position = 'fixed';
+            alertDiv.style.top = '20px';
+            alertDiv.style.right = '20px';
+            alertDiv.style.zIndex = '2000';
+            alertDiv.style.minWidth = '300px';
+            alertDiv.innerHTML = message;
+
+            document.body.appendChild(alertDiv);
+            setTimeout(() => alertDiv.remove(), 4000);
+        }
+
+        function showSettings() {
+            alert('⚙️ إعدادات المنصة:\n\n- لغة الواجهة: العربية\n- المنطقة الزمنية: تونس\n- العملة: دينار تونسي (د.ت)\n- نسبة العمولة: 20%');
+        }
+
+        function logout() {
+            if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        // ===================== تحميل البيانات عند فتح الصفحة =====================
         document.addEventListener('DOMContentLoaded', () => {
-            const input = document.getElementById('ai-message-input');
-            if (input) {
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') sendAIMessage();
-                });
-            }
+            updateAllData();
+            loadDataFromStorage();
+            console.log('✅ تم تحميل لوحة التحكم بنجاح');
         });
+
+        // ===================== حفظ واسترجاع البيانات =====================
+        function saveDataToStorage() {
+            localStorage.setItem('subjects', JSON.stringify(subjects));
+            localStorage.setItem('students', JSON.stringify(students));
+            localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
+            localStorage.setItem('referrals', JSON.stringify(referrals));
+        }
+
+        function loadDataFromStorage() {
+            const savedSubjects = localStorage.getItem('subjects');
+            const savedStudents = localStorage.getItem('students');
+            const savedSubscriptions = localStorage.getItem('subscriptions');
+            const savedReferrals = localStorage.getItem('referrals');
+
+            if (savedSubjects) subjects = JSON.parse(savedSubjects);
+            if (savedStudents) students = JSON.parse(savedStudents);
+            if (savedSubscriptions) subscriptions = JSON.parse(savedSubscriptions);
+            if (savedReferrals) referrals = JSON.parse(savedReferrals);
+        }
+
+        // حفظ البيانات عند كل تغيير
+        window.addEventListener('beforeunload', saveDataToStorage);
     </script>
 
 </body>
