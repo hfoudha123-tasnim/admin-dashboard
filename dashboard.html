@@ -6,515 +6,71 @@
     <title>لوحة التحكم - المنصة التعليمية</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body {
-            font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
-        }
-
+        body { font-family: 'Segoe UI', 'Arabic UI Display', Tahoma, Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
         .container { max-width: 1600px; margin: 0 auto; }
-
-        /* ==================== الرأس ==================== */
-        .header {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        .header-left {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .header-left h1 {
-            color: #667eea;
-            font-size: 2.5rem;
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .user-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-        }
-
-        .header-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        /* ==================== الأزرار ==================== */
-        .btn {
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
-            font-family: inherit;
-            font-size: 1rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: #667eea;
-            color: white;
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            background: #764ba2;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn-success {
-            background: #48bb78;
-            color: white;
-        }
-
-        .btn-success:hover:not(:disabled) {
-            background: #38a169;
-            transform: translateY(-2px);
-        }
-
-        .btn-warning {
-            background: #f39c12;
-            color: white;
-        }
-
-        .btn-warning:hover:not(:disabled) {
-            background: #d68910;
-            transform: translateY(-2px);
-        }
-
-        .btn-danger {
-            background: #e53e3e;
-            color: white;
-        }
-
-        .btn-danger:hover:not(:disabled) {
-            background: #c53030;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: #718096;
-            color: white;
-        }
-
-        .btn-secondary:hover:not(:disabled) {
-            background: #4a5568;
-            transform: translateY(-2px);
-        }
-
-        .btn-logout {
-            background: #e53e3e;
-            color: white;
-        }
-
-        .btn-logout:hover {
-            background: #c53030;
-        }
-
-        /* ==================== قائمة التنقل ==================== */
-        .nav-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-            background: white;
-            padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-        }
-
-        .nav-tab {
-            padding: 12px 20px;
-            border: 2px solid transparent;
-            background: #f0f0f0;
-            cursor: pointer;
-            border-radius: 8px;
-            font-weight: 600;
-            color: #4a5568;
-            transition: all 0.3s;
-        }
-
-        .nav-tab:hover {
-            background: #e2e8f0;
-            border-color: #667eea;
-        }
-
-        .nav-tab.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        /* ==================== المحتوى الرئيسي ==================== */
-        .content {
-            display: none;
-        }
-
-        .content.active {
-            display: block;
-        }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-
-        .card-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .card h3 {
-            color: #2d3748;
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-        }
-
-        .card p {
-            color: #718096;
-            margin-bottom: 15px;
-            line-height: 1.6;
-        }
-
-        .card-value {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #667eea;
-            margin-bottom: 10px;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        /* ==================== الجداول ==================== */
-        .table-wrapper {
-            background: white;
-            border-radius: 15px;
-            padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            overflow-x: auto;
-            margin-bottom: 30px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.95rem;
-        }
-
-        th {
-            background: #f7fafc;
-            padding: 15px;
-            text-align: right;
-            font-weight: 700;
-            color: #2d3748;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        td {
-            padding: 12px 15px;
-            border-bottom: 1px solid #e2e8f0;
-            color: #4a5568;
-        }
-
-        tr:hover {
-            background: #f7fafc;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .table-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-        }
-
+        .header { background: white; padding: 25px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .header-left { display: flex; align-items: center; gap: 15px; }
+        .header-left h1 { color: #667eea; font-size: 2.5rem; }
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        .user-avatar { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; color: white; font-size: 2rem; }
+        .header-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; transition: all 0.3s; font-family: inherit; font-size: 1rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-primary:hover:not(:disabled) { background: #764ba2; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .btn-success { background: #48bb78; color: white; }
+        .btn-success:hover:not(:disabled) { background: #38a169; transform: translateY(-2px); }
+        .btn-warning { background: #f39c12; color: white; }
+        .btn-warning:hover:not(:disabled) { background: #d68910; transform: translateY(-2px); }
+        .btn-danger { background: #e53e3e; color: white; }
+        .btn-danger:hover:not(:disabled) { background: #c53030; transform: translateY(-2px); }
+        .btn-secondary { background: #718096; color: white; }
+        .btn-secondary:hover:not(:disabled) { background: #4a5568; transform: translateY(-2px); }
+        .nav-tabs { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; background: white; padding: 15px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+        .nav-tab { padding: 12px 20px; border: 2px solid transparent; background: #f0f0f0; cursor: pointer; border-radius: 8px; font-weight: 600; color: #4a5568; transition: all 0.3s; }
+        .nav-tab:hover { background: #e2e8f0; border-color: #667eea; }
+        .nav-tab.active { background: #667eea; color: white; border-color: #667eea; }
+        .content { display: none; }
+        .content.active { display: block; }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: all 0.3s; }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.15); }
+        .card-icon { font-size: 3rem; margin-bottom: 15px; }
+        .card h3 { color: #2d3748; margin-bottom: 10px; font-size: 1.5rem; }
+        .card p { color: #718096; margin-bottom: 15px; line-height: 1.6; }
+        .table-wrapper { background: white; border-radius: 15px; padding: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); overflow-x: auto; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+        th { background: #f7fafc; padding: 15px; text-align: right; font-weight: 700; color: #2d3748; border-bottom: 2px solid #e2e8f0; }
+        td { padding: 12px 15px; border-bottom: 1px solid #e2e8f0; color: #4a5568; }
+        tr:hover { background: #f7fafc; }
+        .table-actions { display: flex; gap: 8px; }
+        .badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; }
         .badge-success { background: #c6f6d5; color: #22543d; }
-        .badge-warning { background: #feebc8; color: #7c2d12; }
         .badge-danger { background: #fed7d7; color: #742a2a; }
-        .badge-primary { background: #bee3f8; color: #2c5aa0; }
-
-        /* ==================== الفورمات ==================== */
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 600;
-            color: #2d3748;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            font-family: inherit;
-            font-size: 1rem;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        /* ==================== المودال ==================== */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .modal.active {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-content {
-            background-color: white;
-            padding: 40px;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e2e8f0;
-            padding-bottom: 15px;
-        }
-
-        .modal-header h2 {
-            color: #2d3748;
-            font-size: 1.8rem;
-        }
-
-        .close-btn {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #718096;
-            cursor: pointer;
-            border: none;
-            background: none;
-        }
-
-        .close-btn:hover {
-            color: #2d3748;
-        }
-
-        /* ==================== الإحصائيات ==================== */
-        .stats-section {
-            background: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-
-        .stats-section h2 {
-            margin-bottom: 20px;
-            color: #2d3748;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .stat-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .stat-label {
-            font-size: 0.95rem;
-            opacity: 0.9;
-        }
-
-        /* ==================== التنبيهات ==================== */
-        .alert {
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .alert-success {
-            background: #c6f6d5;
-            color: #22543d;
-            border-left: 4px solid #48bb78;
-        }
-
-        .alert-danger {
-            background: #fed7d7;
-            color: #742a2a;
-            border-left: 4px solid #e53e3e;
-        }
-
-        .alert-warning {
-            background: #feebc8;
-            color: #7c2d12;
-            border-left: 4px solid #f39c12;
-        }
-
-        .alert-info {
-            background: #bee3f8;
-            color: #2c5aa0;
-            border-left: 4px solid #667eea;
-        }
-
-        /* ==================== التجاوب ==================== */
-        @media (max-width: 768px) {
-            .header {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .header-left {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .header-actions {
-                justify-content: center;
-                width: 100%;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .dashboard-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .nav-tabs {
-                flex-direction: column;
-            }
-
-            .nav-tab {
-                text-align: center;
-                width: 100%;
-            }
-
-            table {
-                font-size: 0.85rem;
-            }
-
-            th, td {
-                padding: 10px 8px;
-            }
-        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #2d3748; }
+        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; font-family: inherit; font-size: 1rem; }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: #667eea; box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1); }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); }
+        .modal.active { display: flex; align-items: center; justify-content: center; }
+        .modal-content { background-color: white; padding: 40px; border-radius: 15px; width: 90%; max-width: 500px; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 2px solid #e2e8f0; padding-bottom: 15px; }
+        .modal-header h2 { color: #2d3748; font-size: 1.8rem; }
+        .close-btn { font-size: 2rem; font-weight: bold; color: #718096; cursor: pointer; border: none; background: none; }
+        .stats-section { background: white; padding: 25px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .stats-section h2 { margin-bottom: 20px; color: #2d3748; }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .stat-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; }
+        .stat-number { font-size: 2.5rem; font-weight: bold; margin-bottom: 10px; }
+        .stat-label { font-size: 0.95rem; opacity: 0.9; }
+        .alert { padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .alert-success { background: #c6f6d5; color: #22543d; border-left: 4px solid #48bb78; }
+        @media (max-width: 768px) { .header { flex-direction: column; text-align: center; } .form-row { grid-template-columns: 1fr; } .dashboard-grid { grid-template-columns: 1fr; } .nav-tabs { flex-direction: column; } }
     </style>
 </head>
 <body>
-
     <div class="container">
-        <!-- ==================== الرأس ==================== -->
         <div class="header">
             <div class="header-left">
                 <div style="font-size: 3rem;">📚</div>
@@ -529,11 +85,10 @@
             </div>
             <div class="header-actions">
                 <button class="btn btn-secondary" onclick="showSettings()">⚙️ الإعدادات</button>
-                <button class="btn btn-logout" onclick="logout()">🚪 تسجيل الخروج</button>
+                <button class="btn btn-secondary" onclick="logout()" style="background: #e53e3e;">🚪 تسجيل الخروج</button>
             </div>
         </div>
 
-        <!-- ==================== قائمة التنقل ==================== -->
         <div class="nav-tabs">
             <div class="nav-tab active" onclick="switchTab('overview')">📊 نظرة عامة</div>
             <div class="nav-tab" onclick="switchTab('subjects')">📚 المواد الدراسية</div>
@@ -542,7 +97,6 @@
             <div class="nav-tab" onclick="switchTab('referrals')">🔗 الإحالات</div>
         </div>
 
-        <!-- ==================== نظرة عامة ==================== -->
         <div id="overview" class="content active">
             <div class="stats-section">
                 <h2>📊 إحصائيات المنصة</h2>
@@ -571,49 +125,36 @@
                     <div class="card-icon">📚</div>
                     <h3>المواد الدراسية</h3>
                     <p>إدارة المواد والدروس والتمارين</p>
-                    <button class="btn btn-primary" onclick="switchTab('subjects')" style="width: 100%;">
-                        ➜ إدارة المواد
-                    </button>
+                    <button class="btn btn-primary" onclick="switchTab('subjects')" style="width: 100%;">➜ إدارة المواد</button>
                 </div>
-
                 <div class="card">
                     <div class="card-icon">👨‍🎓</div>
                     <h3>الطلاب</h3>
                     <p>إضافة وإدارة حسابات الطلاب</p>
-                    <button class="btn btn-primary" onclick="switchTab('students')" style="width: 100%;">
-                        ➜ إدارة الطلاب
-                    </button>
+                    <button class="btn btn-primary" onclick="switchTab('students')" style="width: 100%;">➜ إدارة الطلاب</button>
                 </div>
-
                 <div class="card">
                     <div class="card-icon">💳</div>
                     <h3>الاشتراكات</h3>
                     <p>إدارة خطط الاشتراك والدفع</p>
-                    <button class="btn btn-primary" onclick="switchTab('subscriptions')" style="width: 100%;">
-                        ➜ إدارة الاشتراكات
-                    </button>
+                    <button class="btn btn-primary" onclick="switchTab('subscriptions')" style="width: 100%;">➜ إدارة الاشتراكات</button>
                 </div>
-
                 <div class="card">
                     <div class="card-icon">🔗</div>
                     <h3>الإحالات</h3>
                     <p>نظام الإحالات والعمولات (20%)</p>
-                    <button class="btn btn-primary" onclick="switchTab('referrals')" style="width: 100%;">
-                        ➜ إدارة الإحالات
-                    </button>
+                    <button class="btn btn-primary" onclick="switchTab('referrals')" style="width: 100%;">➜ إدارة الإحالات</button>
                 </div>
             </div>
         </div>
 
-        <!-- ==================== المواد الدراسية ==================== -->
         <div id="subjects" class="content">
             <div class="stats-section">
                 <h2>📚 إدارة المواد الدراسية</h2>
                 <button class="btn btn-success" onclick="openAddSubjectModal()">➕ إضافة مادة جديدة</button>
             </div>
-
             <div class="table-wrapper">
-                <table id="subjects-table">
+                <table>
                     <thead>
                         <tr>
                             <th>المادة</th>
@@ -623,22 +164,18 @@
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody id="subjects-tbody">
-                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
-                    </tbody>
+                    <tbody id="subjects-tbody"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- ==================== الطلاب ==================== -->
         <div id="students" class="content">
             <div class="stats-section">
                 <h2>👨‍🎓 إدارة الطلاب</h2>
                 <button class="btn btn-success" onclick="openAddStudentModal()">➕ إضافة طالب جديد</button>
             </div>
-
             <div class="table-wrapper">
-                <table id="students-table">
+                <table>
                     <thead>
                         <tr>
                             <th>اسم الطالب</th>
@@ -649,22 +186,18 @@
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody id="students-tbody">
-                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
-                    </tbody>
+                    <tbody id="students-tbody"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- ==================== الاشتراكات ==================== -->
         <div id="subscriptions" class="content">
             <div class="stats-section">
                 <h2>💳 إدارة الاشتراكات</h2>
                 <button class="btn btn-success" onclick="openAddSubscriptionModal()">➕ إنشاء اشتراك جديد</button>
             </div>
-
             <div class="table-wrapper">
-                <table id="subscriptions-table">
+                <table>
                     <thead>
                         <tr>
                             <th>الطالب</th>
@@ -676,43 +209,36 @@
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody id="subscriptions-tbody">
-                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
-                    </tbody>
+                    <tbody id="subscriptions-tbody"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- ==================== الإحالات ==================== -->
         <div id="referrals" class="content">
             <div class="stats-section">
                 <h2>🔗 إدارة نظام الإحالات</h2>
-                <p style="margin-top: 10px; color: #718096;">العمولة المعطاة للمحيل: <strong>20%</strong> من قيمة الاشتراك</p>
-                <button class="btn btn-success" onclick="openAddReferralModal()">➕ إنشاء رمز إحالة جديد</button>
+                <p style="margin-top: 10px; color: #718096;">العمولة: <strong>20%</strong></p>
+                <button class="btn btn-success" onclick="openAddReferralModal()">➕ إنشاء رمز إحالة</button>
             </div>
-
             <div class="table-wrapper">
-                <table id="referrals-table">
+                <table>
                     <thead>
                         <tr>
-                            <th>رمز الإحالة</th>
+                            <th>الرمز</th>
                             <th>المحيل</th>
-                            <th>عدد الإحالات</th>
-                            <th>الإيرادات (د.ت)</th>
-                            <th>العمولة المستحقة (د.ت)</th>
+                            <th>الإحالات</th>
+                            <th>الإيرادات</th>
+                            <th>العمولة</th>
                             <th>الحالة</th>
                             <th>الإجراءات</th>
                         </tr>
                     </thead>
-                    <tbody id="referrals-tbody">
-                        <!-- سيتم ملأ البيانات بواسطة JavaScript -->
-                    </tbody>
+                    <tbody id="referrals-tbody"></tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <!-- ==================== مودال إضافة مادة ==================== -->
     <div id="addSubjectModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -724,10 +250,6 @@
                 <input type="text" id="subject-name" placeholder="مثال: الرياضيات">
             </div>
             <div class="form-group">
-                <label>الرمز التعريفي</label>
-                <input type="text" id="subject-id" placeholder="مثال: math">
-            </div>
-            <div class="form-group">
                 <label>المستويات</label>
                 <select id="subject-levels" multiple>
                     <option value="grade-3">السنة الثالثة</option>
@@ -736,15 +258,10 @@
                     <option value="grade-6">السنة السادسة</option>
                 </select>
             </div>
-            <div class="form-group">
-                <label>الوصف</label>
-                <textarea id="subject-description" placeholder="وصف المادة..."></textarea>
-            </div>
-            <button class="btn btn-success" onclick="addSubject()" style="width: 100%;">✓ إضافة المادة</button>
+            <button class="btn btn-success" onclick="addSubject()" style="width: 100%;">✓ إضافة</button>
         </div>
     </div>
 
-    <!-- ==================== مودال إضافة طالب ==================== -->
     <div id="addStudentModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -753,45 +270,38 @@
             </div>
             <div class="form-group">
                 <label>اسم الطالب</label>
-                <input type="text" id="student-name" placeholder="اسم الطالب الكامل">
+                <input type="text" id="student-name" placeholder="الاسم الكامل">
             </div>
             <div class="form-group">
                 <label>البريد الإلكتروني</label>
                 <input type="email" id="student-email" placeholder="example@example.com">
             </div>
             <div class="form-group">
-                <label>كلمة المرور</label>
-                <input type="password" id="student-password" placeholder="كلمة مرور آمنة">
-            </div>
-            <div class="form-group">
-                <label>المستوى الدراسي</label>
+                <label>المستوى</label>
                 <select id="student-level">
                     <option value="">اختر المستوى</option>
-                    <option value="grade-3">السنة الثالثة ابتدائي</option>
-                    <option value="grade-4">السنة الرابعة ابتدائي</option>
-                    <option value="grade-5">السنة الخامسة ابتدائي</option>
-                    <option value="grade-6">السنة السادسة ابتدائي</option>
+                    <option value="grade-3">السنة الثالثة</option>
+                    <option value="grade-4">السنة الرابعة</option>
+                    <option value="grade-5">السنة الخامسة</option>
+                    <option value="grade-6">السنة السادسة</option>
                 </select>
             </div>
-            <button class="btn btn-success" onclick="addStudent()" style="width: 100%;">✓ إضافة الطالب</button>
+            <button class="btn btn-success" onclick="addStudent()" style="width: 100%;">✓ إضافة</button>
         </div>
     </div>
 
-    <!-- ==================== مودال إضافة اشتراك ==================== -->
     <div id="addSubscriptionModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>إنشاء اشتراك جديد</h2>
+                <h2>إنشاء اشتراك</h2>
                 <button class="close-btn" onclick="closeModal('addSubscriptionModal')">×</button>
             </div>
             <div class="form-group">
                 <label>الطالب</label>
-                <select id="subscription-student">
-                    <option value="">اختر الطالب</option>
-                </select>
+                <select id="subscription-student"></select>
             </div>
             <div class="form-group">
-                <label>خطة الاشتراك</label>
+                <label>الخطة</label>
                 <select id="subscription-plan">
                     <option value="monthly">شهري - 12 د.ت</option>
                     <option value="quarterly">ثلاثي - 30 د.ت</option>
@@ -802,447 +312,69 @@
                 <label>تاريخ البدء</label>
                 <input type="date" id="subscription-start">
             </div>
-            <button class="btn btn-success" onclick="addSubscription()" style="width: 100%;">✓ إنشاء الاشتراك</button>
+            <button class="btn btn-success" onclick="addSubscription()" style="width: 100%;">✓ إنشاء</button>
         </div>
     </div>
 
-    <!-- ==================== مودال إضافة إحالة ==================== -->
     <div id="addReferralModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2>إنشاء رمز إحالة جديد</h2>
+                <h2>رمز إحالة جديد</h2>
                 <button class="close-btn" onclick="closeModal('addReferralModal')">×</button>
             </div>
             <div class="form-group">
                 <label>اسم المحيل</label>
-                <input type="text" id="referrer-name" placeholder="اسم الشخص الذي يحيل">
+                <input type="text" id="referrer-name" placeholder="الاسم">
             </div>
             <div class="form-group">
                 <label>البريد الإلكتروني</label>
-                <input type="email" id="referrer-email" placeholder="البريد الإلكتروني للمحيل">
+                <input type="email" id="referrer-email" placeholder="email@example.com">
             </div>
             <div class="form-group">
-                <label>رمز الإحالة (سيتم توليده تلقائياً)</label>
-                <input type="text" id="referral-code" placeholder="مثال: REF2025XYZ" readonly>
+                <label>رمز الإحالة</label>
+                <input type="text" id="referral-code" readonly>
             </div>
-            <button class="btn btn-success" onclick="generateReferralCode()">🔄 توليد رمز جديد</button>
-            <button class="btn btn-success" onclick="addReferral()" style="width: 100%; margin-top: 10px;">✓ إنشاء الإحالة</button>
+            <button class="btn btn-warning" onclick="generateReferralCode()" style="width: 100%;">🔄 توليد</button>
+            <button class="btn btn-success" onclick="addReferral()" style="width: 100%; margin-top: 10px;">✓ إنشاء</button>
         </div>
     </div>
 
     <script>
-        // ===================== البيانات =====================
         let subjects = [
-            { id: 'arabic', name: 'اللغة العربية', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 24, active: true },
-            { id: 'math', name: 'الرياضيات', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 20, active: true },
-            { id: 'french', name: 'اللغة الفرنسية', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 18, active: true },
-            { id: 'english', name: 'اللغة الإنجليزية', levels: ['grade-5', 'grade-6'], lessons: 12, active: true },
-            { id: 'history', name: 'التاريخ', levels: ['grade-5', 'grade-6'], lessons: 15, active: true },
-            { id: 'geography', name: 'الجغرافيا', levels: ['grade-5', 'grade-6'], lessons: 14, active: true },
-            { id: 'islamic', name: 'التربية الإسلامية', levels: ['grade-3', 'grade-4', 'grade-5', 'grade-6'], lessons: 16, active: true }
+            {id:'arabic',name:'اللغة العربية',levels:['grade-3','grade-4','grade-5','grade-6'],lessons:24,active:true},
+            {id:'math',name:'الرياضيات',levels:['grade-3','grade-4','grade-5','grade-6'],lessons:20,active:true},
+            {id:'french',name:'اللغة الفرنسية',levels:['grade-3','grade-4','grade-5','grade-6'],lessons:18,active:true},
+            {id:'english',name:'اللغة الإنجليزية',levels:['grade-5','grade-6'],lessons:12,active:true},
+            {id:'history',name:'التاريخ',levels:['grade-5','grade-6'],lessons:15,active:true},
+            {id:'geography',name:'الجغرافيا',levels:['grade-5','grade-6'],lessons:14,active:true},
+            {id:'islamic',name:'التربية الإسلامية',levels:['grade-3','grade-4','grade-5','grade-6'],lessons:16,active:true}
         ];
-
-        let students = [];
-        let subscriptions = [];
-        let referrals = [];
-
-        // ===================== تحويل التبويبات =====================
-        function switchTab(tabName) {
-            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
-            
-            document.getElementById(tabName).classList.add('active');
-            event.target.classList.add('active');
-            
-            // تحديث البيانات
-            updateAllData();
-        }
-
-        // ===================== تحديث جميع البيانات =====================
-        function updateAllData() {
-            updateSubjectsTable();
-            updateStudentsTable();
-            updateSubscriptionsTable();
-            updateReferralsTable();
-            updateStatistics();
-        }
-
-        // ===================== الإحصائيات =====================
-        function updateStatistics() {
-            document.getElementById('total-students').textContent = students.length;
-            document.getElementById('total-subjects').textContent = subjects.length;
-            document.getElementById('active-subscriptions').textContent = subscriptions.filter(s => s.active).length;
-            
-            let revenue = subscriptions.filter(s => s.active).reduce((sum, s) => sum + (s.price || 0), 0);
-            document.getElementById('total-revenue').textContent = revenue.toFixed(2) + ' د.ت';
-        }
-
-        // ===================== إدارة المواد =====================
-        function updateSubjectsTable() {
-            const tbody = document.getElementById('subjects-tbody');
-            tbody.innerHTML = subjects.map(subject => `
-                <tr>
-                    <td><strong>${subject.name}</strong></td>
-                    <td>${subject.levels.length} مستويات</td>
-                    <td>${subject.lessons} درس</td>
-                    <td><span class="badge badge-success">${subject.active ? 'نشط' : 'معطل'}</span></td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="btn btn-primary" onclick="editSubject('${subject.id}')" title="تعديل">✏️</button>
-                            <button class="btn btn-danger" onclick="deleteSubject('${subject.id}')" title="حذف">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function openAddSubjectModal() {
-            document.getElementById('addSubjectModal').classList.add('active');
-        }
-
-        function addSubject() {
-            const name = document.getElementById('subject-name').value;
-            const id = document.getElementById('subject-id').value;
-            const levels = Array.from(document.getElementById('subject-levels').selectedOptions).map(el => el.value);
-            
-            if (!name || !id || levels.length === 0) {
-                alert('⚠️ يرجى ملء جميع الحقول');
-                return;
-            }
-
-            subjects.push({
-                id: id,
-                name: name,
-                levels: levels,
-                lessons: 0,
-                active: true
-            });
-
-            closeModal('addSubjectModal');
-            document.getElementById('subject-name').value = '';
-            document.getElementById('subject-id').value = '';
-            updateSubjectsTable();
-            showAlert('✅ تم إضافة المادة بنجاح', 'success');
-        }
-
-        function deleteSubject(id) {
-            if (confirm('هل أنت متأكد من حذف هذه المادة؟')) {
-                subjects = subjects.filter(s => s.id !== id);
-                updateSubjectsTable();
-                showAlert('✅ تم حذف المادة بنجاح', 'success');
-            }
-        }
-
-        function editSubject(id) {
-            alert('💡 سيتم تطوير هذه الميزة قريباً');
-        }
-
-        // ===================== إدارة الطلاب =====================
-        function updateStudentsTable() {
-            const tbody = document.getElementById('students-tbody');
-            if (students.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: #999;">لا توجد بيانات</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = students.map(student => `
-                <tr>
-                    <td><strong>${student.name}</strong></td>
-                    <td>${student.email}</td>
-                    <td>${student.level}</td>
-                    <td><span class="badge badge-success">${student.subscribed ? 'مشترك' : 'غير مشترك'}</span></td>
-                    <td>${new Date(student.dateAdded).toLocaleDateString('ar-TN')}</td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="btn btn-warning" onclick="viewStudent('${student.id}')" title="عرض">👁️</button>
-                            <button class="btn btn-danger" onclick="deleteStudent('${student.id}')" title="حذف">🗑️</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function openAddStudentModal() {
-            document.getElementById('addStudentModal').classList.add('active');
-        }
-
-        function addStudent() {
-            const name = document.getElementById('student-name').value;
-            const email = document.getElementById('student-email').value;
-            const password = document.getElementById('student-password').value;
-            const level = document.getElementById('student-level').value;
-
-            if (!name || !email || !password || !level) {
-                alert('⚠️ يرجى ملء جميع الحقول');
-                return;
-            }
-
-            const newStudent = {
-                id: 'STU' + Date.now(),
-                name: name,
-                email: email,
-                level: level,
-                subscribed: false,
-                dateAdded: new Date().toISOString()
-            };
-
-            students.push(newStudent);
-            closeModal('addStudentModal');
-            document.getElementById('student-name').value = '';
-            document.getElementById('student-email').value = '';
-            document.getElementById('student-password').value = '';
-            document.getElementById('student-level').value = '';
-            updateStudentsTable();
-            showAlert('✅ تم إضافة الطالب بنجاح', 'success');
-        }
-
-        function deleteStudent(id) {
-            if (confirm('هل أنت متأكد من حذف هذا الطالب؟')) {
-                students = students.filter(s => s.id !== id);
-                updateStudentsTable();
-                showAlert('✅ تم حذف الطالب بنجاح', 'success');
-            }
-        }
-
-        function viewStudent(id) {
-            const student = students.find(s => s.id === id);
-            alert(`📋 بيانات الطالب:\n\nالاسم: ${student.name}\nالبريد: ${student.email}\nالمستوى: ${student.level}`);
-        }
-
-        // ===================== إدارة الاشتراكات =====================
-        function updateSubscriptionsTable() {
-            const tbody = document.getElementById('subscriptions-tbody');
-            if (subscriptions.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #999;">لا توجد بيانات</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = subscriptions.map(sub => `
-                <tr>
-                    <td>${sub.studentName}</td>
-                    <td>${sub.plan === 'monthly' ? 'شهري' : sub.plan === 'quarterly' ? 'ثلاثي' : 'سنوي'}</td>
-                    <td>${sub.price} د.ت</td>
-                    <td>${new Date(sub.startDate).toLocaleDateString('ar-TN')}</td>
-                    <td>${new Date(sub.endDate).toLocaleDateString('ar-TN')}</td>
-                    <td><span class="badge ${sub.active ? 'badge-success' : 'badge-danger'}">${sub.active ? 'نشط' : 'منتهي'}</span></td>
-                    <td>
-                        <div class="table-actions">
-                            <button class="btn btn-warning" onclick="renewSubscription('${sub.id}')" title="تجديد">🔄</button>
-                            <button class="btn btn-danger" onclick="cancelSubscription('${sub.id}')" title="إلغاء">❌</button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function openAddSubscriptionModal() {
-            const select = document.getElementById('subscription-student');
-            select.innerHTML = '<option value="">اختر الطالب</option>' + 
-                students.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-            document.getElementById('addSubscriptionModal').classList.add('active');
-        }
-
-        function addSubscription() {
-            const studentId = document.getElementById('subscription-student').value;
-            const plan = document.getElementById('subscription-plan').value;
-            const startDate = document.getElementById('subscription-start').value;
-
-            if (!studentId || !plan || !startDate) {
-                alert('⚠️ يرجى ملء جميع الحقول');
-                return;
-            }
-
-            const student = students.find(s => s.id === studentId);
-            const prices = { monthly: 12, quarterly: 30, yearly: 100 };
-            const duration = { monthly: 30, quarterly: 90, yearly: 365 };
-
-            const endDate = new Date(startDate);
-            endDate.setDate(endDate.getDate() + duration[plan]);
-
-            const newSub = {
-                id: 'SUB' + Date.now(),
-                studentId: studentId,
-                studentName: student.name,
-                plan: plan,
-                price: prices[plan],
-                startDate: startDate,
-                endDate: endDate.toISOString().split('T')[0],
-                active: true
-            };
-
-            subscriptions.push(newSub);
-            student.subscribed = true;
-            closeModal('addSubscriptionModal');
-            updateSubscriptionsTable();
-            updateStudentsTable();
-            updateStatistics();
-            showAlert('✅ تم إنشاء الاشتراك بنجاح', 'success');
-        }
-
-        function renewSubscription(id) {
-            alert('💡 سيتم تطوير هذه الميزة قريباً');
-        }
-
-        function cancelSubscription(id) {
-            if (confirm('هل أنت متأكد من إلغاء هذا الاشتراك؟')) {
-                const sub = subscriptions.find(s => s.id === id);
-                sub.active = false;
-                updateSubscriptionsTable();
-                updateStatistics();
-                showAlert('✅ تم إلغاء الاشتراك بنجاح', 'success');
-            }
-        }
-
-        // ===================== إدارة الإحالات =====================
-        function updateReferralsTable() {
-            const tbody = document.getElementById('referrals-tbody');
-            if (referrals.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" style="text-align: center; color: #999;">لا توجد بيانات</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = referrals.map(ref => {
-                const referralCount = subscriptions.filter(s => s.referralCode === ref.code).length;
-                const totalRevenue = subscriptions
-                    .filter(s => s.referralCode === ref.code && s.active)
-                    .reduce((sum, s) => sum + s.price, 0);
-                const commission = totalRevenue * 0.20; // 20% عمولة
-
-                return `
-                    <tr>
-                        <td><strong>${ref.code}</strong></td>
-                        <td>${ref.referrerName}</td>
-                        <td>${referralCount}</td>
-                        <td>${totalRevenue.toFixed(2)}</td>
-                        <td>${commission.toFixed(2)}</td>
-                        <td><span class="badge badge-success">نشط</span></td>
-                        <td>
-                            <div class="table-actions">
-                                <button class="btn btn-warning" onclick="copyReferralCode('${ref.code}')" title="نسخ">📋</button>
-                                <button class="btn btn-danger" onclick="deleteReferral('${ref.id}')" title="حذف">🗑️</button>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function openAddReferralModal() {
-            document.getElementById('addReferralModal').classList.add('active');
-        }
-
-        function generateReferralCode() {
-            const code = 'REF' + Math.random().toString(36).substr(2, 9).toUpperCase();
-            document.getElementById('referral-code').value = code;
-        }
-
-        function addReferral() {
-            const name = document.getElementById('referrer-name').value;
-            const email = document.getElementById('referrer-email').value;
-            const code = document.getElementById('referral-code').value;
-
-            if (!name || !email || !code) {
-                alert('⚠️ يرجى ملء جميع الحقول');
-                return;
-            }
-
-            const newReferral = {
-                id: 'REF' + Date.now(),
-                referrerName: name,
-                referrerEmail: email,
-                code: code,
-                active: true,
-                dateCreated: new Date().toISOString()
-            };
-
-            referrals.push(newReferral);
-            closeModal('addReferralModal');
-            document.getElementById('referrer-name').value = '';
-            document.getElementById('referrer-email').value = '';
-            document.getElementById('referral-code').value = '';
-            updateReferralsTable();
-            showAlert('✅ تم إنشاء رمز الإحالة بنجاح', 'success');
-        }
-
-        function copyReferralCode(code) {
-            navigator.clipboard.writeText(code);
-            showAlert('✅ تم نسخ الرمز: ' + code, 'success');
-        }
-
-        function deleteReferral(id) {
-            if (confirm('هل أنت متأكد من حذف رمز الإحالة؟')) {
-                referrals = referrals.filter(r => r.id !== id);
-                updateReferralsTable();
-                showAlert('✅ تم حذف الرمز بنجاح', 'success');
-            }
-        }
-
-        // ===================== إدارة المودالات =====================
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.remove('active');
-        }
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.classList.remove('active');
-            }
-        }
-
-        // ===================== الإجراءات العامة =====================
-        function showAlert(message, type = 'info') {
-            const alertDiv = document.createElement('div');
-            alertDiv.className = `alert alert-${type}`;
-            alertDiv.style.position = 'fixed';
-            alertDiv.style.top = '20px';
-            alertDiv.style.right = '20px';
-            alertDiv.style.zIndex = '2000';
-            alertDiv.style.minWidth = '300px';
-            alertDiv.innerHTML = message;
-
-            document.body.appendChild(alertDiv);
-            setTimeout(() => alertDiv.remove(), 4000);
-        }
-
-        function showSettings() {
-            alert('⚙️ إعدادات المنصة:\n\n- لغة الواجهة: العربية\n- المنطقة الزمنية: تونس\n- العملة: دينار تونسي (د.ت)\n- نسبة العمولة: 20%');
-        }
-
-        function logout() {
-            if (confirm('هل أنت متأكد من رغبتك في تسجيل الخروج؟')) {
-                window.location.href = 'login.html';
-            }
-        }
-
-        // ===================== تحميل البيانات عند فتح الصفحة =====================
-        document.addEventListener('DOMContentLoaded', () => {
-            updateAllData();
-            loadDataFromStorage();
-            console.log('✅ تم تحميل لوحة التحكم بنجاح');
-        });
-
-        // ===================== حفظ واسترجاع البيانات =====================
-        function saveDataToStorage() {
-            localStorage.setItem('subjects', JSON.stringify(subjects));
-            localStorage.setItem('students', JSON.stringify(students));
-            localStorage.setItem('subscriptions', JSON.stringify(subscriptions));
-            localStorage.setItem('referrals', JSON.stringify(referrals));
-        }
-
-        function loadDataFromStorage() {
-            const savedSubjects = localStorage.getItem('subjects');
-            const savedStudents = localStorage.getItem('students');
-            const savedSubscriptions = localStorage.getItem('subscriptions');
-            const savedReferrals = localStorage.getItem('referrals');
-
-            if (savedSubjects) subjects = JSON.parse(savedSubjects);
-            if (savedStudents) students = JSON.parse(savedStudents);
-            if (savedSubscriptions) subscriptions = JSON.parse(savedSubscriptions);
-            if (savedReferrals) referrals = JSON.parse(savedReferrals);
-        }
-
-        // حفظ البيانات عند كل تغيير
-        window.addEventListener('beforeunload', saveDataToStorage);
+        let students=[],subscriptions=[],referrals=[];
+        function switchTab(t){document.querySelectorAll('.content').forEach(e=>e.classList.remove('active'));document.querySelectorAll('.nav-tab').forEach(e=>e.classList.remove('active'));document.getElementById(t).classList.add('active');event.target.classList.add('active');updateAll();}
+        function updateAll(){updateStats();updateSubjectsTable();updateStudentsTable();updateSubscriptionsTable();updateReferralsTable();}
+        function updateStats(){document.getElementById('total-students').textContent=students.length;document.getElementById('active-subscriptions').textContent=subscriptions.filter(s=>s.active).length;let r=subscriptions.filter(s=>s.active).reduce((a,s)=>a+s.price,0);document.getElementById('total-revenue').textContent=r.toFixed(2)+' د.ت';}
+        function updateSubjectsTable(){let h=subjects.map(s=>`<tr><td><strong>${s.name}</strong></td><td>${s.levels.length}</td><td>${s.lessons}</td><td><span class="badge badge-success">${s.active?'نشط':'معطل'}</span></td><td><button class="btn btn-danger" onclick="delSubject('${s.id}')">🗑️</button></td></tr>`).join('');document.getElementById('subjects-tbody').innerHTML=h||'<tr><td colspan="5" style="text-align:center;color:#999;">لا توجد بيانات</td></tr>';}
+        function openAddSubjectModal(){document.getElementById('addSubjectModal').classList.add('active');}
+        function addSubject(){let n=document.getElementById('subject-name').value;let l=Array.from(document.getElementById('subject-levels').selectedOptions).map(e=>e.value);if(!n||!l.length){alert('⚠️ أكمل الحقول');return;}subjects.push({id:n.toLowerCase(),name:n,levels:l,lessons:0,active:true});closeModal('addSubjectModal');document.getElementById('subject-name').value='';updateSubjectsTable();alert('✅ تم الإضافة');}
+        function delSubject(id){if(confirm('حذف؟')){subjects=subjects.filter(s=>s.id!==id);updateSubjectsTable();alert('✅ تم الحذف');}}
+        function updateStudentsTable(){let h=students.length?students.map(s=>`<tr><td><strong>${s.name}</strong></td><td>${s.email}</td><td>${s.level}</td><td><span class="badge badge-success">${s.sub?'مشترك':'لا'}</span></td><td>${new Date(s.date).toLocaleDateString('ar-TN')}</td><td><button class="btn btn-danger" onclick="delStudent('${s.id}')">🗑️</button></td></tr>`).join(''):'<tr><td colspan="6" style="text-align:center;color:#999;">لا توجد بيانات</td></tr>';document.getElementById('students-tbody').innerHTML=h;}
+        function openAddStudentModal(){document.getElementById('addStudentModal').classList.add('active');}
+        function addStudent(){let n=document.getElementById('student-name').value,e=document.getElementById('student-email').value,l=document.getElementById('student-level').value;if(!n||!e||!l){alert('⚠️ أكمل الحقول');return;}students.push({id:'S'+Date.now(),name:n,email:e,level:l,sub:false,date:new Date()});closeModal('addStudentModal');document.getElementById('student-name').value='';document.getElementById('student-email').value='';document.getElementById('student-level').value='';updateStudentsTable();updateStats();alert('✅ تم الإضافة');}
+        function delStudent(id){if(confirm('حذف؟')){students=students.filter(s=>s.id!==id);updateStudentsTable();updateStats();alert('✅ تم الحذف');}}
+        function updateSubscriptionsTable(){let h=subscriptions.length?subscriptions.map(s=>{let p={monthly:'شهري',quarterly:'ثلاثي',yearly:'سنوي'};return `<tr><td>${s.sname}</td><td>${p[s.plan]}</td><td>${s.price}</td><td>${s.start}</td><td>${s.end}</td><td><span class="badge ${s.active?'badge-success':'badge-danger'}">${s.active?'نشط':'منتهي'}</span></td><td><button class="btn btn-danger" onclick="delSub('${s.id}')">❌</button></td></tr>`}).join(''):'<tr><td colspan="7" style="text-align:center;color:#999;">لا توجد بيانات</td></tr>';document.getElementById('subscriptions-tbody').innerHTML=h;}
+        function openAddSubscriptionModal(){let s=document.getElementById('subscription-student');s.innerHTML='<option value="">اختر</option>'+students.map(st=>`<option value="${st.id}">${st.name}</option>`).join('');document.getElementById('addSubscriptionModal').classList.add('active');}
+        function addSubscription(){let sid=document.getElementById('subscription-student').value,p=document.getElementById('subscription-plan').value,start=document.getElementById('subscription-start').value;if(!sid||!p||!start){alert('⚠️ أكمل الحقول');return;}let st=students.find(s=>s.id===sid);let pr={monthly:12,quarterly:30,yearly:100},d={monthly:30,quarterly:90,yearly:365};let end=new Date(start);end.setDate(end.getDate()+d[p]);subscriptions.push({id:'SUB'+Date.now(),sid:sid,sname:st.name,plan:p,price:pr[p],start:start,end:end.toISOString().split('T')[0],active:true});st.sub=true;closeModal('addSubscriptionModal');updateSubscriptionsTable();updateStudentsTable();updateStats();alert('✅ تم الإضافة');}
+        function delSub(id){if(confirm('إلغاء؟')){let s=subscriptions.find(x=>x.id===id);s.active=false;updateSubscriptionsTable();updateStats();alert('✅ تم الإلغاء');}}
+        function updateReferralsTable(){let h=referrals.length?referrals.map(r=>{let c=subscriptions.filter(s=>s.ref===r.code).length,rev=subscriptions.filter(s=>s.ref===r.code&&s.active).reduce((a,s)=>a+s.price,0),com=rev*0.2;return `<tr><td><strong>${r.code}</strong></td><td>${r.rname}</td><td>${c}</td><td>${rev.toFixed(2)}</td><td>${com.toFixed(2)}</td><td><span class="badge badge-success">نشط</span></td><td><button class="btn btn-danger" onclick="delRef('${r.id}')">🗑️</button></td></tr>`}).join(''):'<tr><td colspan="7" style="text-align:center;color:#999;">لا توجد بيانات</td></tr>';document.getElementById('referrals-tbody').innerHTML=h;}
+        function openAddReferralModal(){document.getElementById('addReferralModal').classList.add('active');}
+        function generateReferralCode(){let c='REF'+Math.random().toString(36).substr(2,9).toUpperCase();document.getElementById('referral-code').value=c;}
+        function addReferral(){let n=document.getElementById('referrer-name').value,e=document.getElementById('referrer-email').value,c=document.getElementById('referral-code').value;if(!n||!e||!c){alert('⚠️ أكمل الحقول');return;}referrals.push({id:'R'+Date.now(),rname:n,remail:e,code:c});closeModal('addReferralModal');document.getElementById('referrer-name').value='';document.getElementById('referrer-email').value='';document.getElementById('referral-code').value='';updateReferralsTable();alert('✅ تم الإضافة');}
+        function delRef(id){if(confirm('حذف؟')){referrals=referrals.filter(r=>r.id!==id);updateReferralsTable();alert('✅ تم الحذف');}}
+        function closeModal(id){document.getElementById(id).classList.remove('active');}
+        window.onclick=e=>{if(e.target.classList.contains('modal'))e.target.classList.remove('active');};
+        function showSettings(){alert('⚙️ الإعدادات:\\n- اللغة: العربية\\n- المنطقة: تونس\\n- العملة: د.ت\\n- العمولة: 20%');}
+        function logout(){if(confirm('تسجيل خروج؟'))window.location.href='login.html';}
+        document.addEventListener('DOMContentLoaded',()=>{updateAll();console.log('✅ جاهزة');});
     </script>
-
 </body>
 </html>
